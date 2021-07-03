@@ -13,7 +13,9 @@ const Landing = ({ isAuthenticated }) => {
       <div className='dark-overlay'>
         <div className='landing-inner'>
           <h1 className='landingTitle'>Mamíferas</h1>
-          <p className='lead'>Recordando lo que se ha olvidado</p>
+          <p className='lead'>
+            Recordando lo que se ha olvidado / Honrando el ser madre.
+          </p>
           <div className='buttons'>
             <Link to='/register' className='btn btn-primary'>
               Registrarse
