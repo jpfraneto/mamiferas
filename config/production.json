@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://jpfraneto:marisol@db.wbeyk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  "jwtSecret": "respirandoelairedelosarboles",
+  "githubClientId": "4b562070d4093132d2aa",
+  "githubSecret": "cc704b64b8a2bf398fe822a5b4c9c0231ed055ca"
+}
