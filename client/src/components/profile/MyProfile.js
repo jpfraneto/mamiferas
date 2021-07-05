@@ -5,17 +5,17 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
-import { getProfileById } from '../../actions/profile';
+import ProfileImages from './ProfileImages';
+import { getCurrentProfile } from '../../actions/profile';
 
 const Profile = ({
-  getProfileById,
+  getCurrentProfile,
   profile: { profile, loading },
   auth,
-  match,
 }) => {
   useEffect(() => {
-    getProfileById(match.params.id);
-  }, [getProfileById, match.params.id]);
+    getCurrentProfile();
+  }, [getCurrentProfile]);
   return (
     <Fragment>
       {profile === null || loading ? (
@@ -23,8 +23,13 @@ const Profile = ({
       ) : (
         <Fragment>
           <Link to='/profiles' className='btn btn-light'>
-            Volver a la tribu
+            Volver a papás
           </Link>
+          {auth.isAuthenticated && auth.loading === false && (
+            <Link to='/images/new' className='btn btn-success'>
+              Agregar Imagen
+            </Link>
+          )}
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (
@@ -32,9 +37,10 @@ const Profile = ({
                 Editar Perfil
               </Link>
             )}
+
           <div className='profile-grid my-1'>
             <ProfileTop profile={profile} />
-            <ProfileAbout profile={profile} />
+            {profile.images && <ProfileImages profile={profile} />}
           </div>
         </Fragment>
       )}
@@ -43,7 +49,7 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  getProfileById: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -53,4 +59,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getProfileById })(Profile);
+export default connect(mapStateToProps, { getCurrentProfile })(Profile);

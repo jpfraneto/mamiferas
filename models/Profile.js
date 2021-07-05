@@ -1,113 +1,51 @@
 const mongoose = require('mongoose');
 
 const ProfileSchema = new mongoose.Schema({
-    user: {
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  },
+  website: {
+    type: String,
+  },
+  miracle: {
+    type: Date,
+  },
+  location: {
+    type: String,
+  },
+  images: [
+    {
+      user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'image',
+      },
     },
-    company: {
-        type: String
+  ],
+  bio: {
+    type: String,
+  },
+  social: {
+    youtube: {
+      type: String,
     },
-    website: {
-        type: String
+    twitter: {
+      type: String,
     },
-    location: {
-        type: String
+    facebook: {
+      type: String,
     },
-    status: {
-        type: String,
-        required: true
-    }, 
-    skills: {
-        type: [String],
-        required: true
+    linkedin: {
+      type: String,
     },
-    bio: {
-        type: String
+    instagram: {
+      type: String,
     },
-    githubusername: {
-        type: String
-    },
-    experience: [
-        {
-            title : {
-                type: String,
-                required: true
-            },
-            company : {
-                type: String,
-                required: true
-            },
-            location : {
-                type: String,
-            },
-            from : {
-                type: Date,
-                required: true
-            },
-            to : {
-                type: Date,
-            },
-            current : {
-                type: Boolean,
-                required: true
-            },
-            description : {
-                type: String,
-            },
-        }
-    ],
-    education : [
-        {
-            school : {
-                type: String,
-                required: true
-            },
-            degree : {
-                type: String,
-                required: true
-            },
-            fieldofstudy : {
-                type: String,
-                required: true
-            },
-            from : {
-                type: Date,
-                required: true
-            },
-            to : {
-                type: Date,
-            },
-            current : {
-                type: Boolean,
-            },
-            description : {
-                type: String,
-                required: true
-            }
-        }
-    ],
-    social: {
-        youtube: {
-            type: String
-        },
-        twitter: {
-            type: String
-        },
-        facebook: {
-            type: String
-        },
-        linkedin: {
-            type: String
-        },
-        instagram: {
-            type: String
-        }
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
-})
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 module.exports = Profile = mongoose.model('profile', ProfileSchema);

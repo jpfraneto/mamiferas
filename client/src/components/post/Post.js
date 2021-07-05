@@ -17,9 +17,10 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
   ) : (
     <Fragment>
       <Link to='/posts' className='btn btn'>
-        Back to Posts
+        Volver a los testimonios
       </Link>
       <PostItem post={post} showActions={false} />
+
       <div className='comments'>
         {post.comments.map(comment => (
           <CommentItem key={comment._id} comment={comment} postId={post._id} />

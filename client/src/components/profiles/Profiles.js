@@ -16,9 +16,10 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className='large text-primary'>Papás</h1>
+          <h1 className='large text-primary'>Madres gestantes</h1>
           <p className='lead'>
-            Conoce a otros papás y apoyense mutuamente en este camino
+            Conoce a otras mamás en transición y apoyense mutuamente en este
+            camino
           </p>
           <div className='profiles'>
             {profiles.length > 0 ? (

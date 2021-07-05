@@ -9,23 +9,16 @@ const ProfileAbout = ({
   },
 }) => (
   <div className='profile-about bg-light p-2'>
-    {bio && (
+    {bio ? (
       <Fragment>
         {' '}
-        <h2 className='text-primary'>Biografía de {name}</h2>
+        <h2 className='text-primary'>Biografía</h2>
         <p>{bio}</p>
         <div className='line'></div>
       </Fragment>
+    ) : (
+      <p>No hay Biografía disponible</p>
     )}
-
-    <h2 className='text-primary'>Habilidades</h2>
-    <div className='skills'>
-      {skills.map((skill, index) => (
-        <div key={index} className='p-1'>
-          ✓ {skill}
-        </div>
-      ))}
-    </div>
   </div>
 );
 

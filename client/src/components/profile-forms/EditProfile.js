@@ -20,17 +20,13 @@ const EditProfile = ({
 }) => {
   const [formData, setFormData] = useState({
     company: '',
-    website: '',
+    miracle: '',
     location: '',
     bio: '',
-    status: '',
-    githubusername: '',
-    skills: '',
     youtube: '',
     facebook: '',
     twitter: '',
     instagram: '',
-    linkedin: '',
   });
 
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
@@ -39,36 +35,17 @@ const EditProfile = ({
     getCurrentProfile();
 
     setFormData({
-      company: loading || !profile.company ? '' : profile.company,
-      website: loading || !profile.website ? '' : profile.website,
+      miracle: loading || !profile.miracle ? '' : profile.miracle,
       location: loading || !profile.location ? '' : profile.location,
       bio: loading || !profile.bio ? '' : profile.bio,
-      status: loading || !profile.status ? '' : profile.status,
-      githubusername:
-        loading || !profile.githubusername ? '' : profile.githubusername,
-      skills: loading || !profile.skills ? '' : profile.skills.join(','),
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       facebook: loading || !profile.social ? '' : profile.social.facebook,
       twitter: loading || !profile.social ? '' : profile.social.twitter,
       instagram: loading || !profile.social ? '' : profile.social.instagram,
-      linkedin: loading || !profile.social ? '' : profile.social.linkedin,
     });
   }, [loading, getCurrentProfile]);
 
-  const {
-    company,
-    website,
-    location,
-    bio,
-    status,
-    githubusername,
-    skills,
-    youtube,
-    facebook,
-    twitter,
-    instagram,
-    linkedin,
-  } = formData;
+  const { miracle, bio, youtube, facebook, twitter, instagram } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -80,98 +57,45 @@ const EditProfile = ({
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Create Your Profile</h1>
+      <h1 className='large text-primary'>Edita tu perfil</h1>
       <p className='lead'>
-        <i className='fas fa-user'></i> Let's get some information to make your
-        profile stand out
+        <i className='fas fa-user'></i> Agrega información para poder conectar
+        mejor con otras personas
       </p>
-      <small>* = required field</small>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
-          <select name='status' value={status} onChange={e => onChange(e)}>
-            <option value='0'>* Select Professional Status</option>
-            <option value='Developer'>Developer</option>
-            <option value='Junior Developer'>Junior Developer</option>
-            <option value='Senior Developer'>Senior Developer</option>
-            <option value='Manager'>Manager</option>
-            <option value='Student or Learning'>Student or Learning</option>
-            <option value='Instructor'>Instructor or Teacher</option>
-            <option value='Intern'>Intern</option>
-            <option value='Other'>Other</option>
-          </select>
-          <small className='form-text'>
-            Give us an idea of where you are at in your career
-          </small>
-        </div>
-        <div className='form-group'>
           <input
             type='text'
-            placeholder='Company'
-            name='company'
-            value={company}
+            placeholder='Fecha de Inicio de Embarazo'
+            name='miracle'
+            value={miracle}
             onChange={e => onChange(e)}
           />
           <small className='form-text'>
-            Could be your own company or one you work for
+            Fecha aproximada de cuando quedaste embarazada
           </small>
         </div>
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Website'
-            name='website'
-            value={website}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            Could be your own or a company website
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Location'
+            placeholder='Ubicación'
             name='location'
             value={location}
             onChange={e => onChange(e)}
           />
-          <small className='form-text'>
-            City & state suggested (eg. Boston, MA)
-          </small>
+          <small className='form-text'>¿Dónde vives?</small>
         </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='* Skills'
-            name='skills'
-            value={skills}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Github Username'
-            name='githubusername'
-            value={githubusername}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            If you want your latest repos and a Github link, include your
-            username
-          </small>
-        </div>
+
         <div className='form-group'>
           <textarea
-            placeholder='A short bio of yourself'
+            placeholder='Corta biografía de ti'
             name='bio'
             value={bio}
             onChange={e => onChange(e)}
           ></textarea>
-          <small className='form-text'>Tell us a little about yourself</small>
+          <small className='form-text'>
+            Cuéntanos lo que quieras acerca de ti.
+          </small>
         </div>
 
         <div className='my-2'>
@@ -180,7 +104,7 @@ const EditProfile = ({
             type='button'
             className='btn btn-light'
           >
-            Add Social Network Links
+            Agregar redes sociales.
           </button>
           <span>Optional</span>
         </div>
@@ -191,7 +115,7 @@ const EditProfile = ({
               <FontAwesomeIcon icon={faTwitter} />
               <input
                 type='text'
-                placeholder='Twitter URL'
+                placeholder='Usuario de Twitter'
                 name='twitter'
                 value={twitter}
                 onChange={e => onChange(e)}
@@ -202,7 +126,7 @@ const EditProfile = ({
               <FontAwesomeIcon icon={faFacebook} />
               <input
                 type='text'
-                placeholder='Facebook URL'
+                placeholder='Usuario de Facebook'
                 name='facebook'
                 value={facebook}
                 onChange={e => onChange(e)}
@@ -213,20 +137,9 @@ const EditProfile = ({
               <FontAwesomeIcon icon={faYoutube} />
               <input
                 type='text'
-                placeholder='YouTube URL'
+                placeholder='Usuario de YouTube'
                 name='youtube'
                 value={youtube}
-                onChange={e => onChange(e)}
-              />
-            </div>
-
-            <div className='form-group '>
-              <FontAwesomeIcon icon={faLinkedin} />
-              <input
-                type='text'
-                placeholder='Linkedin URL'
-                name='linkedin'
-                value={linkedin}
                 onChange={e => onChange(e)}
               />
             </div>
@@ -235,7 +148,7 @@ const EditProfile = ({
               <FontAwesomeIcon icon={faInstagram} />
               <input
                 type='text'
-                placeholder='Instagram URL'
+                placeholder='Usuario de Instagram'
                 name='instagram'
                 value={instagram}
                 onChange={e => onChange(e)}
@@ -246,7 +159,7 @@ const EditProfile = ({
 
         <input type='submit' className='btn btn-primary my-1' />
         <Link className='btn btn-light my-1' to='/dashboard'>
-          Go Back
+          Atrás
         </Link>
       </form>
     </Fragment>

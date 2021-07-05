@@ -1,50 +1,58 @@
 const express = require('express');
 const router = express.Router();
-const cloudinary = require('cloudinary');
+const { cloudinary } = require('../../utils/cloudinary');
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const Image = require('../../models/Image');
 const Profile = require('../../models/Profile');
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
-
 // @route   POST api/images
 // @desc    Create a post
 // @access  Private
 
-router.get('/', (req, res) => {
-  console.log(cloudinary.url('sample'));
-  console.log('acá van a estar todas las imagenes!');
-  //Buscar en la DB las imágenes para mostrarlas en el front end
-  const images = [
-    {
-      name: 'imagen1',
-      alt: 'altImagen1',
-      url: 'https://i.blogs.es/36d509/adorable-baby-bed-1556706/1366_2000.jpg',
-    },
-    {
-      name: 'imagen1',
-      alt: 'altImagen1',
-      url: 'https://i.blogs.es/2429b7/bebe-dormido/150_150.jpg',
-    },
-    {
-      name: 'imagen1',
-      alt: 'altImagen1',
-      url: 'https://i.blogs.es/6b0a8c/pexels-photo-62272/150_150.jpeg',
-    },
-  ];
-  res.json(images);
+router.get('/', async (req, res) => {
+  const { resources } = await cloudinary.search
+    .expression('resource_type:image')
+    .sort_by('public_id', 'desc')
+    .execute();
+  const publicIds = resources.map(file => file.public_id);
+  console.log('The public ids are:');
+  res.json(publicIds);
 });
 
-router.post('/', (req, res) => {
-  console.log('wena compare! acá estamos');
-  console.log(req.body);
-  res.json({ 1: 'wena', 2: 'compare' });
+router.get('/:id', async (req, res) => {
+  const profile = await Profile.findById(req.params.id).populate('images');
+  console.log('the profile is:');
+  console.log(profile);
+  res.json(profile.images);
+});
+
+router.post('/', auth, async (req, res) => {
+  try {
+    const uploadedResponse = await cloudinary.uploader.upload(
+      req.body.data.previewSource
+    );
+    const profile = await Profile.findOne({ user: req.user.id }).select(
+      '-password'
+    );
+    console.log('the profile ias:', profile);
+    const newImage = new Image({
+      user: req.user.id,
+      title: req.body.data.title,
+      alt: '',
+      secure_url: uploadedResponse.secure_url,
+      text: req.body.data.text,
+    });
+    await newImage.save();
+    console.log('the new image is:', newImage);
+    ///ACÁ ME QUEDÉ PEGADO
+    profile.images.unshift(newImage);
+    await profile.save();
+    res.json({ msg: 'The image was uploaded and added to your profile!' });
+  } catch (error) {
+    res.status(500).json({ err: 'Something went wrong uploading the image' });
+  }
 });
 
 // router.post(

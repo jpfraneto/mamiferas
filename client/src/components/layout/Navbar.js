@@ -10,15 +10,15 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to='/posts'>Testimonios</Link>
+        <Link to='/images'>Imagenes</Link>
       </li>
       <li>
-        <Link to='/resources'>Recursos</Link>
+        <Link to='/posts'>Escribir</Link>
       </li>
       <li>
-        <Link to='/dashboard'>
+        <Link to='/me'>
           <FontAwesomeIcon icon={faUser} />{' '}
-          <span className='hide-sm'>Mi Cuenta</span>
+          <span className='hide-sm'>Mi Perfil</span>
         </Link>
       </li>
       <li>

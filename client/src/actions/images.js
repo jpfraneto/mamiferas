@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setAlert } from './alert';
 import { UPLOAD_IMAGE, GET_IMAGES, POST_ERROR, GET_USER_IMAGES } from './types';
 
-export const getImages = () => async dispatch => {
+export const getAllImages = () => async dispatch => {
   try {
     const res = await axios.get('/api/images');
     dispatch({
@@ -34,7 +34,7 @@ export const uploadImage = imageData => async dispatch => {
       payload: res.data,
     });
 
-    dispatch(setAlert('Image Added to the DB', 'success'));
+    dispatch(setAlert(res.data.msg, 'success'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -43,9 +43,8 @@ export const uploadImage = imageData => async dispatch => {
   }
 };
 
-export const getProfileImages = () => async dispatch => {
+export const getProfileImages = id => async dispatch => {
   try {
-    const id = '60df19a114bdaf1263fa181d';
     const res = await axios.get(`/api/images/${id}`);
     console.log('the res is', res.data);
     dispatch({

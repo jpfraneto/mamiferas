@@ -4,13 +4,11 @@ import {
   CLEAR_PROFILE,
   UPDATE_PROFILE,
   GET_PROFILES,
-  GET_REPOS,
 } from '../actions/types';
 
 const initialState = {
   profile: null,
   profiles: [],
-  repos: [],
   loading: true,
   error: {},
 };
@@ -45,14 +43,6 @@ export default function profile(state = initialState, action) {
       return {
         ...state,
         profile: null,
-        repos: [],
-        loading: false,
-      };
-
-    case GET_REPOS:
-      return {
-        ...state,
-        repos: payload,
         loading: false,
       };
 

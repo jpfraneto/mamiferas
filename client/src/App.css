@@ -206,6 +206,12 @@ img {
   border: #ccc solid 1px;
 }
 
+.bg-comment {
+  background: rgb(245, 226, 226);
+  color: #333;
+  border: #ccc solid 1px;
+}
+
 .btn:hover {
   opacity: 0.8;
 }
@@ -593,4 +599,13 @@ button {
 .displayImageHello {
   width: 33%;
   margin: 8px auto;
+}
+
+.imagesDisplayDiv {
+  text-align: center;
+}
+
+.imagesDisplayDiv img {
+  width: 30%;
+  margin: 8px;
 }

@@ -5,14 +5,17 @@ const ImageSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
-  name: {
+  title: {
     type: String,
     required: true,
   },
   alt: {
     type: String,
   },
-  url: {
+  text: {
+    type: String,
+  },
+  secure_url: {
     type: String,
   },
   likes: [
