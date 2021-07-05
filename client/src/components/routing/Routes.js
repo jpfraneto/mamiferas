@@ -14,6 +14,7 @@ import Post from '../post/Post';
 import Login from '../auth/Login';
 import Alert from '../layout/Alert';
 import PrivateRoute from '../routing/PrivateRoute';
+import ProfileImages from '../profile/ProfileImages';
 import Images from '../images/ImagesDisplay';
 import AddImage from '../images/AddImage';
 import NotFound from '../layout/NotFound';
@@ -27,7 +28,9 @@ const Routes = () => {
         <Route exact path='/login' component={Login} />
         <Route exact path='/resources' component={Resources} />
         <Route exact path='/images' component={Images} />
+        <Route exact path='/profiles' component={Profiles} />
         <Route exact path='/profile/:id' component={Profile} />
+        <Route exact path='/profile/:id/images' component={ProfileImages} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/create-profile' component={CreateProfile} />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />

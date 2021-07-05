@@ -589,3 +589,8 @@ button {
   display: flex;
   margin: 8px;
 }
+
+.displayImageHello {
+  width: 33%;
+  margin: 8px auto;
+}

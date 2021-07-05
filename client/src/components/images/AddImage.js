@@ -29,7 +29,6 @@ const AddImage = ({ uploadImage }) => {
   const handleSubmitFile = e => {
     e.preventDefault();
     if (!previewSource) return;
-    const reader = new FileReader();
     uploadImage(previewSource);
   };
 

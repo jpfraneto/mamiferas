@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getImages } from '../../actions/images';
 import { connect } from 'react-redux';
+import { Image } from 'cloudinary-react';
 import PropTypes from 'prop-types';
 
 const ImagesDisplay = ({ image: { images, loading }, getImages }) => {
@@ -11,13 +12,22 @@ const ImagesDisplay = ({ image: { images, loading }, getImages }) => {
   return (
     <div>
       <h1>This is where all the images will be displayed!</h1>
-      <Link to='/images/new'>Add new image</Link>
-      {images.map((image, index) => (
-        <Fragment key={index}>
-          <img className='imageDisplay' src={image.url} alt={image.alt} />
-          <p>{image.title}</p>
-        </Fragment>
-      ))}
+      {images.length > 0 ? (
+        images.map((imageId, index) => (
+          <Image
+            key={index}
+            cloudName='the-open-source-factory'
+            publicId={imageId}
+            width='300'
+            className='displayImageHello'
+          />
+        ))
+      ) : (
+        <p>There are no images in the database :(</p>
+      )}
+      <Link to='/images/new' className='btn'>
+        Add new image
+      </Link>
     </div>
   );
 };
