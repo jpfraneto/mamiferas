@@ -6,26 +6,29 @@ import axios from 'axios';
 import { Image } from 'cloudinary-react';
 import { getProfileImages } from '../../actions/images';
 
-const ProfileImages = ({ getProfileImages, profile: { _id, images } }) => {
+const ProfileImages = ({ images, getProfileImages, profile: { _id } }) => {
   useEffect(() => {
     getProfileImages(_id);
-  }, []);
+  }, [getProfileImages]);
   return (
     <div>
       <h1>Profile Images!</h1>
+      <button
+        onClick={() => {
+          console.log(images);
+        }}
+      >
+        Log Images!
+      </button>
       <div className='imagesDisplayDiv'>
-        <Link to={'/images/1asdasdasdas'}>
-          {' '}
-          <img src='https://images.agoramedia.com/wte3.0/gcms/how-much-sleep-do-babies-need-alt-722x406.jpg?width=574' />
-        </Link>
-        <Link to={'/images/2asdasdasdasdsa'}>
-          {' '}
-          <img src='https://images.agoramedia.com/wte3.0/gcms/Seasonal-Allergies-in-Babies-and-Toddlers-article.jpg?width=185' />
-        </Link>
-        <Link to={'/images/3sadasdasdas'}>
-          {' '}
-          <img src='https://images.agoramedia.com/wte3.0/gcms/Sunscreen-for-Babies-What-Parents-Need-to-Know-article.jpg?width=185' />
-        </Link>
+        {images &&
+          images.map((image, index) => (
+            <Link to={`/images/${image.username}`}>
+              {' '}
+              <img key={image._id} alt={image.alt} src={image.secure_url} />
+            </Link>
+          ))}
+
         <Link to={'/images/new'}>
           <button>Add Image</button>
         </Link>
@@ -40,7 +43,7 @@ ProfileImages.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  images: state.images,
+  images: state.image.images,
 });
 
 export default connect(mapStateToProps, { getProfileImages })(ProfileImages);

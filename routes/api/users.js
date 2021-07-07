@@ -67,6 +67,10 @@ router.post(
       //Create profile
       const profileFields = {};
       profileFields.user = user._id;
+      profileFields.username = '';
+      profileFields.miracle = '';
+      profileFields.location = '';
+      profileFields.bio = '';
       profile = new Profile(profileFields);
       await profile.save();
 

@@ -1,10 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 
 const ProfileTop = ({
   profile: {
     status,
     company,
+    bio,
+    imageLink,
+    miracle,
     location,
     website,
     social,
@@ -13,12 +18,31 @@ const ProfileTop = ({
 }) => {
   return (
     <div className='profile-top bg-primary p-2'>
-      <img className='round-img my-1' src={avatar} alt='' />
+      <Link to='/profile-image-update'>
+        {imageLink ? (
+          <img className='round-img' src={imageLink} alt='' />
+        ) : (
+          <img
+            className='round-img'
+            src='https://howtoapps.com/wp-content/uploads/2020/01/b9ed581c-cute-profile-pic-8-600x400.jpg'
+            alt=''
+          />
+        )}
+      </Link>
       <h1 className='large'>{name}</h1>
-      <p className='lead'>
-        {status} {company && <span> at {company}</span>}
+      <p className='lead'>{bio}</p>
+      {miracle ? (
+        <p>
+          Mi bebé va a nacer alrededor del{' '}
+          <Moment format='DD/MM/YYYY'>{miracle}</Moment>
+        </p>
+      ) : (
+        <p>¿Cuándo va a nacer tu bebé? Edita tu perfil para contarnos</p>
+      )}
+
+      <p>
+        <strong>{location && <span>{location}</span>}</strong>
       </p>
-      <p>{location && <span>{location}</span>}</p>
       <div className='icons my-1'>
         {website ? (
           <a href={website} target='_blank' rel='noopener noreferrer'>

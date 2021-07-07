@@ -609,3 +609,8 @@ button {
   width: 30%;
   margin: 8px;
 }
+
+.profile-image-display {
+  width: 300px;
+  height: auto;
+}

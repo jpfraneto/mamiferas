@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { createProfile, getCurrentProfile } from '../../actions/profile';
+import { updateProfile, getCurrentProfile } from '../../actions/profile';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
@@ -14,13 +14,14 @@ import {
 
 const EditProfile = ({
   profile: { profile, loading },
-  createProfile,
+  updateProfile,
   getCurrentProfile,
   history,
 }) => {
   const [formData, setFormData] = useState({
-    company: '',
+    username: '',
     miracle: '',
+    imageLink: '',
     location: '',
     bio: '',
     youtube: '',
@@ -35,8 +36,10 @@ const EditProfile = ({
     getCurrentProfile();
 
     setFormData({
+      username: loading || !profile.username ? '' : profile.username,
       miracle: loading || !profile.miracle ? '' : profile.miracle,
       location: loading || !profile.location ? '' : profile.location,
+      imageLink: loading || !profile.imageLink ? '' : profile.imageLink,
       bio: loading || !profile.bio ? '' : profile.bio,
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       facebook: loading || !profile.social ? '' : profile.social.facebook,
@@ -45,14 +48,24 @@ const EditProfile = ({
     });
   }, [loading, getCurrentProfile]);
 
-  const { miracle, bio, youtube, facebook, twitter, instagram } = formData;
+  const {
+    username,
+    miracle,
+    bio,
+    imageLink,
+    location,
+    youtube,
+    facebook,
+    twitter,
+    instagram,
+  } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const onSubmit = e => {
     e.preventDefault();
-    createProfile(formData, history, true);
+    updateProfile(formData, history);
   };
 
   return (
@@ -66,13 +79,25 @@ const EditProfile = ({
         <div className='form-group'>
           <input
             type='text'
+            placeholder='Nombre de Usuario'
+            name='username'
+            value={username}
+            onChange={e => onChange(e)}
+          />
+          <small className='form-text'>
+            ¿Cuál va a ser tu nombre de usuario?
+          </small>
+        </div>
+        <div className='form-group'>
+          <input
+            type='date'
             placeholder='Fecha de Inicio de Embarazo'
             name='miracle'
             value={miracle}
             onChange={e => onChange(e)}
           />
           <small className='form-text'>
-            Fecha aproximada de cuando quedaste embarazada
+            Fecha aproximada de cuando va a nacer tu bebé
           </small>
         </div>
         <div className='form-group'>
@@ -167,13 +192,13 @@ const EditProfile = ({
 };
 
 EditProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired,
+  updateProfile: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({ profile: state.profile });
 
-export default connect(mapStateToProps, { createProfile, getCurrentProfile })(
+export default connect(mapStateToProps, { updateProfile, getCurrentProfile })(
   withRouter(EditProfile)
 );

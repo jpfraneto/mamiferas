@@ -21,11 +21,16 @@ router.get('/', async (req, res) => {
   res.json(publicIds);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/user/:id', async (req, res) => {
   const profile = await Profile.findById(req.params.id).populate('images');
-  console.log('the profile is:');
-  console.log(profile);
+  console.log('the profile with the images populated is:', profile);
   res.json(profile.images);
+});
+
+router.get('/:id', async (req, res) => {
+  const image = await Image.findById(req.params.id);
+  console.log('the found image is', image);
+  res.json(image);
 });
 
 router.post('/', auth, async (req, res) => {
@@ -36,21 +41,38 @@ router.post('/', auth, async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id }).select(
       '-password'
     );
-    console.log('the profile ias:', profile);
     const newImage = new Image({
-      user: req.user.id,
+      username: req.user.id,
       title: req.body.data.title,
       alt: '',
       secure_url: uploadedResponse.secure_url,
       text: req.body.data.text,
     });
     await newImage.save();
-    console.log('the new image is:', newImage);
-    ///ACÁ ME QUEDÉ PEGADO
     profile.images.unshift(newImage);
     await profile.save();
     res.json({ msg: 'The image was uploaded and added to your profile!' });
   } catch (error) {
+    console.log('ooops, there was an error');
+    res.status(500).json({ err: 'Something went wrong uploading the image' });
+  }
+});
+
+router.post('/update-profile-picture', auth, async (req, res) => {
+  try {
+    console.log('inside here, the req.body is:', req.body);
+    const uploadedResponse = await cloudinary.uploader.upload(
+      req.body.previewSource
+    );
+    const profile = await Profile.findOne({ user: req.user.id }).select(
+      '-password'
+    );
+    profile.imageLink = uploadedResponse.secure_url;
+    profile.save();
+    res.json({
+      msg: 'Tu foto de perfil fue actualizada!',
+    });
+  } catch (err) {
     res.status(500).json({ err: 'Something went wrong uploading the image' });
   }
 });

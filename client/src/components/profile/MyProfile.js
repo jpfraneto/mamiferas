@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
-import ProfileAbout from './ProfileAbout';
 import ProfileImages from './ProfileImages';
 import { getCurrentProfile } from '../../actions/profile';
 
@@ -23,7 +22,7 @@ const Profile = ({
       ) : (
         <Fragment>
           <Link to='/profiles' className='btn btn-light'>
-            Volver a papás
+            Volver a la tribu
           </Link>
           {auth.isAuthenticated && auth.loading === false && (
             <Link to='/images/new' className='btn btn-success'>

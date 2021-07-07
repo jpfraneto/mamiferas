@@ -5,7 +5,7 @@ const ProfileSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
-  website: {
+  username: {
     type: String,
   },
   miracle: {
@@ -14,17 +14,18 @@ const ProfileSchema = new mongoose.Schema({
   location: {
     type: String,
   },
-  images: [
-    {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'image',
-      },
-    },
-  ],
+  imageLink: {
+    type: String,
+  },
   bio: {
     type: String,
   },
+  images: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'image',
+    },
+  ],
   social: {
     youtube: {
       type: String,
