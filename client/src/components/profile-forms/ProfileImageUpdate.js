@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AddImage from '../images/AddImage';
 import { getCurrentProfile } from '../../actions/profile';
@@ -33,7 +34,7 @@ const ProfileImageUpdate = ({
   const handleSubmit = e => {
     e.preventDefault();
     if (!imageData.previewSource) return;
-    updateProfilePicture(history, imageData);
+    updateProfilePicture(history, imageData, profile.username);
   };
   return (
     <Fragment>
@@ -41,18 +42,6 @@ const ProfileImageUpdate = ({
         <Spinner />
       ) : (
         <Fragment>
-          {profile.imageLink ? (
-            <div>
-              <p>Foto de Perfil actual:</p>
-              <img
-                className='profile-image-display round-img my-1'
-                src={profile.imageLink}
-              />
-            </div>
-          ) : (
-            <p>Aún no tienes foto de perfil. Acá agrega una!</p>
-          )}
-
           <h4>Elegir una nueva foto de perfil</h4>
           <form onSubmit={handleSubmit}>
             <input
@@ -62,14 +51,20 @@ const ProfileImageUpdate = ({
             />
             <input className='form-input' type='submit' value='Submit!' />
           </form>
-          {imageData.previewSource && (
-            <img
-              src={imageData.previewSource}
-              className='profile-image-display round-img my-1'
-              alt='chosen'
-              style={{ height: '300px', width: 'auto' }}
-            />
-          )}
+          <img
+            src={
+              imageData.previewSource
+                ? imageData.previewSource
+                : profile.imageLink
+            }
+            className='profile-image-display round-img my-1'
+            alt='chosen'
+            style={{ height: '300px', width: 'auto' }}
+          />
+          <br />
+          <Link className='btn' to='/me'>
+            Volver a tu Perfil
+          </Link>
         </Fragment>
       )}
     </Fragment>

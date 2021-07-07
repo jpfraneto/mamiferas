@@ -12,13 +12,13 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
 
   return (
     <Fragment>
-      {loading ? (
+      {profiles === null || loading ? (
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className='large text-primary'>Madres gestantes</h1>
+          <h1 className='large text-primary'>Futuras Mamás</h1>
           <p className='lead'>
-            Conoce a otras mamás en transición y apoyense mutuamente en este
+            Conoce a otras que están en transición y apoyense mutuamente en este
             camino
           </p>
           <div className='profiles'>

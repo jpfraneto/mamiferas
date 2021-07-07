@@ -14,6 +14,7 @@ const { check, validationResult } = require('express-validator');
 
 router.get('/me', auth, async (req, res) => {
   try {
+    console.log('IN HERE!');
     const profile = await Profile.findOne({ user: req.user.id }).populate(
       'user',
       ['name', 'avatar']
@@ -23,7 +24,7 @@ router.get('/me', auth, async (req, res) => {
         .status(400)
         .json({ msg: 'There is no profile for this user ' });
     }
-
+    console.log('the profile for this user is: ', profile);
     res.json(profile);
   } catch (error) {
     console.error(error.message);
@@ -42,7 +43,6 @@ router.post('/', auth, async (req, res) => {
   }
 
   const {
-    username,
     miracle,
     location,
     bio,
@@ -56,7 +56,6 @@ router.post('/', auth, async (req, res) => {
   //Build profile objects
   const profileFields = {};
   profileFields.user = req.user.id;
-  if (username) profileFields.username = username;
   if (miracle) profileFields.miracle = miracle;
   if (location) profileFields.location = location;
   if (bio) profileFields.bio = bio;
@@ -108,10 +107,10 @@ router.get('/', async (req, res) => {
 // @desc    Get profile by user id
 // @access  Public
 
-router.get('/user/:user_id', async (req, res) => {
+router.get('/user/:username', async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.params.user_id,
+      username: req.params.username,
     }).populate('user', ['name', 'avatar']);
     if (!profile) return res.status(400).json({ msg: 'Profile not found' });
     res.json(profile);

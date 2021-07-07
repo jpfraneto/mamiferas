@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
@@ -15,6 +15,12 @@ const Profile = ({
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
+
+  if (profile) {
+    console.log('the profile is:', profile);
+    return <Redirect to={`/profile/${profile.username}`} />;
+  }
+
   return (
     <Fragment>
       {profile === null || loading ? (
@@ -24,11 +30,6 @@ const Profile = ({
           <Link to='/profiles' className='btn btn-light'>
             Volver a la tribu
           </Link>
-          {auth.isAuthenticated && auth.loading === false && (
-            <Link to='/images/new' className='btn btn-success'>
-              Agregar Imagen
-            </Link>
-          )}
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (

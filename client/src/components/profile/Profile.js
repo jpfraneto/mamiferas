@@ -5,17 +5,18 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
 import ProfileAbout from './ProfileAbout';
-import { getProfileById } from '../../actions/profile';
+import ProfileImages from './ProfileImages';
+import { getProfileByUsername } from '../../actions/profile';
 
 const Profile = ({
-  getProfileById,
+  getProfileByUsername,
   profile: { profile, loading },
   auth,
   match,
 }) => {
   useEffect(() => {
-    getProfileById(match.params.id);
-  }, [getProfileById, match.params.id]);
+    getProfileByUsername(match.params.username);
+  }, [getProfileByUsername, match.params.username]);
   return (
     <Fragment>
       {profile === null || loading ? (
@@ -36,6 +37,7 @@ const Profile = ({
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
           </div>
+          {profile.images && <ProfileImages profile={profile} />}
         </Fragment>
       )}
     </Fragment>
@@ -43,7 +45,7 @@ const Profile = ({
 };
 
 Profile.propTypes = {
-  getProfileById: PropTypes.func.isRequired,
+  getProfileByUsername: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
 };
@@ -53,4 +55,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getProfileById })(Profile);
+export default connect(mapStateToProps, { getProfileByUsername })(Profile);

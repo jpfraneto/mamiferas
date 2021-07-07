@@ -15,21 +15,23 @@ const initialState = {
 export default function image(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    //OJO CON ESTO; NO ESTÁ BIEN!
     case GET_IMAGE:
       return {
         ...state,
         image: payload,
+        loading: false,
       };
     case GET_IMAGES:
       return {
         ...state,
         images: payload,
+        loading: false,
       };
     case GET_USER_IMAGES:
       return {
         ...state,
         images: payload,
+        loading: false,
       };
     case UPLOAD_IMAGE:
       return {

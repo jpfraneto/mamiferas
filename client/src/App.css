@@ -601,16 +601,30 @@ button {
   margin: 8px auto;
 }
 
-.imagesDisplayDiv {
+.images-display-div {
   text-align: center;
 }
 
-.imagesDisplayDiv img {
+.images-display-div img {
   width: 30%;
-  margin: 8px;
+  margin: 1%;
 }
 
 .profile-image-display {
   width: 300px;
   height: auto;
+  margin: 8px;
+}
+
+.image-display {
+  background-color: cornsilk;
+  padding: 8px;
+  border-radius: 2%;
+  text-align: center;
+  margin: 0 auto;
+  width: 88%;
+}
+
+.image-display-individual {
+  width: 88%;
 }

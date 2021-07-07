@@ -38,7 +38,7 @@ export const getImage = id => async dispatch => {
   }
 };
 
-export const uploadImage = imageData => async dispatch => {
+export const uploadImage = (imageData, history) => async dispatch => {
   const body = JSON.stringify({ data: imageData });
 
   const config = {
@@ -55,6 +55,8 @@ export const uploadImage = imageData => async dispatch => {
     });
 
     dispatch(setAlert(res.data.msg, 'success'));
+
+    history.push('/me');
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -79,27 +81,28 @@ export const getProfileImages = id => async dispatch => {
   }
 };
 
-export const updateProfilePicture = (history, imageData) => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    console.log('inside here!!');
-    const res = await axios.post(
-      '/api/images/update-profile-picture',
-      imageData,
-      config
-    );
-    console.log('the response is: ', res);
-    dispatch(setAlert(res.data.msg, 'success'));
+export const updateProfilePicture =
+  (history, imageData, username) => async dispatch => {
+    console.log('the image data is', imageData);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const res = await axios.post(
+        '/api/images/update-profile-picture',
+        imageData,
+        config
+      );
+      console.log('the response is: ', res);
+      dispatch(setAlert(res.data.msg, 'success'));
 
-    history.push('/me');
-  } catch (err) {
-    dispatch({
-      type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
+      history.push(`/profile/${username}`);
+    } catch (err) {
+      dispatch({
+        type: POST_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
+    }
+  };

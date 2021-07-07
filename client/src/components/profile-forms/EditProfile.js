@@ -78,18 +78,6 @@ const EditProfile = ({
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <input
-            type='text'
-            placeholder='Nombre de Usuario'
-            name='username'
-            value={username}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            ¿Cuál va a ser tu nombre de usuario?
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
             type='date'
             placeholder='Fecha de Inicio de Embarazo'
             name='miracle'
@@ -183,7 +171,7 @@ const EditProfile = ({
         )}
 
         <input type='submit' className='btn btn-primary my-1' />
-        <Link className='btn btn-light my-1' to='/dashboard'>
+        <Link className='btn btn-light my-1' to='/me'>
           Atrás
         </Link>
       </form>

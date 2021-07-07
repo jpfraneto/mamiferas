@@ -14,7 +14,6 @@ const ProfileAbout = ({
         {' '}
         <h2 className='text-primary'>Biografía</h2>
         <p>{bio}</p>
-        <div className='line'></div>
       </Fragment>
     ) : (
       <p>No hay Biografía disponible</p>

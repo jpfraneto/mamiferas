@@ -6,15 +6,17 @@ const ProfileItem = ({
   profile: {
     user: { _id, name, avatar },
     location,
+    username,
+    imageLink,
   },
 }) => {
   return (
     <div className='profile bg-light'>
-      <img className='round-img' src={avatar} alt='' />
+      <img className='round-img' src={imageLink} alt='' />
       <div>
         <h2>{name}</h2>
         <p className='my-1'>{location && <span>{location}</span>}</p>
-        <Link to={`/profile/${_id}`} className='btn btn-primary'>
+        <Link to={`/profile/${username}`} className='btn btn-primary'>
           Ver Perfil
         </Link>
       </div>

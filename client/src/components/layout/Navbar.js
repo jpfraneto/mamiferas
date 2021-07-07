@@ -10,11 +10,14 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to='/images'>Imagenes</Link>
+        <Link to='/images'>Fotos</Link>
       </li>
       <li>
-        <Link to='/posts'>Escribir</Link>
+        <Link to='/profiles'>Perfiles</Link>
       </li>
+      {/* <li>
+        <Link to='/posts'>Escribir</Link>
+      </li> */}
       <li>
         <Link to='/me'>
           <FontAwesomeIcon icon={faUser} />{' '}
@@ -22,7 +25,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         </Link>
       </li>
       <li>
-        <Link onClick={logout} to='#!'>
+        <Link onClick={logout} to=''>
           <FontAwesomeIcon icon={faSignOutAlt} />{' '}
           <span className='hide-sm'>Cerrar Sesión</span>
         </Link>
@@ -33,10 +36,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const guestLinks = (
     <ul>
       <li>
-        <Link to='/posts'>Testimonios</Link>
-      </li>
-      <li>
-        <Link to='/resources'>Recursos</Link>
+        <Link to='/images'>Fotos</Link>
       </li>
       <li>
         <Link to='/register'>Registrarse</Link>

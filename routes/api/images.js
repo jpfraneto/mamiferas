@@ -12,18 +12,12 @@ const Profile = require('../../models/Profile');
 // @access  Private
 
 router.get('/', async (req, res) => {
-  const { resources } = await cloudinary.search
-    .expression('resource_type:image')
-    .sort_by('public_id', 'desc')
-    .execute();
-  const publicIds = resources.map(file => file.public_id);
-  console.log('The public ids are:');
-  res.json(publicIds);
+  const data = await Image.find({});
+  res.json({ data });
 });
 
 router.get('/user/:id', async (req, res) => {
   const profile = await Profile.findById(req.params.id).populate('images');
-  console.log('the profile with the images populated is:', profile);
   res.json(profile.images);
 });
 
@@ -36,13 +30,16 @@ router.get('/:id', async (req, res) => {
 router.post('/', auth, async (req, res) => {
   try {
     const uploadedResponse = await cloudinary.uploader.upload(
-      req.body.data.previewSource
+      req.body.data.previewSource,
+      {
+        upload_preset: 'mamiferas_media',
+      }
     );
     const profile = await Profile.findOne({ user: req.user.id }).select(
       '-password'
     );
     const newImage = new Image({
-      username: req.user.id,
+      username: profile.username,
       title: req.body.data.title,
       alt: '',
       secure_url: uploadedResponse.secure_url,
@@ -60,9 +57,11 @@ router.post('/', auth, async (req, res) => {
 
 router.post('/update-profile-picture', auth, async (req, res) => {
   try {
-    console.log('inside here, the req.body is:', req.body);
     const uploadedResponse = await cloudinary.uploader.upload(
-      req.body.previewSource
+      req.body.previewSource,
+      {
+        upload_preset: 'mamiferas_pp',
+      }
     );
     const profile = await Profile.findOne({ user: req.user.id }).select(
       '-password'

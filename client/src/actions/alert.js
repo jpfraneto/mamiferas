@@ -6,7 +6,7 @@ import { SET_ALERT, REMOVE_ALERT } from './types';
 
 //This is an action called setAlert
 export const setAlert =
-  (msg, alertType, timeout = 5000) =>
+  (msg, alertType, timeout = 2222) =>
   dispatch => {
     const id = uuid();
     dispatch({

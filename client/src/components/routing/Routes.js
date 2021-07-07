@@ -31,7 +31,7 @@ const Routes = () => {
         <PrivateRoute exact path='/images/new' component={AddImage} />
         <Route exact path='/images/:id' component={ImageDisplay} />
         <Route exact path='/profiles' component={Profiles} />
-        <Route exact path='/profile/:id' component={Profile} />
+        <Route exact path='/profile/:username' component={Profile} />
         <Route exact path='/profile/:id/images' component={ProfileImages} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/me' component={MyProfile} />

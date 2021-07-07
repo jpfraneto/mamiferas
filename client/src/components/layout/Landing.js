@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const Landing = ({ isAuthenticated }) => {
-  if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
-  }
-
   return (
     <section className='landing'>
       <div className='dark-overlay'>
@@ -16,14 +12,22 @@ const Landing = ({ isAuthenticated }) => {
           <p className='lead'>
             Recordando lo que se ha olvidado / Honrando el ser madre.
           </p>
-          <div className='buttons'>
-            <Link to='/register' className='btn btn-primary'>
-              Registrarse
-            </Link>
-            <Link to='/login' className='btn btn-light'>
-              Iniciar Sesión
-            </Link>
-          </div>
+          {!isAuthenticated ? (
+            <div className='buttons'>
+              <Link to='/register' className='btn btn-primary'>
+                Registrarse
+              </Link>
+              <Link to='/login' className='btn btn-light'>
+                Iniciar Sesión
+              </Link>
+            </div>
+          ) : (
+            <div className='buttons'>
+              <Link to='/images' className='btn btn-light'>
+                Historias Gráficas
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </section>
