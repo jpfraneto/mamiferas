@@ -5,6 +5,7 @@ import {
   GET_IMAGE,
   GET_IMAGES,
   POST_ERROR,
+  CLEAR_IMAGE,
   GET_USER_IMAGES,
 } from './types';
 
@@ -25,6 +26,7 @@ export const getAllImages = () => async dispatch => {
 
 export const getImage = id => async dispatch => {
   try {
+    dispatch({ type: CLEAR_IMAGE });
     const res = await axios.get(`/api/images/${id}`);
     dispatch({
       type: GET_IMAGE,
@@ -68,7 +70,6 @@ export const uploadImage = (imageData, history) => async dispatch => {
 export const getProfileImages = id => async dispatch => {
   try {
     const res = await axios.get(`/api/images/user/${id}`);
-    console.log('the res is', res.data);
     dispatch({
       type: GET_USER_IMAGES,
       payload: res.data,
@@ -83,7 +84,6 @@ export const getProfileImages = id => async dispatch => {
 
 export const updateProfilePicture =
   (history, imageData, username) => async dispatch => {
-    console.log('the image data is', imageData);
     try {
       const config = {
         headers: {
@@ -95,7 +95,6 @@ export const updateProfilePicture =
         imageData,
         config
       );
-      console.log('the response is: ', res);
       dispatch(setAlert(res.data.msg, 'success'));
 
       history.push(`/profile/${username}`);

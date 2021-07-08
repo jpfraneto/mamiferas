@@ -21,11 +21,13 @@ router.post(
 
     try {
       const user = await User.findById(req.user.id).select('-password');
+      const profile = await Profile.findOne({ user: req.user.id });
 
       const newPost = new Post({
         text: req.body.text,
         name: user.name,
-        avatar: user.avatar,
+        avatar: profile.imageLink,
+        username: profile.username,
         user: req.user.id,
       });
 
@@ -176,11 +178,14 @@ router.post(
     try {
       const user = await User.findById(req.user.id).select('-password');
       const post = await Post.findById(req.params.id);
+      const profile = await Profile.findOne({ user: req.user.id });
 
       const newComment = {
         text: req.body.text,
         name: user.name,
         avatar: user.avatar,
+        avatar: profile.imageLink,
+        username: profile.username,
         user: req.user.id,
       };
 

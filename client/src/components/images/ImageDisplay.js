@@ -1,13 +1,16 @@
 import React, { Fragment, useEffect } from 'react';
 import { Image } from 'cloudinary-react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { getImage } from '../../actions/images';
 import { connect } from 'react-redux';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const ImageDisplay = ({ match, getImage, image }) => {
+  let history = useHistory();
   useEffect(() => {
     getImage(match.params.id);
   }, [getImage]);
@@ -33,13 +36,18 @@ const ImageDisplay = ({ match, getImage, image }) => {
                 - <Moment format='DD/MM/YYYY'>{image.date}</Moment>
               </p>
               <h1>{image.title}</h1>
-              <p>{image.text}</p>
+              <ReactMarkdown
+                remarkPlugins={[gfm]}
+                children={'string'}
+                className='imageText'
+              >
+                {image.text}
+              </ReactMarkdown>
             </div>
           )}
-          <br />
-          <Link className='btn btn-success' to={'/images'}>
-            Volver a Historias
-          </Link>
+          <button className='btn btn-success' onClick={() => history.goBack()}>
+            Volver
+          </button>
         </div>
       )}
     </Fragment>

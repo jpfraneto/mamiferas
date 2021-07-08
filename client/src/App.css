@@ -27,10 +27,6 @@ a {
   text-decoration: none;
 }
 
-ul {
-  list-style: none;
-}
-
 img {
   width: 100%;
 }
@@ -321,6 +317,7 @@ button {
 
 .navbar ul {
   display: flex;
+  list-style-type: none;
 }
 
 .navbar a {
@@ -501,6 +498,51 @@ button {
   margin: 0;
 }
 
+.imageDisplay {
+  width: 150px;
+  height: auto;
+  display: flex;
+  margin: 8px;
+}
+
+.displayImageHello {
+  width: 33%;
+  margin: 8px auto;
+}
+
+.images-display-div {
+  text-align: center;
+}
+
+.images-display-div img {
+  width: 30%;
+  margin: 1%;
+}
+
+.profile-image-display {
+  width: 300px;
+  height: auto;
+  margin: 8px;
+}
+
+.image-display {
+  background-color: cornsilk;
+  padding: 8px;
+  border-radius: 2%;
+  text-align: center;
+  margin: 0 auto;
+  width: 88%;
+}
+
+.image-display-individual {
+  width: 88%;
+}
+
+.imageText {
+  margin: 0 auto;
+  width: 66%;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
@@ -587,44 +629,7 @@ button {
   .post button {
     padding: 0.3rem 0.4rem;
   }
-}
-
-.imageDisplay {
-  width: 150px;
-  height: auto;
-  display: flex;
-  margin: 8px;
-}
-
-.displayImageHello {
-  width: 33%;
-  margin: 8px auto;
-}
-
-.images-display-div {
-  text-align: center;
-}
-
-.images-display-div img {
-  width: 30%;
-  margin: 1%;
-}
-
-.profile-image-display {
-  width: 300px;
-  height: auto;
-  margin: 8px;
-}
-
-.image-display {
-  background-color: cornsilk;
-  padding: 8px;
-  border-radius: 2%;
-  text-align: center;
-  margin: 0 auto;
-  width: 88%;
-}
-
-.image-display-individual {
-  width: 88%;
+  .imageText {
+    width: 88%;
+  }
 }

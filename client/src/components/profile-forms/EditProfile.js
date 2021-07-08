@@ -79,7 +79,6 @@ const EditProfile = ({
         <div className='form-group'>
           <input
             type='date'
-            placeholder='Fecha de Inicio de Embarazo'
             name='miracle'
             value={miracle}
             onChange={e => onChange(e)}

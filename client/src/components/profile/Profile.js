@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ProfileTop from './ProfileTop';
@@ -14,6 +14,7 @@ const Profile = ({
   auth,
   match,
 }) => {
+  let history = useHistory();
   useEffect(() => {
     getProfileByUsername(match.params.username);
   }, [getProfileByUsername, match.params.username]);
@@ -23,9 +24,9 @@ const Profile = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to='/profiles' className='btn btn-light'>
-            Volver a la tribu
-          </Link>
+          <button onClick={() => history.goBack()} className='btn btn-light'>
+            Volver
+          </button>
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (

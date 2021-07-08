@@ -24,7 +24,9 @@ const ProfileTop = ({
       {miracle ? (
         <p>
           Mi bebé va a nacer alrededor del{' '}
-          <Moment format='DD/MM/YYYY'>{miracle}</Moment>
+          <Moment format='DD/MM/YYYY' add={{ hours: 8 }}>
+            {miracle}
+          </Moment>
         </p>
       ) : (
         <p>Todavía no sabemos cuándo va a nacer tu bebé!</p>

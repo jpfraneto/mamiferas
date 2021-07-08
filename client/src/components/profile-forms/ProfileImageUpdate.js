@@ -49,22 +49,26 @@ const ProfileImageUpdate = ({
               name='profile-image'
               onChange={handleFileInputChange}
             />
-            <input className='form-input' type='submit' value='Submit!' />
+            <img
+              src={
+                imageData.previewSource
+                  ? imageData.previewSource
+                  : profile.imageLink
+              }
+              className='profile-image-display round-img my-1'
+              alt='chosen'
+              style={{ height: '300px', width: 'auto' }}
+            />
+            <br />
+            <input
+              className='form-input btn btn-success'
+              type='submit'
+              value='Actualizar foto de perfil'
+            />
+            <Link className='btn' to='/me'>
+              Volver a tu Perfil
+            </Link>
           </form>
-          <img
-            src={
-              imageData.previewSource
-                ? imageData.previewSource
-                : profile.imageLink
-            }
-            className='profile-image-display round-img my-1'
-            alt='chosen'
-            style={{ height: '300px', width: 'auto' }}
-          />
-          <br />
-          <Link className='btn' to='/me'>
-            Volver a tu Perfil
-          </Link>
         </Fragment>
       )}
     </Fragment>

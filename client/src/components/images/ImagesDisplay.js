@@ -15,10 +15,9 @@ const ImagesDisplay = ({ image: { images, loading }, getAllImages }) => {
       {images === null || loading ? (
         <Spinner />
       ) : (
-        <div>
-          <h1>
-            Estas son todas las historias que se han compartido en este lugar
-          </h1>
+        <div style={{ textAlign: 'center' }}>
+          <h1>Fotos</h1>
+          <p>Conecta con el proceso de otras mamás y sus vivencias</p>
           {images.data && images.data.length > 0 ? (
             images.data.map((image, index) => (
               <Link key={index} to={`/images/${image._id}`}>

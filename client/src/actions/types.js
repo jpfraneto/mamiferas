@@ -27,3 +27,4 @@ export const GET_IMAGES = 'GET_IMAGES';
 export const GET_IMAGE = 'GET_IMAGE';
 export const GET_USER_IMAGES = 'GET_USER_IMAGES';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+export const CLEAR_IMAGE = 'CLEAR_IMAGE';

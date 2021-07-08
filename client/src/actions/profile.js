@@ -48,7 +48,24 @@ export const getProfiles = () => async dispatch => {
 //Get Profile By ID
 export const getProfileByUsername = username => async dispatch => {
   try {
-    const res = await axios.get(`/api/profile/user/${username}`);
+    const res = await axios.get(`/api/profile/${username}`);
+
+    dispatch({
+      type: GET_PROFILE,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+//Get Profile By ID
+export const getProfileById = id => async dispatch => {
+  try {
+    const res = await axios.get(`/api/profile/user/${id}`);
 
     dispatch({
       type: GET_PROFILE,
@@ -74,6 +91,10 @@ export const updateProfile = (formData, history) => async dispatch => {
     dispatch({
       type: UPDATE_PROFILE,
       payload: res.data,
+    });
+
+    dispatch({
+      type: CLEAR_PROFILE,
     });
 
     dispatch(setAlert('Profile Updated', 'success'));

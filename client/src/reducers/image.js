@@ -2,6 +2,7 @@ import {
   UPLOAD_IMAGE,
   GET_IMAGE,
   GET_IMAGES,
+  CLEAR_IMAGE,
   GET_USER_IMAGES,
 } from '../actions/types';
 
@@ -15,6 +16,12 @@ const initialState = {
 export default function image(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
+    case CLEAR_IMAGE:
+      return {
+        ...state,
+        image: null,
+        loading: false,
+      };
     case GET_IMAGE:
       return {
         ...state,

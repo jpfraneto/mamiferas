@@ -29,18 +29,15 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', auth, async (req, res) => {
   try {
-    console.log('inside here, with the req body that is: ', req.body);
     const uploadedResponse = await cloudinary.uploader.upload(
       req.body.data.previewSource,
       {
         upload_preset: 'mamiferas_media',
       }
     );
-    console.log('The uploaded response is: ', uploadedResponse);
     const profile = await Profile.findOne({ user: req.user.id }).select(
       '-password'
     );
-    console.log('the profile is: ', profile);
     const newImage = new Image({
       username: profile.username,
       title: req.body.data.title,
@@ -48,11 +45,10 @@ router.post('/', auth, async (req, res) => {
       secure_url: uploadedResponse.secure_url,
       text: req.body.data.text,
     });
-    console.log('the new image is: ', newImage);
     await newImage.save();
     profile.images.unshift(newImage);
     await profile.save();
-    res.json({ msg: 'The image was uploaded and added to your profile!' });
+    res.json({ msg: 'La imagen fue agregada a tu perfil!' });
   } catch (error) {
     console.log('ooops, there was an error');
     res.status(500).json({ err: 'Something went wrong uploading the image' });
