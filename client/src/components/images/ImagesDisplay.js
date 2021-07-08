@@ -30,7 +30,7 @@ const ImagesDisplay = ({ image: { images, loading }, getAllImages }) => {
           )}
           <br />
           <Link to='/images/new' className='btn'>
-            Agregar nueva imagen
+            Agregar Nueva
           </Link>
         </div>
       )}

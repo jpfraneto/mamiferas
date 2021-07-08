@@ -38,7 +38,7 @@ const ImageDisplay = ({ match, getImage, image }) => {
           )}
           <br />
           <Link className='btn btn-success' to={'/images'}>
-            Back to Images
+            Volver a Historias
           </Link>
         </div>
       )}
