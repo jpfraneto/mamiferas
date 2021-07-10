@@ -3,17 +3,17 @@ import { setAlert } from './alert';
 import {
   UPLOAD_IMAGE,
   GET_IMAGE,
-  GET_IMAGES,
+  GET_GLOBAL_IMAGES,
   POST_ERROR,
   CLEAR_IMAGE,
-  GET_USER_IMAGES,
+  GET_PROFILE_IMAGES,
 } from './types';
 
 export const getAllImages = () => async dispatch => {
   try {
     const res = await axios.get('/api/images');
     dispatch({
-      type: GET_IMAGES,
+      type: GET_GLOBAL_IMAGES,
       payload: res.data,
     });
   } catch (err) {
@@ -22,6 +22,10 @@ export const getAllImages = () => async dispatch => {
       payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
+};
+
+export const clearImage = () => dispatch => {
+  dispatch({ type: CLEAR_IMAGE });
 };
 
 export const getImage = id => async dispatch => {
@@ -40,7 +44,7 @@ export const getImage = id => async dispatch => {
   }
 };
 
-export const uploadImage = (imageData, history) => async dispatch => {
+export const uploadImage = (imageData, history, username) => async dispatch => {
   const body = JSON.stringify({ data: imageData });
 
   const config = {
@@ -58,7 +62,7 @@ export const uploadImage = (imageData, history) => async dispatch => {
 
     dispatch(setAlert(res.data.msg, 'success'));
 
-    history.push('/me');
+    history.push(`/profile/${username}`);
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -71,7 +75,7 @@ export const getProfileImages = id => async dispatch => {
   try {
     const res = await axios.get(`/api/images/user/${id}`);
     dispatch({
-      type: GET_USER_IMAGES,
+      type: GET_PROFILE_IMAGES,
       payload: res.data,
     });
   } catch (err) {

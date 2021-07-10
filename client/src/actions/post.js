@@ -143,7 +143,7 @@ export const addComment = (postId, formData) => async dispatch => {
       payload: res.data,
     });
 
-    dispatch(setAlert('Se agregó un comentario', 'success'));
+    dispatch(setAlert('Se agregó tu comentario', 'success'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -162,7 +162,7 @@ export const deleteComment = (postId, commentId) => async dispatch => {
       payload: commentId,
     });
 
-    dispatch(setAlert('Se eliminó el comentario', 'success'));
+    dispatch(setAlert('Se eliminó tu comentario', 'success'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,

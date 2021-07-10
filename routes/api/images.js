@@ -7,25 +7,52 @@ const User = require('../../models/User');
 const Image = require('../../models/Image');
 const Profile = require('../../models/Profile');
 
-// @route   POST api/images
-// @desc    Create a post
+// @route   GET api/images
+// @desc    Get all images
 // @access  Private
 
 router.get('/', async (req, res) => {
-  const data = await Image.find({});
-  res.json({ data });
+  try {
+    const data = await Image.find({});
+    res.json({ data });
+  } catch (err) {
+    res.status(500).json({ err: 'Something went wrong getting the images' });
+  }
 });
 
-router.get('/user/:id', async (req, res) => {
-  const profile = await Profile.findById(req.params.id).populate('images');
-  res.json(profile.images);
+// @route   GET api/images/user/:id
+// @desc    Get user images
+// @access  Private
+
+router.get('/user/:id', auth, async (req, res) => {
+  try {
+    const profile = await Profile.findById(req.params.id).populate('images');
+    res.json(profile.images);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ err: 'Something went wrong getting the images for this user' });
+  }
 });
+
+// @route   GET api/images/:id
+// @desc    Get image information
+// @access  Private
 
 router.get('/:id', async (req, res) => {
-  const image = await Image.findById(req.params.id);
-  console.log('the found image is', image);
-  res.json(image);
+  try {
+    const image = await Image.findById(req.params.id);
+    res.json(image);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ err: 'Something went wrong getting the image by id' });
+  }
 });
+
+// @route   POST api/images
+// @desc    Upload image and add it to the profile of the user that is logged in
+// @access  Private
 
 router.post('/', auth, async (req, res) => {
   try {
@@ -55,6 +82,10 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+// @route   POST api/images/update-profile-picture
+// @desc    Upload the profile picture of the logged in user
+// @access  Private
+
 router.post('/update-profile-picture', auth, async (req, res) => {
   try {
     const uploadedResponse = await cloudinary.uploader.upload(
@@ -75,34 +106,5 @@ router.post('/update-profile-picture', auth, async (req, res) => {
     res.status(500).json({ err: 'Something went wrong uploading the image' });
   }
 });
-
-// router.post(
-//   '/',
-//   [auth, [check('text', 'Text is required').not().isEmpty()]],
-//   async (req, res) => {
-//     const errors = validationResult(req);
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ errors: errors.array() });
-//     }
-
-//     try {
-//       const user = await User.findById(req.user.id).select('-password');
-
-//       const newPost = new Post({
-//         text: req.body.text,
-//         name: user.name,
-//         avatar: user.avatar,
-//         user: req.user.id,
-//       });
-
-//       const post = await newPost.save();
-
-//       res.json(post);
-//     } catch (err) {
-//       console.error(err.message);
-//       res.status(500).send('Server error!');
-//     }
-//   }
-// );
 
 module.exports = router;

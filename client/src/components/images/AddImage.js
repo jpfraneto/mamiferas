@@ -54,7 +54,7 @@ const AddImage = ({
       );
     }
     setImageData({ ...imageData, uploading: true });
-    uploadImage(imageData, history);
+    uploadImage(imageData, history, profile.username);
   };
 
   const onChange = e =>

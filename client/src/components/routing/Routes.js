@@ -31,7 +31,7 @@ const Routes = () => {
         <PrivateRoute exact path='/images/new' component={AddImage} />
         <Route exact path='/images/:id' component={ImageDisplay} />
         <Route exact path='/profiles' component={Profiles} />
-        <Route exact path='/profile/:username' component={Profile} />
+        <PrivateRoute exact path='/profile/:username' component={Profile} />
         <Route exact path='/profile/:id/images' component={ProfileImages} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />
         <PrivateRoute exact path='/me' component={MyProfile} />
@@ -41,7 +41,7 @@ const Routes = () => {
           component={ProfileImageUpdate}
         />
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />
-        <Route exact path='/posts' component={Posts} />
+        <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
 
         <Route component={NotFound} />

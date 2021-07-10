@@ -6,26 +6,31 @@ import Spinner from '../layout/Spinner';
 import { Image } from 'cloudinary-react';
 import PropTypes from 'prop-types';
 
-const ImagesDisplay = ({ image: { images, loading }, getAllImages }) => {
+const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
   useEffect(() => {
     getAllImages();
   }, [getAllImages]);
   return (
     <Fragment>
-      {images === null || loading ? (
+      {globalImages === null || loading ? (
         <Spinner />
       ) : (
         <div style={{ textAlign: 'center' }}>
           <h1>Fotos</h1>
-          <p>Conecta con el proceso de otras mamás y sus vivencias</p>
-          {images.data && images.data.length > 0 ? (
-            images.data.map((image, index) => (
-              <Link key={index} to={`/images/${image._id}`}>
-                <img className='profile-image-display' src={image.secure_url} />
-              </Link>
-            ))
+          {globalImages && globalImages.data && globalImages.data.length > 0 ? (
+            <Fragment>
+              <p>Conecta con el proceso de otras mamás y sus vivencias</p>
+              {globalImages.data.map((image, index) => (
+                <Link key={index} to={`/images/${image._id}`}>
+                  <img
+                    className='profile-image-display'
+                    src={image.secure_url}
+                  />
+                </Link>
+              ))}
+            </Fragment>
           ) : (
-            <p>No hay fotos :(</p>
+            <p>Aún no hay fotos :(</p>
           )}
           <br />
           <Link to='/images/new' className='btn'>

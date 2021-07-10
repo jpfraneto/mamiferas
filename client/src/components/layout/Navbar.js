@@ -6,7 +6,7 @@ import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <ul>
       <li>
@@ -22,7 +22,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
         <Link to='/posts'>Escribir</Link>
       </li> */}
       <li>
-        <Link to='/me'>
+        <Link to={isAuthenticated ? `/profile/${user.username}` : '/'}>
           <FontAwesomeIcon icon={faUser} />{' '}
           <span className='hide-sm'>Mi Perfil</span>
         </Link>

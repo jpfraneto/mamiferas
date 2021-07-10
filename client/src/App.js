@@ -9,6 +9,7 @@ import { LOGOUT } from './actions/types';
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
+import { clearImage } from './actions/images';
 import setAuthToken from './utils/setAuthToken';
 
 import './App.css';
@@ -24,6 +25,7 @@ const App = () => {
       setAuthToken(localStorage.token);
     }
     store.dispatch(loadUser());
+    clearImage();
 
     // log user out from all tabs if they log out in one tab
     window.addEventListener('storage', () => {

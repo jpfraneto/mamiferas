@@ -16,9 +16,8 @@ const Profile = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  if (profile) {
-    console.log('the profile is:', profile);
-    return <Redirect to={`/profile/${profile.username}`} />;
+  if (auth.user) {
+    return <Redirect to={`/profile/${auth.user.username}`} />;
   }
 
   return (

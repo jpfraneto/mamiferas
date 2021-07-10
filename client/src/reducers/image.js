@@ -1,13 +1,15 @@
 import {
   UPLOAD_IMAGE,
   GET_IMAGE,
-  GET_IMAGES,
+  GET_GLOBAL_IMAGES,
   CLEAR_IMAGE,
-  GET_USER_IMAGES,
+  GET_PROFILE_IMAGES,
+  CLEAR_PROFILE_IMAGES,
 } from '../actions/types';
 
 const initialState = {
-  images: [],
+  userImages: [],
+  globalImages: [],
   image: null,
   loading: true,
   error: {},
@@ -20,7 +22,13 @@ export default function image(state = initialState, action) {
       return {
         ...state,
         image: null,
-        loading: false,
+        loading: true,
+      };
+    case CLEAR_PROFILE_IMAGES:
+      return {
+        ...state,
+        userImages: [],
+        loading: true,
       };
     case GET_IMAGE:
       return {
@@ -28,16 +36,19 @@ export default function image(state = initialState, action) {
         image: payload,
         loading: false,
       };
-    case GET_IMAGES:
+    case GET_GLOBAL_IMAGES:
       return {
         ...state,
-        images: payload,
+        globalImages: payload,
         loading: false,
       };
-    case GET_USER_IMAGES:
+    case GET_PROFILE_IMAGES:
+      // **** T O D O ****
+      // Check if the images of the user have already been loaded in globalImages and then add
+      // them to userImages
       return {
         ...state,
-        images: payload,
+        userImages: payload,
         loading: false,
       };
     case UPLOAD_IMAGE:

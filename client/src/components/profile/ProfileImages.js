@@ -9,6 +9,7 @@ import { getProfileImages } from '../../actions/images';
 const ProfileImages = ({
   images,
   getProfileImages,
+  loggedInUsername,
   profile: { username, _id },
 }) => {
   useEffect(() => {
@@ -17,7 +18,7 @@ const ProfileImages = ({
   return (
     <div>
       <div className='images-display-div'>
-        {images.length > 0 ? (
+        {images && images.length > 0 ? (
           <Fragment>
             <h1>
               Fotos compartidas por <strong>{username}</strong>
@@ -33,9 +34,11 @@ const ProfileImages = ({
           <h1>{username} todavía no comparte ninguna foto.</h1>
         )}
         <br />
-        <Link to={'/images/new'}>
-          <button className='btn btn-success'>Agregar Foto</button>
-        </Link>
+        {loggedInUsername === username && (
+          <Link to={'/images/new'}>
+            <button className='btn btn-success'>Agregar Foto</button>
+          </Link>
+        )}
       </div>
     </div>
   );
@@ -43,11 +46,13 @@ const ProfileImages = ({
 
 ProfileImages.propTypes = {
   getProfileImages: PropTypes.func.isRequired,
-  images: PropTypes.array.isRequired,
+  loggedInUsername: PropTypes.string.isRequired,
+  images: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
-  images: state.image.images,
+  images: state.image.userImages,
+  loggedInUsername: state.auth.user.username,
 });
 
 export default connect(mapStateToProps, { getProfileImages })(ProfileImages);

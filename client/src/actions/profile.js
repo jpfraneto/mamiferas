@@ -6,6 +6,7 @@ import {
   GET_PROFILE,
   GET_PROFILES,
   PROFILE_ERROR,
+  CLEAR_PROFILE_IMAGES,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
 } from './types';
@@ -13,8 +14,10 @@ import {
 // Get the currents users profile
 export const getCurrentProfile = () => async dispatch => {
   try {
+    dispatch({ type: CLEAR_PROFILE });
+    dispatch({ type: CLEAR_PROFILE_IMAGES });
+
     const res = await axios.get('/api/profile/me');
-    console.log('inside the action! and the response is', res.data);
     dispatch({
       type: GET_PROFILE,
       payload: res.data,
@@ -30,6 +33,8 @@ export const getCurrentProfile = () => async dispatch => {
 //Get all profiles
 export const getProfiles = () => async dispatch => {
   dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: CLEAR_PROFILE_IMAGES });
+
   try {
     const res = await axios.get('/api/profile');
 
@@ -96,6 +101,9 @@ export const updateProfile = (formData, history) => async dispatch => {
     dispatch({
       type: CLEAR_PROFILE,
     });
+    console.log('inside the profile update route');
+    console.log('form data: ', formData);
+    console.log('the res.data is: ', res.data);
 
     dispatch(setAlert('Profile Updated', 'success'));
 
