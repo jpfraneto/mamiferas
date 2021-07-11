@@ -39,7 +39,7 @@ export default function image(state = initialState, action) {
     case GET_GLOBAL_IMAGES:
       return {
         ...state,
-        globalImages: payload,
+        globalImages: [...state.globalImages, ...payload],
         loading: false,
       };
     case GET_PROFILE_IMAGES:

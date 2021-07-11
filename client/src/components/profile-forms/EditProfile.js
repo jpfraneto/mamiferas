@@ -65,7 +65,7 @@ const EditProfile = ({
 
   const onSubmit = e => {
     e.preventDefault();
-    updateProfile(formData, history);
+    updateProfile(formData, history, username);
   };
 
   return (

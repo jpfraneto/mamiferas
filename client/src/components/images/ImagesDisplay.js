@@ -8,19 +8,19 @@ import PropTypes from 'prop-types';
 
 const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
   useEffect(() => {
-    getAllImages();
+    getAllImages(globalImages);
   }, [getAllImages]);
   return (
     <Fragment>
-      {globalImages === null || loading ? (
+      {globalImages.length === 0 || loading ? (
         <Spinner />
       ) : (
         <div style={{ textAlign: 'center' }}>
           <h1>Fotos</h1>
-          {globalImages && globalImages.data && globalImages.data.length > 0 ? (
+          {globalImages.length > 0 ? (
             <Fragment>
               <p>Conecta con el proceso de otras mamás y sus vivencias</p>
-              {globalImages.data.map((image, index) => (
+              {globalImages.map((image, index) => (
                 <Link key={index} to={`/images/${image._id}`}>
                   <img
                     className='profile-image-display'

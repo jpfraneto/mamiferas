@@ -9,10 +9,10 @@ import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
-const ImageDisplay = ({ match, getImage, image }) => {
+const ImageDisplay = ({ image: { image, globalImages }, match, getImage }) => {
   let history = useHistory();
   useEffect(() => {
-    getImage(match.params.id);
+    getImage(globalImages, match.params.id);
   }, [getImage]);
   return (
     <Fragment>
@@ -57,7 +57,7 @@ const ImageDisplay = ({ match, getImage, image }) => {
 ImageDisplay.propTypes = { getImage: PropTypes.func.isRequired };
 
 const mapStateToProps = state => ({
-  image: state.image.image,
+  image: state.image,
 });
 
 export default connect(mapStateToProps, { getImage })(ImageDisplay);

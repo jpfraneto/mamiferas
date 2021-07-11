@@ -13,8 +13,8 @@ const Profile = require('../../models/Profile');
 
 router.get('/', async (req, res) => {
   try {
-    const data = await Image.find({});
-    res.json({ data });
+    const globalImages = await Image.find({});
+    res.json({ globalImages });
   } catch (err) {
     res.status(500).json({ err: 'Something went wrong getting the images' });
   }

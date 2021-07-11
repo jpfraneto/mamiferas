@@ -26,6 +26,9 @@ const Landing = ({ isAuthenticated }) => {
               <Link to='/images' className='btn btn-light'>
                 Historias Gráficas
               </Link>
+              <Link to='/posts' className='btn btn-dark'>
+                Testimonios
+              </Link>
             </div>
           )}
         </div>

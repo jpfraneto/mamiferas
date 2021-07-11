@@ -22,12 +22,16 @@ const CommentForm = ({ postId, addComment }) => {
           name='text'
           cols='30'
           rows='5'
-          placeholder='Agregar comentario'
+          placeholder='Escribe acá...'
           value={text}
           onChange={e => setText(e.target.value)}
           required
         ></textarea>
-        <input type='submit' className='btn btn-dark my-1' value='Enviar' />
+        <input
+          type='submit'
+          className='btn btn-dark my-1'
+          value='Agregar Comentario'
+        />
       </form>
     </div>
   );

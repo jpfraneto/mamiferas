@@ -13,7 +13,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
         <Link to='/posts'>Testimonios</Link>
       </li>
       <li>
-        <Link to='/images'>Fotos</Link>
+        <Link to='/images'>Historias Gráficas</Link>
       </li>
       <li>
         <Link to='/profiles'>Perfiles</Link>

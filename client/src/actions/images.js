@@ -9,12 +9,15 @@ import {
   GET_PROFILE_IMAGES,
 } from './types';
 
-export const getAllImages = () => async dispatch => {
+export const getAllImages = globalImages => async dispatch => {
   try {
+    dispatch({ type: CLEAR_IMAGE });
     const res = await axios.get('/api/images');
+    const returnedDataFromServer = res.data;
+    const newImages = compareImages(globalImages, returnedDataFromServer);
     dispatch({
       type: GET_GLOBAL_IMAGES,
-      payload: res.data,
+      payload: newImages,
     });
   } catch (err) {
     dispatch({
@@ -28,10 +31,17 @@ export const clearImage = () => dispatch => {
   dispatch({ type: CLEAR_IMAGE });
 };
 
-export const getImage = id => async dispatch => {
+export const getImage = (globalImages, id) => async dispatch => {
   try {
     dispatch({ type: CLEAR_IMAGE });
-    const res = await axios.get(`/api/images/${id}`);
+    const ids = globalImages.map(image => image._id);
+    const index = ids.indexOf(id);
+    var res = {};
+    if (!(index >= 0)) {
+      res = await axios.get(`/api/images/${id}`);
+    } else {
+      res.data = globalImages[index];
+    }
     dispatch({
       type: GET_IMAGE,
       payload: res.data,
@@ -109,3 +119,22 @@ export const updateProfilePicture =
       });
     }
   };
+
+const compareImages = (imagesAlreadyLoaded, dataFromServer) => {
+  const ids1 = imagesAlreadyLoaded.map(x => x._id);
+  const ids2 = dataFromServer.globalImages.map(x => x._id);
+  const differenceInArrays = compareArrays(ids1, ids2);
+  const newImages = [];
+  dataFromServer.globalImages.forEach(image => {
+    if (differenceInArrays.includes(image._id)) {
+      newImages.push(image);
+    }
+  });
+  return newImages;
+};
+
+const compareArrays = (arr1, arr2) => {
+  return arr1
+    .filter(x => !arr2.includes(x))
+    .concat(arr2.filter(x => !arr1.includes(x)));
+};

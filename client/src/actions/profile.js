@@ -85,42 +85,40 @@ export const getProfileById = id => async dispatch => {
 };
 
 // Create or Update a Profile
-export const updateProfile = (formData, history) => async dispatch => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const res = await axios.post('/api/profile', formData, config);
-    dispatch({
-      type: UPDATE_PROFILE,
-      payload: res.data,
-    });
+export const updateProfile =
+  (formData, history, username) => async dispatch => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+      const res = await axios.post('/api/profile', formData, config);
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: res.data,
+      });
 
-    dispatch({
-      type: CLEAR_PROFILE,
-    });
-    console.log('inside the profile update route');
-    console.log('form data: ', formData);
-    console.log('the res.data is: ', res.data);
+      dispatch({
+        type: CLEAR_PROFILE,
+      });
 
-    dispatch(setAlert('Profile Updated', 'success'));
+      dispatch(setAlert('El perfil fue actualizado', 'success'));
 
-    history.push('/me');
-  } catch (err) {
-    const errors = err.response.data.errors;
+      history.push(`/profile/${username}`);
+    } catch (err) {
+      const errors = err.response.data.errors;
 
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      if (errors) {
+        errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status },
+      });
     }
-
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
+  };
 
 // Delete Account & Profile
 export const deleteAccount = () => async dispatch => {

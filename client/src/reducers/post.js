@@ -24,6 +24,7 @@ export default function post(state = initialState, action) {
       return {
         ...state,
         posts: payload,
+        post: null,
         loading: false,
       };
     case GET_POST:
