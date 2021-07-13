@@ -21,7 +21,6 @@ const EditProfile = ({
   const [formData, setFormData] = useState({
     username: '',
     miracle: '',
-    imageLink: '',
     location: '',
     bio: '',
     youtube: '',
@@ -39,7 +38,6 @@ const EditProfile = ({
       username: loading || !profile.username ? '' : profile.username,
       miracle: loading || !profile.miracle ? '' : profile.miracle,
       location: loading || !profile.location ? '' : profile.location,
-      imageLink: loading || !profile.imageLink ? '' : profile.imageLink,
       bio: loading || !profile.bio ? '' : profile.bio,
       youtube: loading || !profile.social ? '' : profile.social.youtube,
       facebook: loading || !profile.social ? '' : profile.social.facebook,
@@ -52,7 +50,6 @@ const EditProfile = ({
     username,
     miracle,
     bio,
-    imageLink,
     location,
     youtube,
     facebook,
@@ -60,8 +57,9 @@ const EditProfile = ({
     instagram,
   } = formData;
 
-  const onChange = e =>
+  const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const onSubmit = e => {
     e.preventDefault();

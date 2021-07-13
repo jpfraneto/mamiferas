@@ -27,9 +27,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-
-    const { name, email, username, password } = req.body;
-
+    const { name, email, username, miracle, password } = req.body;
     try {
       let user = await User.findOne({ email });
 
@@ -69,12 +67,11 @@ router.post(
       const profileFields = {};
       profileFields.user = user._id;
       profileFields.username = username;
-      profileFields.miracle = '';
+      profileFields.miracle = miracle;
       profileFields.location = '';
       profileFields.bio = '';
       profileFields.imageLink =
         'https://howtoapps.com/wp-content/uploads/2020/01/b9ed581c-cute-profile-pic-8-600x400.jpg';
-      console.log('the profile fields is:', profileFields);
       profile = new Profile(profileFields);
       await profile.save();
 

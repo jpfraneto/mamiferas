@@ -15,6 +15,7 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
+//posts
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
 export const POST_ERROR = 'POST_ERROR';
@@ -23,9 +24,15 @@ export const DELETE_POST = 'DELETE_POST';
 export const ADD_POST = 'ADD_POST';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const REMOVE_COMMENT = 'REMOVE_COMMENT';
+//images
 export const GET_GLOBAL_IMAGES = 'GET_GLOBAL_IMAGES';
 export const GET_IMAGE = 'GET_IMAGE';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const CLEAR_IMAGE = 'CLEAR_IMAGE';
 export const GET_PROFILE_IMAGES = 'GET_USER_IMAGES';
 export const CLEAR_PROFILE_IMAGES = 'CLEAR_PROFILE_IMAGES';
+//articles
+export const ADD_ARTICLE = 'ADD_ARTICLE';
+export const GET_ARTICLES = 'GET_ARTICLES';
+export const GET_ARTICLE = 'GET_ARTICLE';
+export const DELETE_ARTICLE = 'DELETE_ARTICLE';

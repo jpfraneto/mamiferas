@@ -14,9 +14,6 @@ import {
 // Get the currents users profile
 export const getCurrentProfile = () => async dispatch => {
   try {
-    dispatch({ type: CLEAR_PROFILE });
-    dispatch({ type: CLEAR_PROFILE_IMAGES });
-
     const res = await axios.get('/api/profile/me');
     dispatch({
       type: GET_PROFILE,
@@ -32,9 +29,6 @@ export const getCurrentProfile = () => async dispatch => {
 
 //Get all profiles
 export const getProfiles = () => async dispatch => {
-  dispatch({ type: CLEAR_PROFILE });
-  dispatch({ type: CLEAR_PROFILE_IMAGES });
-
   try {
     const res = await axios.get('/api/profile');
 
@@ -59,6 +53,7 @@ export const getProfileByUsername = username => async dispatch => {
       type: GET_PROFILE,
       payload: res.data,
     });
+    return res.data;
   } catch (err) {
     dispatch({
       type: PROFILE_ERROR,

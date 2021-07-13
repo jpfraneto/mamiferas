@@ -27,7 +27,7 @@ const PostForm = ({ addPost }) => {
         <input
           type='submit'
           className='btn btn-dark my-1'
-          value='Pulicar Testimonio'
+          value='Publicar Testimonio'
         />
       </form>
     </div>

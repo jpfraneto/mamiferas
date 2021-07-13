@@ -7,7 +7,7 @@ import ProfileItem from './ProfileItem';
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   useEffect(() => {
-    if (!profiles) getProfiles();
+    getProfiles();
   }, [getProfiles]);
 
   return (

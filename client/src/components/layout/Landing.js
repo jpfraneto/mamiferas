@@ -23,11 +23,8 @@ const Landing = ({ isAuthenticated }) => {
             </div>
           ) : (
             <div className='buttons'>
-              <Link to='/images' className='btn btn-light'>
-                Historias Gráficas
-              </Link>
-              <Link to='/posts' className='btn btn-dark'>
-                Testimonios
+              <Link to='/articles' className='btn btn-light'>
+                Historias
               </Link>
             </div>
           )}

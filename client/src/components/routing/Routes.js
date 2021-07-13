@@ -18,6 +18,9 @@ import AddImage from '../images/AddImage';
 import NotFound from '../layout/NotFound';
 import MyProfile from '../profile/MyProfile';
 import ProfileImageUpdate from '../profile-forms/ProfileImageUpdate';
+import Articles from '../articles/Articles';
+import WriteArticle from '../articles/WriteArticle';
+import ShowArticle from '../articles/ShowArticle';
 
 const Routes = () => {
   return (
@@ -43,6 +46,10 @@ const Routes = () => {
         <PrivateRoute exact path='/edit-profile' component={EditProfile} />
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
+
+        <PrivateRoute exact path='/articles' component={Articles} />
+        <PrivateRoute exact path='/articles/new' component={WriteArticle} />
+        <PrivateRoute exact path='/articles/:id' component={ShowArticle} />
 
         <Route component={NotFound} />
       </Switch>

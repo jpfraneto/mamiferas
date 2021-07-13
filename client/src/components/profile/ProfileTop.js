@@ -14,6 +14,7 @@ const ProfileTop = ({
     social,
     user: { name, avatar },
   },
+  birthDate,
 }) => {
   return (
     <div className='profile-top bg-primary p-2'>
@@ -22,12 +23,7 @@ const ProfileTop = ({
       </Link>
       <h1 className='large'>{name}</h1>
       {miracle ? (
-        <p>
-          Mi bebé va a nacer alrededor del{' '}
-          <Moment format='DD/MM/YYYY' add={{ hours: 8 }}>
-            {miracle}
-          </Moment>
-        </p>
+        <p>Semanas de gestación: {birthDate}</p>
       ) : (
         <p>Todavía no sabemos cuándo va a nacer tu bebé!</p>
       )}

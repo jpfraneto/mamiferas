@@ -2,10 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import functions from '../../utils/functions';
 
 const ProfileItem = ({
   profile: {
     user: { _id, name, avatar },
+    articles,
     location,
     username,
     miracle,
@@ -20,15 +22,13 @@ const ProfileItem = ({
         <p className='my-1'>
           {miracle ? (
             <span>
-              Su bebé nace cerca del{' '}
-              <Moment format='DD/MM/YYYY' add={{ hours: 8 }}>
-                {miracle}
-              </Moment>
+              Semanas de Gestación: {functions.calculateWeekFromNow(miracle)}
             </span>
           ) : (
             <span>Aún no sabemos cuándo nace su bebé</span>
           )}
         </p>
+        <p>Ha escrito {articles.length} historias</p>
         <p className='my-1'>{location && <span>{location}</span>}</p>
         <Link to={`/profile/${username}`} className='btn btn-primary'>
           Ver Perfil

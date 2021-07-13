@@ -10,11 +10,12 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     name: '',
     email: '',
     username: '',
+    miracle: '',
     password: '',
     password2: '',
   });
 
-  const { name, email, username, password, password2 } = formData;
+  const { name, email, username, miracle, password, password2 } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,12 +25,13 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('passwords do not match', 'danger', 2000);
     } else {
-      register({ name, email, password, username });
+      console.log('before the register, and the miracle is: ', miracle);
+      register({ name, email, password, miracle, username });
     }
   };
 
   if (isAuthenticated) {
-    return <Redirect to={'/me'} />;
+    return <Redirect to={'/'} />;
   }
 
   return (
@@ -72,6 +74,17 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             onChange={e => onChange(e)}
           />
           <small className='form-text'>Nombre de Usuario</small>
+        </div>
+        <div className='form-group'>
+          <input
+            type='date'
+            placeholder='Fecha estimada para el parto'
+            name='miracle'
+            required
+            value={miracle}
+            onChange={e => onChange(e)}
+          />
+          <small className='form-text'>¿Cuándo nace tu bebé?</small>
         </div>
         <div className='form-group'>
           <input

@@ -19,7 +19,9 @@ export const loadUser = () => async dispatch => {
   }
 
   try {
+    console.log('inside the loadUser!');
     const res = await axios.get('/api/auth');
+    console.log('the response from the server is: ', res);
     dispatch({
       type: USER_LOADED,
       payload: res.data,
@@ -33,12 +35,15 @@ export const loadUser = () => async dispatch => {
 
 //Register User
 export const register =
-  ({ name, email, password, username }) =>
+  ({ name, email, password, miracle, username }) =>
   async dispatch => {
+    dispatch({
+      type: LOGOUT,
+    });
     const config = {
       headers: { 'Content-Type': 'application/json' },
     };
-    const body = JSON.stringify({ name, email, password, username });
+    const body = JSON.stringify({ name, email, password, miracle, username });
 
     try {
       const res = await axios.post('/api/users', body, config);

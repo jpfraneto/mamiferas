@@ -26,6 +26,12 @@ const ProfileSchema = new mongoose.Schema({
       ref: 'image',
     },
   ],
+  articles: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'article',
+    },
+  ],
   social: {
     youtube: {
       type: String,
