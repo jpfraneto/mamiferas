@@ -16,9 +16,9 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className='large text-primary'>Futuras Mamás</h1>
+          <h1 className='large text-primary'>Futuras Mamás / Futuros Papás</h1>
           <p className='lead'>
-            Conoce a otras que están en transición y apoyense mutuamente en este
+            Conoce a otr@s que están en transición y apoyense mutuamente en este
             camino
           </p>
           <div className='profiles'>

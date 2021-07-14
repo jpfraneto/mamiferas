@@ -22,6 +22,9 @@ const ArticleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  privada: {
+    type: Boolean,
+  },
   likes: [
     {
       user: {

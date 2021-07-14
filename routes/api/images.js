@@ -97,12 +97,16 @@ router.post('/update-profile-picture', auth, async (req, res) => {
     const profile = await Profile.findOne({ user: req.user.id }).select(
       '-password'
     );
+    const user = await User.findById(req.user.id).select('-password');
+    user.avatar = uploadedResponse.secure_url;
+    user.save();
     profile.imageLink = uploadedResponse.secure_url;
     profile.save();
     res.json({
       msg: 'Tu foto de perfil fue actualizada!',
     });
   } catch (err) {
+    console.log('the err is: ', err);
     res.status(500).json({ err: 'Something went wrong uploading the image' });
   }
 });

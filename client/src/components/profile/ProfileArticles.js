@@ -23,11 +23,21 @@ const ProfileArticles = ({
             <Fragment>
               <h2>Historias</h2>
               {articles.map(article => (
-                <Link key={article._id} to={`/articles/${article._id}`}>
-                  <p>
-                    <strong>{article.title}</strong> - {article.pregnancyDate}{' '}
-                  </p>
-                </Link>
+                <Fragment>
+                  {article.privada && loggedInUsername !== username ? (
+                    <p>
+                      🔐🤫😳 <strong>{article.title}</strong> -{' '}
+                      {article.pregnancyDate}{' '}
+                    </p>
+                  ) : (
+                    <Link key={article._id} to={`/articles/${article._id}`}>
+                      <p>
+                        <strong>{article.title}</strong> -{' '}
+                        {article.pregnancyDate}{' '}
+                      </p>
+                    </Link>
+                  )}
+                </Fragment>
               ))}
             </Fragment>
           ) : (
@@ -48,12 +58,12 @@ const ProfileArticles = ({
 ProfileArticles.propTypes = {
   getProfileArticles: PropTypes.func.isRequired,
   loggedInUsername: PropTypes.string.isRequired,
-  articles: PropTypes.array,
+  articles: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   loggedInUsername: state.auth.user.username,
-  articles: state.article.articles,
+  articles: state.article.profileArticles,
 });
 
 export default connect(mapStateToProps, { getProfileArticles })(

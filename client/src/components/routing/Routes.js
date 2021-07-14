@@ -47,9 +47,9 @@ const Routes = () => {
         <PrivateRoute exact path='/posts' component={Posts} />
         <PrivateRoute exact path='/posts/:id' component={Post} />
 
-        <PrivateRoute exact path='/articles' component={Articles} />
+        <Route exact path='/articles' component={Articles} />
         <PrivateRoute exact path='/articles/new' component={WriteArticle} />
-        <PrivateRoute exact path='/articles/:id' component={ShowArticle} />
+        <Route exact path='/articles/:id' component={ShowArticle} />
 
         <Route component={NotFound} />
       </Switch>

@@ -17,14 +17,15 @@ const Profile = ({
   match,
 }) => {
   let history = useHistory();
-  console.log('The match.params.username is: ', match.params.username);
   const [birthDate, setBirthDate] = useState('');
+  const [loading2, setLoading2] = useState(true);
   useEffect(() => {
     const getProfileInfo = async () => {
       const profileInfo = await getProfileByUsername(match.params.username);
       if (profileInfo && profileInfo.miracle) {
         const miracleDate = functions.calculateWeekFromNow(profileInfo.miracle);
         setBirthDate(miracleDate);
+        setLoading2(false);
       }
     };
     getProfileInfo();
@@ -33,7 +34,8 @@ const Profile = ({
     <Fragment>
       {profile === null ||
       match.params.username !== profile.username ||
-      loading ? (
+      loading ||
+      loading2 ? (
         <Spinner />
       ) : (
         <Fragment>

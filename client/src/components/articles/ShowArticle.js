@@ -6,11 +6,18 @@ import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import { getArticleById } from '../../actions/article';
 import functions from '../../utils/functions';
+import CommentForm from './CommentForm';
+import CommentItem from './CommentItem';
 import { connect } from 'react-redux';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
-const ShowArticle = ({ article: { article }, match, getArticleById }) => {
+const ShowArticle = ({
+  auth: { isAuthenticated },
+  article: { article },
+  match,
+  getArticleById,
+}) => {
   let history = useHistory();
   useEffect(() => {
     getArticleById(match.params.id);
@@ -22,37 +29,60 @@ const ShowArticle = ({ article: { article }, match, getArticleById }) => {
       article.loading ? (
         <Spinner />
       ) : (
-        <div className='image-display'>
-          {article && (
+        <Fragment>
+          <button
+            type='button'
+            onClick={() => history.goBack()}
+            className='btn btn-light'
+          >
+            Volver
+          </button>
+          <div className='post bg-white p-1 my-1'>
+            <div>
+              <Link to={`/profile/${article.username}`}>
+                <img className='round-img' src={article.avatar} alt='' />
+                <h4>{article.name}</h4>
+              </Link>
+            </div>
             <div>
               <h1>{article.title}</h1>
+              <br />
+              <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
+                {article.text}
+              </ReactMarkdown>
               <p className='post-date'>
                 Escrita a las {article.pregnancyDate} el{' '}
                 <Moment format='DD/MM/YYYY'>{article.date}</Moment>
               </p>
-              <hr />
-              <ReactMarkdown
-                remarkPlugins={[gfm]}
-                children={'string'}
-                className='articleText'
-              >
-                {article.text}
-              </ReactMarkdown>
             </div>
+          </div>
+          {article.comments.length > 0 && (
+            <h1 className='text-primary'>Comentarios:</h1>
           )}
-          <button className='btn btn-success' onClick={() => history.goBack()}>
-            Volver
-          </button>
-        </div>
+          <div className='comments'>
+            {article.comments.map(comment => (
+              <CommentItem
+                key={comment._id}
+                comment={comment}
+                articleId={article._id}
+              />
+            ))}
+          </div>
+          {isAuthenticated && <CommentForm articleId={article._id} />}
+        </Fragment>
       )}
     </Fragment>
   );
 };
 
-ShowArticle.propTypes = { getArticleById: PropTypes.func.isRequired };
+ShowArticle.propTypes = {
+  getArticleById: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+};
 
 const mapStateToProps = state => ({
   article: state.article,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { getArticleById })(ShowArticle);

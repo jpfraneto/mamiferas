@@ -12,7 +12,7 @@ const ProfileAbout = ({
     {bio ? (
       <Fragment>
         {' '}
-        <h2 className='text-primary'>Biografía</h2>
+        <h2 className='text-primary'>Acerca de Mi</h2>
         <p>{bio}</p>
       </Fragment>
     ) : (

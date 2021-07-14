@@ -18,13 +18,13 @@ const ArticleItem = ({
     username,
     likes,
     comments,
+    privada,
     date,
     pregnancyDate,
   },
   auth,
   showActions,
 }) => {
-  useEffect(() => {}, []);
   return (
     <div className='post bg-white p-1 my-1'>
       <div>
@@ -35,18 +35,25 @@ const ArticleItem = ({
       </div>
       <div>
         <h3>{title}</h3>
-        <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
-          {text.length > 88 ? text.substring(0, 88) + '...' : text}
-        </ReactMarkdown>
+        {!privada && (
+          <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
+            {text.length > 88 ? text.substring(0, 88) + '...' : text}
+          </ReactMarkdown>
+        )}
+
         <p className='post-date'>
           Escrita a las {pregnancyDate} el{' '}
           <Moment format='DD/MM/YYYY'>{date}</Moment>
         </p>
         {showActions && (
           <Fragment>
-            <Link to={`/articles/${_id}`} className='btn btn-primary'>
-              Leer Más 💬 {comments.length}
-            </Link>
+            {privada && auth.user.username !== username ? (
+              <p className='btn btn-primary'>🔐🤫😳 Esta historia es privada</p>
+            ) : (
+              <Link to={`/articles/${_id}`} className='btn btn-primary'>
+                Leer Más 💬 {comments.length}
+              </Link>
+            )}
           </Fragment>
         )}
       </div>
