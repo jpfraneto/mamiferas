@@ -18,27 +18,29 @@ const ProfileImages = ({
   return (
     <div>
       <div className='images-display-div'>
-        {images && images.length > 0 ? (
-          <Fragment>
-            <h1>
-              Fotos compartidas por <strong>{username}</strong>
-            </h1>
-            {images.map((image, index) => (
-              <Link key={index} to={`/images/${image._id}`}>
-                {' '}
-                <img alt={image.alt} src={image.secure_url} />
-              </Link>
-            ))}
-          </Fragment>
-        ) : (
-          <h1>{username} todavía no comparte ninguna foto.</h1>
-        )}
-        <br />
-        {loggedInUsername === username && (
-          <Link to={'/images/new'}>
-            <button className='btn btn-success'>Agregar Foto</button>
-          </Link>
-        )}
+        <div className='profile-about bg-light p-2'>
+          {images && images.length > 0 ? (
+            <Fragment>
+              <h1>
+                Fotos compartidas por <strong>{username}</strong>
+              </h1>
+              {images.map((image, index) => (
+                <Link key={index} to={`/images/${image._id}`}>
+                  {' '}
+                  <img alt={image.alt} src={image.secure_url} />
+                </Link>
+              ))}
+            </Fragment>
+          ) : (
+            <h1>{username} todavía no comparte ninguna foto.</h1>
+          )}
+          <br />
+          {loggedInUsername === username && (
+            <Link to={'/images/new'}>
+              <button className='btn btn-success'>Agregar Foto</button>
+            </Link>
+          )}
+        </div>
       </div>
     </div>
   );

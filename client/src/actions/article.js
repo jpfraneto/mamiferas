@@ -2,12 +2,14 @@ import {
   ADD_ARTICLE,
   GET_ARTICLE,
   GET_ARTICLES,
+  UPDATE_ARTICLE,
   SORT_ARTICLES_DATE,
   SORT_ARTICLES_BIRTHDATE,
   GET_PROFILE_ARTICLES,
   ARTICLE_ERROR,
   ADD_COMMENT,
   REMOVE_COMMENT,
+  REMOVE_ARTICLE,
 } from './types';
 import axios from 'axios';
 import { setAlert } from './alert';
@@ -56,6 +58,7 @@ export const getArticleById = id => async dispatch => {
       type: GET_ARTICLE,
       payload: res.data.article,
     });
+    return res.data.article;
   } catch (err) {
     dispatch({
       type: ARTICLE_ERROR,
@@ -78,6 +81,61 @@ export const getArticles = () => async dispatch => {
     });
   }
 };
+
+export const editArticle =
+  (newArticleData, history, articleId) => async dispatch => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      const res = await axios.put(
+        `/api/articles/${articleId}`,
+        newArticleData,
+        config
+      );
+      console.log('the response from the server is:', res.data);
+      dispatch({
+        type: UPDATE_ARTICLE,
+        payload: res.data.updatedArticle,
+      });
+      dispatch(setAlert('Se editó tu historia', 'success'));
+      history.push(`/articles/${articleId}`);
+    } catch (err) {
+      dispatch({
+        type: ARTICLE_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status,
+        },
+      });
+    }
+  };
+
+export const deleteArticle =
+  (history, username, articleId) => async dispatch => {
+    if (window.confirm('¿Estás segur@ que quieres borrar esta historia?')) {
+      try {
+        const res = await axios.delete(`/api/articles/${articleId}`);
+        dispatch({
+          type: REMOVE_ARTICLE,
+          payload: articleId,
+        });
+        dispatch(setAlert('Se eliminó tu historia', 'success'));
+        history.push(`/profile/${username}`);
+      } catch (err) {
+        dispatch({
+          type: ARTICLE_ERROR,
+          payload: {
+            msg: err.response.statusText,
+            status: err.response.status,
+          },
+        });
+      }
+    }
+  };
 
 export const addLike = () => async dispatch => {
   console.log('this is the action for adding a like!');

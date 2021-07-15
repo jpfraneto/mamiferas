@@ -8,12 +8,7 @@ import { getCurrentProfile } from '../../actions/profile';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
-const AddImage = ({
-  profile: { profile },
-  uploadImage,
-  history,
-  getCurrentProfile,
-}) => {
+const AddImage = ({ auth: { user }, uploadImage, history }) => {
   let historyLog = useHistory();
   const [fileInputState, setFileInputState] = useState('');
   const [imageData, setImageData] = useState({
@@ -24,10 +19,6 @@ const AddImage = ({
     preview: false,
     uploading: false,
   });
-
-  useEffect(() => {
-    getCurrentProfile();
-  }, [getCurrentProfile]);
 
   const handleFileInputChange = e => {
     const file = e.target.files[0];
@@ -54,7 +45,7 @@ const AddImage = ({
       );
     }
     setImageData({ ...imageData, uploading: true });
-    uploadImage(imageData, history, profile.username);
+    uploadImage(imageData, history, user.username);
   };
 
   const onChange = e =>
@@ -83,8 +74,8 @@ const AddImage = ({
               <Fragment>
                 <p>
                   <strong>
-                    <Link to={`/profile/${profile.username}`}>
-                      {profile.username}
+                    <Link to={`/profile/${user.username}`}>
+                      {user.username}
                     </Link>
                   </strong>{' '}
                   - {imageData.date}
@@ -161,12 +152,10 @@ AddImage.propTypes = {
   uploadImage: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
-  profile: state.profile,
 });
 
 export default connect(mapStateToProps, { uploadImage, getCurrentProfile })(

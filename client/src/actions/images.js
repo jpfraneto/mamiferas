@@ -7,14 +7,15 @@ import {
   POST_ERROR,
   CLEAR_IMAGE,
   GET_PROFILE_IMAGES,
+  UPDATE_PROFILE_PICTURE,
 } from './types';
 
 export const getAllImages = globalImages => async dispatch => {
   try {
-    dispatch({ type: CLEAR_IMAGE });
     const res = await axios.get('/api/images');
     const returnedDataFromServer = res.data;
     const newImages = compareImages(globalImages, returnedDataFromServer);
+
     dispatch({
       type: GET_GLOBAL_IMAGES,
       payload: newImages,
@@ -110,7 +111,10 @@ export const updateProfilePicture =
         config
       );
       dispatch(setAlert(res.data.msg, 'success'));
-
+      dispatch({
+        type: UPDATE_PROFILE_PICTURE,
+        payload: res.data.user,
+      });
       history.push(`/profile/${username}`);
     } catch (err) {
       dispatch({

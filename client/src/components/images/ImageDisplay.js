@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Image } from 'cloudinary-react';
 import { Link, useHistory } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
@@ -11,12 +11,14 @@ import gfm from 'remark-gfm';
 
 const ImageDisplay = ({ image: { image, globalImages }, match, getImage }) => {
   let history = useHistory();
+  const [loading2, setLoading2] = useState(true);
   useEffect(() => {
     getImage(globalImages, match.params.id);
+    setLoading2(false);
   }, [getImage]);
   return (
     <Fragment>
-      {image === null || image.loading ? (
+      {image === null || image.loading || loading2 ? (
         <Spinner />
       ) : (
         <div className='image-display'>
@@ -33,7 +35,8 @@ const ImageDisplay = ({ image: { image, globalImages }, match, getImage }) => {
                     {image.username}
                   </Link>
                 </strong>{' '}
-                - <Moment format='DD/MM/YYYY'>{image.date}</Moment>
+                - {image.pregnancyDate} -{' '}
+                <Moment format='DD/MM/YYYY'>{image.date}</Moment>
               </p>
               <h1>{image.title}</h1>
               <ReactMarkdown

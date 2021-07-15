@@ -6,6 +6,7 @@ const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const Image = require('../../models/Image');
 const Profile = require('../../models/Profile');
+const functions = require('../../utils/functions');
 
 // @route   GET api/images
 // @desc    Get all images
@@ -69,6 +70,7 @@ router.post('/', auth, async (req, res) => {
       username: profile.username,
       title: req.body.data.title,
       alt: '',
+      pregnancyDate: functions.calculateWeekFromNow(profile.miracle),
       secure_url: uploadedResponse.secure_url,
       text: req.body.data.text,
     });
@@ -103,6 +105,7 @@ router.post('/update-profile-picture', auth, async (req, res) => {
     profile.imageLink = uploadedResponse.secure_url;
     profile.save();
     res.json({
+      user,
       msg: 'Tu foto de perfil fue actualizada!',
     });
   } catch (err) {

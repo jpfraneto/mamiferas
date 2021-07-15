@@ -97,6 +97,64 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+// @route   PUT api/articles/:id
+// @desc    UPDATE article with id
+// @access  Private
+
+router.put('/:id', auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+    const article = await Article.findById(req.params.id);
+    if (!article) {
+      return res.status(404).json({ msg: 'No article found with that ID' });
+    }
+    //Check ownership of the article
+    if (article.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+    article.title = req.body.title;
+    article.text = req.body.text;
+    article.privada = req.body.privada;
+    article.updated = true;
+    article.pregnancyDate = functions.calculateWeekFromNow(profile.miracle);
+    await article.save();
+    res.json({ updatedArticle: article, msg: 'The article was updated' });
+  } catch (err) {
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'No article found with that ID' });
+    }
+    res.status(500).send('Server error!');
+  }
+});
+
+// @route   DELETE api/article/:id
+// @desc    Delete a specific article
+// @access  Private
+
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id);
+
+    if (!article) {
+      return res.status(404).json({ msg: 'No article found with that ID' });
+    }
+
+    //Check ownership of the article
+    if (article.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+
+    await article.remove();
+
+    res.json({ msg: 'The article was deleted' });
+  } catch (err) {
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'No article found with that ID' });
+    }
+    res.status(500).send('Server error!');
+  }
+});
+
 // @route   POST api/articles/comment/:id
 // @desc    Comment on an article
 // @access  Private

@@ -7,63 +7,55 @@ import { getProfileArticles } from '../../actions/article';
 import functions from '../../utils/functions';
 
 const ProfileArticles = ({
-  articles,
-  getProfileArticles,
   loggedInUsername,
-  profile: { miracle, username, _id },
+  profile: { articles, miracle, username, _id },
 }) => {
-  useEffect(() => {
-    getProfileArticles(username);
-  }, [getProfileArticles]);
   return (
     <div>
-      <div className='images-display-div'>
-        <div className='profile-about bg-light p-2'>
-          {articles && articles.length > 0 ? (
-            <Fragment>
-              <h2>Historias</h2>
-              {articles.map(article => (
-                <Fragment>
-                  {article.privada && loggedInUsername !== username ? (
+      <div className='profile-about bg-light p-2'>
+        {articles && articles.length > 0 ? (
+          <Fragment>
+            <h2>Historias</h2>
+            {articles.map(article => (
+              <Fragment key={article._id}>
+                {article.privada && loggedInUsername !== username ? (
+                  <p>
+                    🔐🤫😳 <strong>{article.title}</strong> -{' '}
+                    {article.pregnancyDate}{' '}
+                  </p>
+                ) : (
+                  <Link to={`/articles/${article._id}`}>
                     <p>
-                      🔐🤫😳 <strong>{article.title}</strong> -{' '}
-                      {article.pregnancyDate}{' '}
+                      {article.privada &&
+                        loggedInUsername === username &&
+                        '🔐🤫😳 '}
+                      <strong>{article.title}</strong> - {article.pregnancyDate}{' '}
                     </p>
-                  ) : (
-                    <Link key={article._id} to={`/articles/${article._id}`}>
-                      <p>
-                        <strong>{article.title}</strong> -{' '}
-                        {article.pregnancyDate}{' '}
-                      </p>
-                    </Link>
-                  )}
-                </Fragment>
-              ))}
-            </Fragment>
-          ) : (
-            <h1>{username} todavía no escribe ninguna historia.</h1>
-          )}
-          <br />
-          {loggedInUsername === username && (
-            <Link to={'/articles/new'}>
-              <button className='btn btn-success'>Escribir Historia</button>
-            </Link>
-          )}
-        </div>
+                  </Link>
+                )}
+              </Fragment>
+            ))}
+          </Fragment>
+        ) : (
+          <h1>{username} todavía no escribe ninguna historia.</h1>
+        )}
+        <br />
+        {loggedInUsername === username && (
+          <Link to={'/articles/new'}>
+            <button className='btn btn-success'>Escribir Historia</button>
+          </Link>
+        )}
       </div>
     </div>
   );
 };
 
 ProfileArticles.propTypes = {
-  getProfileArticles: PropTypes.func.isRequired,
   loggedInUsername: PropTypes.string.isRequired,
-  articles: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   loggedInUsername: state.auth.user.username,
-  articles: state.article.profileArticles,
 });
 
 export default connect(mapStateToProps, { getProfileArticles })(

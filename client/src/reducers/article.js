@@ -1,6 +1,7 @@
 import {
   ADD_ARTICLE,
   GET_ARTICLE,
+  REMOVE_ARTICLE,
   GET_ARTICLES,
   GET_PROFILE_ARTICLES,
   ADD_COMMENT,
@@ -8,9 +9,19 @@ import {
   SORT_ARTICLES_BIRTHDATE,
   SORT_ARTICLES_DATE,
   ARTICLE_ERROR,
+  UPDATE_ARTICLE,
 } from '../actions/types';
 
 const sortByKey = key => (a, b) => a[key] > b[key] ? 1 : -1;
+const updateArticles = (articles, updatedArticle) => {
+  if (articles && articles.length > 0) {
+    const index = articles.map(x => x._id).indexOf(updatedArticle._id);
+    const newArticles = articles.slice();
+    newArticles[index] = updatedArticle;
+    return newArticles;
+  }
+  return articles;
+};
 
 const initialSate = {
   articles: [],
@@ -34,6 +45,21 @@ export default function article(state = initialSate, action) {
         ...state,
         loading: false,
         article: payload,
+      };
+
+    case UPDATE_ARTICLE:
+      return {
+        ...state,
+        loading: false,
+        article: payload,
+        articles: updateArticles(state.articles, payload),
+      };
+
+    case REMOVE_ARTICLE:
+      return {
+        ...state,
+        articles: state.articles.filter(article => article._id !== payload),
+        loading: false,
       };
 
     case GET_ARTICLES:

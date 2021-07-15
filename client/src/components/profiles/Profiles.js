@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
@@ -6,13 +6,15 @@ import { getProfiles } from '../../actions/profile';
 import ProfileItem from './ProfileItem';
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
+  const [loading2, setLoading2] = useState(true);
   useEffect(() => {
     getProfiles();
+    setLoading2(false);
   }, [getProfiles]);
 
   return (
     <Fragment>
-      {profiles === null || loading ? (
+      {profiles === null || loading || loading2 ? (
         <Spinner />
       ) : (
         <Fragment>

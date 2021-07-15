@@ -66,6 +66,10 @@ const ArticleSchema = new mongoose.Schema({
   pregnancyDate: {
     type: String,
   },
+  updated: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = Article = mongoose.model('article', ArticleSchema);

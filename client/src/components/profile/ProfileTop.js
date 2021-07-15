@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
@@ -16,11 +16,18 @@ const ProfileTop = ({
   },
   birthDate,
 }) => {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div className='profile-top bg-primary p-2'>
-      <Link to='/profile-image-update'>
-        <img className='round-img' src={imageLink} alt='' />
-      </Link>
+      <img
+        onClick={() => {
+          setShowModal(!showModal);
+        }}
+        className='round-img'
+        src={imageLink}
+        alt=''
+      />
       <h1 className='large'>{name}</h1>
       {miracle ? (
         <p>Semanas de gestación: {birthDate}</p>
@@ -47,6 +54,28 @@ const ProfileTop = ({
               ))
           : null}
       </div>
+      {showModal && (
+        <dialog
+          className='dialog'
+          style={{ position: 'absolute' }}
+          open
+          onClick={() => {
+            setShowModal(!showModal);
+          }}
+        >
+          <img
+            className='modal-image-display'
+            src={imageLink}
+            onClick={() => {
+              setShowModal(!showModal);
+            }}
+            alt='no image'
+          />
+          <br></br>
+          <p>{name}</p>
+          <button>Close</button>
+        </dialog>
+      )}
     </div>
   );
 };

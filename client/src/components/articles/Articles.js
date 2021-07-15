@@ -12,10 +12,12 @@ const Article = ({
   sortArticles,
   article: { articles, loading },
 }) => {
+  const [loading2, setLoading2] = useState(true);
   useEffect(() => {
     getArticles();
+    setLoading2(false);
   }, [getArticles]);
-  return articles === null || loading ? (
+  return articles === null || loading || loading2 ? (
     <Spinner />
   ) : (
     <Fragment>

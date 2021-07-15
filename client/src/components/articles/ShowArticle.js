@@ -4,8 +4,11 @@ import { Link, useHistory } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
-import { getArticleById } from '../../actions/article';
-import functions from '../../utils/functions';
+import {
+  getArticleById,
+  editArticle,
+  deleteArticle,
+} from '../../actions/article';
 import CommentForm from './CommentForm';
 import CommentItem from './CommentItem';
 import { connect } from 'react-redux';
@@ -13,10 +16,12 @@ import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
 
 const ShowArticle = ({
-  auth: { isAuthenticated },
+  auth: { isAuthenticated, user },
   article: { article },
   match,
   getArticleById,
+  editArticle,
+  deleteArticle,
 }) => {
   let history = useHistory();
   useEffect(() => {
@@ -51,9 +56,33 @@ const ShowArticle = ({
                 {article.text}
               </ReactMarkdown>
               <p className='post-date'>
-                Escrita a las {article.pregnancyDate} el{' '}
+                {article.updated ? 'Actualizada ' : 'Escrita '}a las{' '}
+                {article.pregnancyDate} el{' '}
                 <Moment format='DD/MM/YYYY'>{article.date}</Moment>
+                {article.privada &&
+                  ' - Esta historia es privada, sólo tú la puedes ver 🔐🤫😳'}
               </p>
+
+              {user && user.username === article.username && (
+                <Fragment>
+                  <Link
+                    to={`/articles/${article._id}/edit`}
+                    type='button'
+                    className='btn btn-primary'
+                  >
+                    Editar Historia
+                  </Link>
+                  <button
+                    type='button'
+                    onClick={() =>
+                      deleteArticle(history, user.username, article._id)
+                    }
+                    className='btn btn-danger'
+                  >
+                    Eliminar Historia
+                  </button>
+                </Fragment>
+              )}
             </div>
           </div>
           {article.comments.length > 0 && (
@@ -77,6 +106,8 @@ const ShowArticle = ({
 
 ShowArticle.propTypes = {
   getArticleById: PropTypes.func.isRequired,
+  editArticle: PropTypes.func.isRequired,
+  deleteArticle: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
@@ -85,4 +116,8 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getArticleById })(ShowArticle);
+export default connect(mapStateToProps, {
+  getArticleById,
+  editArticle,
+  deleteArticle,
+})(ShowArticle);

@@ -633,3 +633,15 @@ button {
     width: 88%;
   }
 }
+
+.dialog {
+  box-shadow: 0 8px 6px -6px black;
+  position: static;
+  left: 26%;
+  top: 10%;
+  padding: 8px;
+}
+
+.modal-image-display {
+  width: 666px !important;
+}

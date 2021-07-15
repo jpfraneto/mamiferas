@@ -6,7 +6,6 @@ import {
   GET_PROFILE,
   GET_PROFILES,
   PROFILE_ERROR,
-  CLEAR_PROFILE_IMAGES,
   UPDATE_PROFILE,
   ACCOUNT_DELETED,
 } from './types';
@@ -55,6 +54,7 @@ export const getProfileByUsername = username => async dispatch => {
     });
     return res.data;
   } catch (err) {
+    console.log('there was an error here', err);
     dispatch({
       type: PROFILE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },

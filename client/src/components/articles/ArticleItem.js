@@ -44,6 +44,9 @@ const ArticleItem = ({
         <p className='post-date'>
           Escrita a las {pregnancyDate} el{' '}
           <Moment format='DD/MM/YYYY'>{date}</Moment>
+          {privada &&
+            username === auth.user.username &&
+            ' - Esta historia es privada, sólo tú la puedes ver 🔐🤫😳'}
         </p>
         {showActions && (
           <Fragment>

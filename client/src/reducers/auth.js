@@ -7,6 +7,7 @@ import {
   AUTH_ERROR,
   LOGOUT,
   ACCOUNT_DELETED,
+  UPDATE_PROFILE_PICTURE,
 } from '../actions/types';
 
 const initialState = {
@@ -34,6 +35,14 @@ export default function auth(state = initialState, action) {
       return {
         ...state,
         ...payload,
+        isAuthenticated: true,
+        loading: false,
+      };
+
+    case UPDATE_PROFILE_PICTURE:
+      return {
+        ...state,
+        user: payload,
         isAuthenticated: true,
         loading: false,
       };

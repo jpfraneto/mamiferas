@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllImages } from '../../actions/images';
 import { connect } from 'react-redux';
@@ -7,19 +7,21 @@ import { Image } from 'cloudinary-react';
 import PropTypes from 'prop-types';
 
 const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
+  const [loading2, setLoading2] = useState(true);
   useEffect(() => {
     getAllImages(globalImages);
+    setLoading2(false);
   }, [getAllImages]);
   return (
     <Fragment>
-      {globalImages.length === 0 || loading ? (
+      {loading || loading2 ? (
         <Spinner />
       ) : (
         <div style={{ textAlign: 'center' }}>
           <h1>Fotos</h1>
           {globalImages.length > 0 ? (
             <Fragment>
-              <p>Conecta con el proceso de otras mamás y sus vivencias</p>
+              <p>Estas son fotos que han sido compartidas en este lugar</p>
               {globalImages.map((image, index) => (
                 <Link key={index} to={`/images/${image._id}`}>
                   <img

@@ -25,17 +25,14 @@ const Profile = ({
       if (profileInfo && profileInfo.miracle) {
         const miracleDate = functions.calculateWeekFromNow(profileInfo.miracle);
         setBirthDate(miracleDate);
-        setLoading2(false);
       }
+      setLoading2(false);
     };
     getProfileInfo();
   }, [getProfileByUsername, match.params.username]);
   return (
     <Fragment>
-      {profile === null ||
-      match.params.username !== profile.username ||
-      loading ||
-      loading2 ? (
+      {profile === null || loading || loading2 ? (
         <Spinner />
       ) : (
         <Fragment>
@@ -52,8 +49,9 @@ const Profile = ({
           <div className='profile-grid my-1'>
             <ProfileTop birthDate={birthDate} profile={profile} />
             <ProfileAbout profile={profile} />
+            <ProfileArticles profile={profile} />
+            <ProfileImages profile={profile} />
           </div>
-          <ProfileArticles profile={profile} />
         </Fragment>
       )}
     </Fragment>

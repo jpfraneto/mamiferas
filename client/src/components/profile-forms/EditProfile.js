@@ -28,7 +28,6 @@ const EditProfile = ({
     twitter: '',
     instagram: '',
   });
-
   const [displaySocialInputs, toggleSocialInputs] = useState(false);
 
   useEffect(() => {
@@ -73,6 +72,10 @@ const EditProfile = ({
         <i className='fas fa-user'></i> Agrega información para poder conectar
         mejor con otras personas
       </p>
+      <Link to='/profile-image-update'>
+        <img className='round-img' src={''} alt='' />
+        Actualizar Foto de Perfil
+      </Link>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <input

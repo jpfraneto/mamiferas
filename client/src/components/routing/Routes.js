@@ -6,6 +6,7 @@ import EditProfile from '../profile-forms/EditProfile';
 import Profiles from '../profiles/Profiles';
 import Profile from '../profile/Profile';
 import Resources from '../resources/Resources';
+import ResourcesItem from '../resources/ResourcesItem';
 import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import Login from '../auth/Login';
@@ -21,6 +22,7 @@ import ProfileImageUpdate from '../profile-forms/ProfileImageUpdate';
 import Articles from '../articles/Articles';
 import WriteArticle from '../articles/WriteArticle';
 import ShowArticle from '../articles/ShowArticle';
+import EditArticle from '../articles/EditArticle';
 
 const Routes = () => {
   return (
@@ -30,6 +32,26 @@ const Routes = () => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/resources' component={Resources} />
+
+        <Route exact path='/resources/embarazo'>
+          <ResourcesItem tema={'Embarazo'} />
+        </Route>
+        <Route exact path='/resources/parto'>
+          <ResourcesItem tema={'Parto'} />
+        </Route>
+        <Route exact path='/resources/puerperio'>
+          <ResourcesItem tema={'Puerperio'} />
+        </Route>
+        <Route exact path='/resources/lactancia'>
+          <ResourcesItem tema={'Lactancia'} />
+        </Route>
+        <Route exact path='/resources/crianza'>
+          <ResourcesItem tema={'Crianza'} />
+        </Route>
+        <Route exact path='/resources/relacion-de-pareja'>
+          <ResourcesItem tema={'Relación de Pareja'} />
+        </Route>
+
         <Route exact path='/images' component={Images} />
         <PrivateRoute exact path='/images/new' component={AddImage} />
         <Route exact path='/images/:id' component={ImageDisplay} />
@@ -50,6 +72,7 @@ const Routes = () => {
         <Route exact path='/articles' component={Articles} />
         <PrivateRoute exact path='/articles/new' component={WriteArticle} />
         <Route exact path='/articles/:id' component={ShowArticle} />
+        <PrivateRoute exact path='/articles/:id/edit' component={EditArticle} />
 
         <Route component={NotFound} />
       </Switch>

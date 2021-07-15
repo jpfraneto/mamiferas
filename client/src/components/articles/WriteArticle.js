@@ -6,17 +6,25 @@ import { connect } from 'react-redux';
 import { addArticle } from '../../actions/article';
 import ReactMarkdown from 'react-markdown';
 import { getCurrentProfile } from '../../actions/profile';
+import functions from '../../utils/functions';
 import gfm from 'remark-gfm';
 
 const WriteArticle = ({ addArticle, history, user }) => {
   const [data, setData] = useState({
     title: 'Título',
     text: 'Texto',
+    pregnancyDate: '',
     privada: false,
   });
 
   const onChange = e => {
     setData({ ...data, [e.target.name]: e.target.value });
+  };
+
+  const togglePrivada = e => {
+    e.target.checked
+      ? setData({ ...data, privada: true })
+      : setData({ ...data, privada: false });
   };
 
   const onSubmit = e => {
@@ -32,7 +40,7 @@ const WriteArticle = ({ addArticle, history, user }) => {
     <div className='post-form'>
       <div className='post bg-white p-1 my-1'>
         <div>
-          <Link to={`/profile/jpfraneto`}>
+          <Link to={`/profile/${user.username}`}>
             <img className='round-img' src={user.avatar} alt='' />
             <h4>{user.name}</h4>
           </Link>
@@ -44,8 +52,10 @@ const WriteArticle = ({ addArticle, history, user }) => {
             {data.text}
           </ReactMarkdown>
           <p className='post-date'>
-            Escrita a las 28+4 el{' '}
+            Escrita a las {functions.calculateWeekFromNow(user.miracle)} el{' '}
             <Moment format='DD/MM/YYYY'>{new Date()}</Moment>
+            {data.privada &&
+              ' - Esta historia es privada, sólo tú la puedes ver 🔐🤫😳'}
           </p>
         </div>
       </div>
@@ -73,7 +83,11 @@ const WriteArticle = ({ addArticle, history, user }) => {
           </small>
         </div>
         <div className='form-group'>
-          <input type='checkbox' name='privada' onChange={e => onChange(e)} />
+          <input
+            type='checkbox'
+            name='privada'
+            onChange={e => togglePrivada(e)}
+          />
           <label htmlFor='privada'>
             {' '}
             ¿Quieres que esta historia sea privada?

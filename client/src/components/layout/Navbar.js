@@ -12,13 +12,13 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
       <li>
         <Link to='/articles'>Historias</Link>
       </li>
-
+      <li>
+        <Link to='/images'>Imágenes</Link>
+      </li>
       <li>
         <Link to='/profiles'>Perfiles</Link>
       </li>
-      {/* <li>
-        <Link to='/posts'>Escribir</Link>
-      </li> */}
+
       <li>
         <Link to={isAuthenticated ? `/profile/${user.username}` : '/'}>
           <FontAwesomeIcon icon={faUser} />{' '}

@@ -37,17 +37,13 @@ router.post(
           .json({ errors: [{ msg: 'User already exists! ' }] });
       }
 
-      const avatar = gravatar.url(email, {
-        s: '200',
-        r: 'pg',
-        d: 'mm',
-      });
-
       user = new User({
-        name,
-        email,
-        username,
-        avatar,
+        name: name.toLowerCase(),
+        email: email.toLowerCase(),
+        miracle: miracle,
+        username: username.toLowerCase(),
+        avatar:
+          'https://howtoapps.com/wp-content/uploads/2020/01/b9ed581c-cute-profile-pic-8-600x400.jpg',
         password,
       });
 
@@ -66,7 +62,7 @@ router.post(
       //Create profile
       const profileFields = {};
       profileFields.user = user._id;
-      profileFields.username = username;
+      profileFields.username = username.toLowerCase();
       profileFields.miracle = miracle;
       profileFields.location = '';
       profileFields.bio = '';

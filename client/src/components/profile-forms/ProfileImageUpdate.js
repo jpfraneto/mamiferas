@@ -60,11 +60,13 @@ const ProfileImageUpdate = ({
               style={{ height: '300px', width: 'auto' }}
             />
             <br />
-            <input
+            <button
               className='form-input btn btn-success'
               type='submit'
-              value='Actualizar foto de perfil'
-            />
+              value='Actualizar'
+            >
+              Actualizar
+            </button>
             <Link className='btn' to='/me'>
               Volver a tu Perfil
             </Link>
