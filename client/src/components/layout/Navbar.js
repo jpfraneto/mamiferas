@@ -1,23 +1,31 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faUser } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
+import NavItem from './NavItem';
+import DropdownMenu from './DropdownMenu';
 
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <ul>
-      <li>
-        <Link to='/articles'>Historias</Link>
-      </li>
-      <li>
-        <Link to='/images'>Imágenes</Link>
-      </li>
-      <li>
-        <Link to='/profiles'>Perfiles</Link>
-      </li>
+      <NavItem
+        name={'Recursos'}
+        linkRoute={'resources'}
+        elements={[
+          'Parto',
+          'Puerperio',
+          'Embarazo',
+          'Lactancia',
+          'Crianza',
+          'Relaciones',
+        ]}
+      />
+      <NavItem name={'Historias'} linkRoute={'articles'} />
+      <NavItem name={'Imágenes'} linkRoute={'images'} />
+      <NavItem name={'Perfiles'} linkRoute={'profiles'} />
 
       <li>
         <Link to={isAuthenticated ? `/profile/${user.username}` : '/'}>
@@ -36,12 +44,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
   const guestLinks = (
     <ul>
-      <li>
-        <Link to='/register'>Registrarse</Link>
-      </li>
-      <li>
-        <Link to='/login'>Iniciar Sesión</Link>
-      </li>
+      <NavItem name={'Registrarse'} linkRoute={'register'} />
+      <NavItem name={'Iniciar Sesión'} linkRoute={'login'} />
     </ul>
   );
 

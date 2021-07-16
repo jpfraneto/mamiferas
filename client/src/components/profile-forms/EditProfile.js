@@ -79,24 +79,15 @@ const EditProfile = ({
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
           <input
-            type='date'
-            name='miracle'
-            value={miracle}
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>
-            Fecha aproximada de cuando va a nacer tu bebé
-          </small>
-        </div>
-        <div className='form-group'>
-          <input
             type='text'
             placeholder='Ubicación'
             name='location'
             value={location}
             onChange={e => onChange(e)}
           />
-          <small className='form-text'>¿Dónde vives?</small>
+          <small className='form-text'>
+            ¿Dónde pasas la mayor parte de tu tiempo?
+          </small>
         </div>
 
         <div className='form-group'>
@@ -124,11 +115,14 @@ const EditProfile = ({
 
         {displaySocialInputs && (
           <Fragment>
+            <p>
+              Agrega la dirección de tu cuenta en las siguientes Redes Sociales:
+            </p>
             <div className='form-group '>
               <FontAwesomeIcon icon={faTwitter} />
               <input
                 type='text'
-                placeholder='Usuario de Twitter'
+                placeholder='Twitter'
                 name='twitter'
                 value={twitter}
                 onChange={e => onChange(e)}
@@ -139,7 +133,7 @@ const EditProfile = ({
               <FontAwesomeIcon icon={faFacebook} />
               <input
                 type='text'
-                placeholder='Usuario de Facebook'
+                placeholder='Facebook'
                 name='facebook'
                 value={facebook}
                 onChange={e => onChange(e)}
@@ -150,7 +144,7 @@ const EditProfile = ({
               <FontAwesomeIcon icon={faYoutube} />
               <input
                 type='text'
-                placeholder='Usuario de YouTube'
+                placeholder='YouTube'
                 name='youtube'
                 value={youtube}
                 onChange={e => onChange(e)}
@@ -161,7 +155,7 @@ const EditProfile = ({
               <FontAwesomeIcon icon={faInstagram} />
               <input
                 type='text'
-                placeholder='Usuario de Instagram'
+                placeholder='Instagram'
                 name='instagram'
                 value={instagram}
                 onChange={e => onChange(e)}

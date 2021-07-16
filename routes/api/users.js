@@ -38,7 +38,11 @@ router.post(
       }
 
       user = new User({
-        name: name.toLowerCase(),
+        name: name
+          .toLowerCase()
+          .split(' ')
+          .map(word => word[0].toUpperCase() + word.slice(1, word.length))
+          .join(' '),
         email: email.toLowerCase(),
         miracle: miracle,
         username: username.toLowerCase(),
@@ -77,7 +81,7 @@ router.post(
         { expiresIn: 360000 },
         (err, token) => {
           if (err) throw err;
-          res.json({ token });
+          res.json({ token, user });
         }
       );
     } catch (err) {

@@ -48,8 +48,8 @@ const Routes = () => {
         <Route exact path='/resources/crianza'>
           <ResourcesItem tema={'Crianza'} />
         </Route>
-        <Route exact path='/resources/relacion-de-pareja'>
-          <ResourcesItem tema={'Relación de Pareja'} />
+        <Route exact path='/resources/relaciones'>
+          <ResourcesItem tema={'Relaciones'} />
         </Route>
 
         <Route exact path='/images' component={Images} />

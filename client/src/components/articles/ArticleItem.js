@@ -23,7 +23,6 @@ const ArticleItem = ({
     pregnancyDate,
   },
   auth,
-  showActions,
 }) => {
   return (
     <div className='post bg-white p-1 my-1'>
@@ -48,17 +47,15 @@ const ArticleItem = ({
             username === auth.user.username &&
             ' - Esta historia es privada, sólo tú la puedes ver 🔐🤫😳'}
         </p>
-        {showActions && (
-          <Fragment>
-            {privada && auth.user.username !== username ? (
-              <p className='btn btn-primary'>🔐🤫😳 Esta historia es privada</p>
-            ) : (
-              <Link to={`/articles/${_id}`} className='btn btn-primary'>
-                Leer Más 💬 {comments.length}
-              </Link>
-            )}
-          </Fragment>
-        )}
+        <Fragment>
+          {privada && auth.user.username !== username ? (
+            <p className='btn btn-primary'>🔐🤫😳 Esta historia es privada</p>
+          ) : (
+            <Link to={`/articles/${_id}`} className='btn btn-primary'>
+              Leer Más 💬 {comments.length}
+            </Link>
+          )}
+        </Fragment>
       </div>
     </div>
   );
@@ -66,12 +63,7 @@ const ArticleItem = ({
 
 ArticleItem.propTypes = {
   addLike: PropTypes.func.isRequired,
-  article: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-};
-
-ArticleItem.defaultProps = {
-  showActions: true,
 };
 
 const mapStateToProps = state => ({

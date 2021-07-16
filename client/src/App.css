@@ -312,7 +312,6 @@ button {
   width: 100%;
   top: 0;
   border-bottom: solid 1px var(--primary-color);
-  opacity: 0.9;
 }
 
 .navbar ul {
@@ -332,6 +331,26 @@ button {
 
 .navbar .welcome span {
   margin-right: 0.6rem;
+}
+
+.dropdown {
+  position: absolute;
+  background-color: var(--primary-color);
+  top: 60px;
+  width: 300px;
+  transform: translateX(-45%);
+  overflow: hidden;
+}
+
+.menu-item {
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item:hover {
+  background-color: #1e7a88;
+  color: white;
 }
 
 /* Landing Page */

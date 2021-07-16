@@ -6,15 +6,13 @@ import { getProfiles } from '../../actions/profile';
 import ProfileItem from './ProfileItem';
 
 const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
-  const [loading2, setLoading2] = useState(true);
   useEffect(() => {
     getProfiles();
-    setLoading2(false);
   }, [getProfiles]);
 
   return (
     <Fragment>
-      {profiles === null || loading || loading2 ? (
+      {profiles === null || loading ? (
         <Spinner />
       ) : (
         <Fragment>
@@ -24,7 +22,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
             camino
           </p>
           <div className='profiles'>
-            {profiles.length > 0 ? (
+            {profiles.length > 0 || loading ? (
               profiles.map(profile => (
                 <ProfileItem key={profile._id} profile={profile} />
               ))

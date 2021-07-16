@@ -14,7 +14,6 @@ const functions = require('../../utils/functions');
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-    console.log(req);
     const articles = await Article.find({}).sort([['date', -1]]);
     res.json({ articles });
   } catch (err) {
@@ -40,7 +39,6 @@ router.post(
       const profile = await Profile.findOne({ user: req.user.id });
       const user = await User.findById(req.user.id).select('-password');
       const now = new Date();
-      const privada = req.body.privada === 'on' ? true : false;
       const newArticle = new Article({
         user: req.user.id,
         name: user.name,
@@ -49,7 +47,7 @@ router.post(
         text: req.body.text,
         avatar: profile.imageLink,
         date: now,
-        privada: privada,
+        privada: req.body.privada,
         pregnancyDate: functions.calculateWeekFromNow(profile.miracle),
       });
       await newArticle.save();
