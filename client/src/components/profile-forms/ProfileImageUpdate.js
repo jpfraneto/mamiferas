@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import AddImage from '../images/AddImage';
 import { getCurrentProfile } from '../../actions/profile';
-import { updateProfilePicture } from '../../actions/images';
+import { updateProfilePicture } from '../../actions/image';
 
 const ProfileImageUpdate = ({
   profile: { profile, loading },

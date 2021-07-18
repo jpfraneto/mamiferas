@@ -664,3 +664,14 @@ button {
 .modal-image-display {
   width: 666px !important;
 }
+
+.post-image-display {
+  width: 80% !important;
+  height: auto;
+  border: solid 4px black;
+}
+
+.round-img-for-update {
+  width: 111px;
+  border-radius: 9%;
+}

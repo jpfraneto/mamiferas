@@ -30,13 +30,25 @@ const Profile = ({
     };
     getProfileInfo();
   }, [getProfileByUsername, match.params.username]);
+  const handleGoBack = () => {
+    console.log('inside here!!');
+    if (history.location.state) {
+      history.push(history.location.state.returnTo);
+    } else {
+      history.goBack();
+    }
+  };
   return (
     <Fragment>
       {profile === null || loading || loading2 ? (
         <Spinner />
       ) : (
         <Fragment>
-          <button onClick={() => history.goBack()} className='btn btn-light'>
+          <button
+            type='button'
+            onClick={handleGoBack}
+            className='btn btn-light'
+          >
             Volver
           </button>
           {auth.isAuthenticated &&

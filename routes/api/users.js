@@ -65,6 +65,7 @@ router.post(
 
       //Create profile
       const profileFields = {};
+      profileFields.name = user.name;
       profileFields.user = user._id;
       profileFields.username = username.toLowerCase();
       profileFields.miracle = miracle;

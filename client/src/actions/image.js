@@ -6,7 +6,12 @@ import {
   GET_GLOBAL_IMAGES,
   POST_ERROR,
   CLEAR_IMAGE,
+  UPDATE_IMAGE,
+  DELETE_IMAGE,
   GET_PROFILE_IMAGES,
+  ADD_IMAGE_COMMENT,
+  REMOVE_IMAGE_COMMENT,
+  IMAGE_ERROR,
   UPDATE_PROFILE_PICTURE,
 } from './types';
 
@@ -73,7 +78,38 @@ export const uploadImage = (imageData, history, username) => async dispatch => {
 
     dispatch(setAlert(res.data.msg, 'success'));
 
-    history.push(`/profile/${username}`);
+    history.push(`/images/${res.data.imageId}`, {
+      returnTo: '/images',
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const updateImage = (history, imageData) => async dispatch => {
+  const body = JSON.stringify({ data: imageData });
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.put(`/api/images/${imageData.id}`, body, config);
+    dispatch({
+      type: UPDATE_IMAGE,
+      payload: res.data.updatedImage,
+    });
+
+    dispatch(setAlert(res.data.msg, 'success'));
+
+    history.push(`/images/${imageData.id}`, {
+      returnTo: '/images',
+    });
   } catch (err) {
     dispatch({
       type: POST_ERROR,
@@ -87,6 +123,21 @@ export const getProfileImages = id => async dispatch => {
     const res = await axios.get(`/api/images/user/${id}`);
     dispatch({
       type: GET_PROFILE_IMAGES,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+export const deleteImage = id => async dispatch => {
+  try {
+    const res = await axios.delete(`/api/images/${id}`);
+    dispatch({
+      type: DELETE_IMAGE,
       payload: res.data,
     });
   } catch (err) {
@@ -115,7 +166,9 @@ export const updateProfilePicture =
         type: UPDATE_PROFILE_PICTURE,
         payload: res.data.user,
       });
-      history.push(`/profile/${username}`);
+      history.push(`/profile/${username}`, {
+        returnTo: `/profile/${username}`,
+      });
     } catch (err) {
       dispatch({
         type: POST_ERROR,
@@ -123,6 +176,52 @@ export const updateProfilePicture =
       });
     }
   };
+
+// Add comment
+export const addComment = (imageId, formData) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  try {
+    const res = await axios.post(
+      `/api/images/comment/${imageId}`,
+      formData,
+      config
+    );
+
+    dispatch({
+      type: ADD_IMAGE_COMMENT,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Se agregó tu comentario a la imagen', 'success'));
+  } catch (err) {
+    dispatch({
+      type: IMAGE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Delete comment
+export const deleteComment = (imageId, commentId) => async dispatch => {
+  try {
+    await axios.delete(`/api/images/comment/${imageId}/${commentId}`);
+    dispatch({
+      type: REMOVE_IMAGE_COMMENT,
+      payload: { commentId: commentId, msg: 'Comment removed!' },
+    });
+    dispatch(setAlert('Se eliminó tu comentario de la imagen', 'success'));
+  } catch (err) {
+    dispatch({
+      type: IMAGE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 const compareImages = (imagesAlreadyLoaded, dataFromServer) => {
   const ids1 = imagesAlreadyLoaded.map(x => x._id);

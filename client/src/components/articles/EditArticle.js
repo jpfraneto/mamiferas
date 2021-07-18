@@ -26,7 +26,6 @@ const EditArticle = ({ match, getArticleById, editArticle, history }) => {
   useEffect(() => {
     const getThisArticle = async () => {
       const article = await getArticleById(match.params.id);
-      console.log('the article is:', article);
       const {
         _id,
         title,
@@ -77,6 +76,15 @@ const EditArticle = ({ match, getArticleById, editArticle, history }) => {
         <Spinner />
       ) : (
         <Fragment>
+          <button
+            type='button'
+            onClick={() => {
+              history.goBack();
+            }}
+            className='btn btn-light'
+          >
+            Volver
+          </button>
           <h1 className='text-primary'>Editar Historia:</h1>
           <div className='post-form'>
             <div className='post bg-white p-1 my-1'>
@@ -142,13 +150,6 @@ const EditArticle = ({ match, getArticleById, editArticle, history }) => {
                 className='btn btn-success my-1'
                 value='Actualizar Historia'
               />
-              <button
-                type='button'
-                onClick={() => history.goBack()}
-                className='btn btn-light'
-              >
-                Volver
-              </button>
             </form>
           </div>
         </Fragment>

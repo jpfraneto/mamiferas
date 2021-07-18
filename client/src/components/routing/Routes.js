@@ -23,6 +23,7 @@ import Articles from '../articles/Articles';
 import WriteArticle from '../articles/WriteArticle';
 import ShowArticle from '../articles/ShowArticle';
 import EditArticle from '../articles/EditArticle';
+import EditImage from '../images/EditImage';
 
 const Routes = () => {
   return (
@@ -55,6 +56,7 @@ const Routes = () => {
         <Route exact path='/images' component={Images} />
         <PrivateRoute exact path='/images/new' component={AddImage} />
         <Route exact path='/images/:id' component={ImageDisplay} />
+        <PrivateRoute exact path='/images/:id/edit' component={EditImage} />
         <Route exact path='/profiles' component={Profiles} />
         <PrivateRoute exact path='/profile/:username' component={Profile} />
         <Route exact path='/profile/:id/images' component={ProfileImages} />

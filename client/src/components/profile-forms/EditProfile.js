@@ -73,7 +73,8 @@ const EditProfile = ({
         mejor con otras personas
       </p>
       <Link to='/profile-image-update'>
-        <img className='round-img' src={''} alt='' />
+        <img className='round-img-for-update' src={profile.imageLink} alt='' />
+        <br />
         Actualizar Foto de Perfil
       </Link>
       <form className='form' onSubmit={e => onSubmit(e)}>

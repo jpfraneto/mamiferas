@@ -5,6 +5,12 @@ const ImageSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  name: {
+    type: String,
+  },
+  avatar: {
+    type: String,
+  },
   title: {
     type: String,
   },
@@ -16,6 +22,10 @@ const ImageSchema = new mongoose.Schema({
   },
   secure_url: {
     type: String,
+  },
+  updated: {
+    type: Boolean,
+    default: false,
   },
   likes: [
     {
@@ -53,6 +63,10 @@ const ImageSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  privada: {
+    type: Boolean,
+    default: false,
   },
 });
 

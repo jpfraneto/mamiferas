@@ -17,8 +17,9 @@ router.get('/', async (req, res) => {
     const articles = await Article.find({}).sort([['date', -1]]);
     res.json({ articles });
   } catch (err) {
+    console.log('the error is', err);
     res.status(500).json({
-      err: `There was an error retrieving the article ${req.params.id}`,
+      err: `There was an error retrieving the articles`,
     });
   }
 });
@@ -196,7 +197,6 @@ router.post(
 
 router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
   try {
-    console.log('inside here for deleting the article!');
     const article = await Article.findById(req.params.id);
     //pull out comment
     const comment = article.comments.find(
@@ -220,10 +220,6 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
     article.comments.splice(removeIndex, 1);
 
     await article.save();
-    console.log(
-      'the comment was deleted, and what is going to be returned is:',
-      article.comments
-    );
     res.json(article.comments);
   } catch (err) {
     console.log('there was an error deleting the comment', err);

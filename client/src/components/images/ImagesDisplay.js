@@ -1,9 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getAllImages } from '../../actions/images';
+import { getAllImages } from '../../actions/image';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
-import { Image } from 'cloudinary-react';
 import PropTypes from 'prop-types';
 
 const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
@@ -22,6 +21,10 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
           {globalImages.length > 0 ? (
             <Fragment>
               <p>Estas son fotos que han sido compartidas en este lugar</p>
+              <Link to='/images/new' className='btn'>
+                Agregar Nueva Foto
+              </Link>
+              <br />
               {globalImages.map((image, index) => (
                 <Link key={index} to={`/images/${image._id}`}>
                   <img
@@ -34,10 +37,6 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
           ) : (
             <p>Aún no hay fotos :(</p>
           )}
-          <br />
-          <Link to='/images/new' className='btn'>
-            Agregar Nueva
-          </Link>
         </div>
       )}
     </Fragment>

@@ -27,7 +27,10 @@ export const addArticle = (articleData, history) => async dispatch => {
       type: ADD_ARTICLE,
       payload: res.data.newArticle,
     });
-    history.push(`/articles`);
+    console.log('the new article is: ', res.data.newArticle);
+    history.push(`/articles/${res.data.newArticle._id}`, {
+      returnTo: '/articles',
+    });
   } catch (err) {
     dispatch({
       type: ARTICLE_ERROR,
@@ -69,7 +72,9 @@ export const getArticleById = id => async dispatch => {
 
 export const getArticles = () => async dispatch => {
   try {
+    console.log('getting the articles!');
     const res = await axios.get('/api/articles');
+    console.log('The response from the server is: ', res.data);
     dispatch({
       type: GET_ARTICLES,
       payload: res.data.articles,
@@ -102,7 +107,9 @@ export const editArticle =
         payload: res.data.updatedArticle,
       });
       dispatch(setAlert('Se editó tu historia', 'success'));
-      history.push(`/articles/${articleId}`);
+      history.push(`/articles/${articleId}`, {
+        returnTo: '/articles',
+      });
     } catch (err) {
       dispatch({
         type: ARTICLE_ERROR,

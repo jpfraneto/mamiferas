@@ -3,6 +3,10 @@ import {
   GET_IMAGE,
   GET_GLOBAL_IMAGES,
   CLEAR_IMAGE,
+  UPDATE_IMAGE,
+  IMAGE_ERROR,
+  ADD_IMAGE_COMMENT,
+  REMOVE_IMAGE_COMMENT,
   GET_PROFILE_IMAGES,
   CLEAR_PROFILE_IMAGES,
 } from '../actions/types';
@@ -51,10 +55,37 @@ export default function image(state = initialState, action) {
         userImages: payload,
         loading: false,
       };
+    case ADD_IMAGE_COMMENT:
+      return {
+        ...state,
+        image: { ...state.image, comments: payload.comments },
+        //Todo: add the comment to the image in the global images
+        loading: false,
+      };
+
+    case REMOVE_IMAGE_COMMENT:
+      return {
+        ...state,
+        image: {
+          ...state.image,
+          comments: state.image.comments.filter(
+            comment => comment._id !== payload.commentId
+          ),
+          loading: false,
+        },
+      };
+
     case UPLOAD_IMAGE:
+    case UPDATE_IMAGE:
       return {
         ...state,
         image: payload,
+        loading: false,
+      };
+    case IMAGE_ERROR:
+      return {
+        ...state,
+        error: payload,
         loading: false,
       };
     default:

@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { article } from 'cloudinary-react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
@@ -20,13 +19,20 @@ const ShowArticle = ({
   article: { article },
   match,
   getArticleById,
-  editArticle,
   deleteArticle,
 }) => {
   let history = useHistory();
   useEffect(() => {
     getArticleById(match.params.id);
   }, [getArticleById]);
+  const handleGoBack = () => {
+    console.log('inside here!!');
+    if (history.location.state) {
+      history.push(history.location.state.returnTo);
+    } else {
+      history.goBack();
+    }
+  };
   return (
     <Fragment>
       {article === null ||
@@ -37,7 +43,7 @@ const ShowArticle = ({
         <Fragment>
           <button
             type='button'
-            onClick={() => history.goBack()}
+            onClick={handleGoBack}
             className='btn btn-light'
           >
             Volver

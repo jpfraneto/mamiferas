@@ -100,7 +100,9 @@ export const updateProfile =
 
       dispatch(setAlert('El perfil fue actualizado', 'success'));
 
-      history.push(`/profile/${username}`);
+      history.push(`/profile/${username}`, {
+        returnTo: `/profiles`,
+      });
     } catch (err) {
       const errors = err.response.data.errors;
 

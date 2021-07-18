@@ -8,6 +8,9 @@ const ProfileSchema = new mongoose.Schema({
   username: {
     type: String,
   },
+  name: {
+    type: String,
+  },
   miracle: {
     type: Date,
   },

@@ -3,13 +3,13 @@ import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../layout/Spinner';
-import { uploadImage } from '../../actions/images';
+import functions from '../../utils/functions';
+import Moment from 'react-moment';
+import { uploadImage } from '../../actions/image';
 import { getCurrentProfile } from '../../actions/profile';
-import ReactMarkdown from 'react-markdown';
-import gfm from 'remark-gfm';
 
-const AddImage = ({ auth: { user }, uploadImage, history }) => {
-  let historyLog = useHistory();
+const AddImage = ({ auth: { user }, uploadImage }) => {
+  let history = useHistory();
   const [fileInputState, setFileInputState] = useState('');
   const [imageData, setImageData] = useState({
     title: '',
@@ -17,6 +17,7 @@ const AddImage = ({ auth: { user }, uploadImage, history }) => {
     text: '',
     previewSource: '',
     preview: false,
+    privada: false,
     uploading: false,
   });
 
@@ -30,7 +31,11 @@ const AddImage = ({ auth: { user }, uploadImage, history }) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        setImageData({ ...imageData, previewSource: reader.result });
+        setImageData({
+          ...imageData,
+          previewSource: reader.result,
+          preview: true,
+        });
       };
     } else {
       setImageData({ ...imageData, previewSource: '' });
@@ -51,94 +56,78 @@ const AddImage = ({ auth: { user }, uploadImage, history }) => {
   const onChange = e =>
     setImageData({ ...imageData, [e.target.name]: e.target.value });
 
-  const togglePreview = preview => {
-    if (imageData.title && imageData.text)
-      setImageData({ ...imageData, preview: preview });
-    else alert('Por favor agrega un título y un texto para la imagen!');
-  };
-
   return (
     <Fragment>
       {!imageData.uploading ? (
-        <div>
-          <h1 style={{ textAlign: 'center' }}>Agregar una nueva foto</h1>
-          <div className='image-display'>
-            {imageData.previewSource && (
-              <img
-                src={imageData.previewSource}
-                alt='chosen'
-                style={{ height: '300px', width: 'auto' }}
-              />
-            )}
-            {imageData.preview && (
-              <Fragment>
-                <p>
-                  <strong>
-                    <Link to={`/profile/${user.username}`}>
-                      {user.username}
-                    </Link>
-                  </strong>{' '}
-                  - {imageData.date}
-                </p>
-                <h1>{imageData.title}</h1>
-                <ReactMarkdown
-                  remarkPlugins={[gfm]}
-                  children={'string'}
-                  className='imageText'
-                >
-                  {imageData.text}
-                </ReactMarkdown>
-              </Fragment>
-            )}
+        <Fragment>
+          <button
+            type='button'
+            onClick={() => history.goBack()}
+            className='btn btn-light'
+          >
+            Volver
+          </button>
 
-            <hr />
-            <form onSubmit={handleSubmit}>
-              <input
-                onChange={handleFileInputChange}
-                type='file'
-                name='image'
-              />
-              <div className='form-group'>
-                <label>Título: </label>
-                <br />
+          <div className='post bg-white p-1 my-1'>
+            <div>
+              <Link to={`/profile/${user.username}`}>
+                <img className='round-img' src={user.avatar} alt='' />
+                <h4>{user.name}</h4>
+              </Link>
+            </div>
+            <div>
+              {imageData.previewSource && (
+                <img
+                  src={imageData.previewSource}
+                  alt='Image for Upload'
+                  className='post-image-display'
+                />
+              )}
+              <form onSubmit={e => handleSubmit(e)}>
+                <div className='form-group'>
+                  <label>Título: </label>
+                  <br />
+                  <input
+                    type='text'
+                    className='form-control'
+                    name='title'
+                    value={imageData.title}
+                    onChange={e => onChange(e)}
+                  />
+                </div>
+                <div className='form-group'>
+                  <label>Texto: </label>
+                  <br />
+                  <textarea
+                    type='text'
+                    className='form-control'
+                    rows='16'
+                    cols='44'
+                    name='text'
+                    value={imageData.text}
+                    onChange={e => onChange(e)}
+                  />
+                </div>
                 <input
-                  type='text'
-                  className='form-control'
-                  name='title'
-                  value={imageData.title}
-                  onChange={e => onChange(e)}
+                  onChange={handleFileInputChange}
+                  type='file'
+                  name='image'
                 />
-              </div>
-              <div className='form-group'>
-                <label>¿Qué te gustaría decir?: </label>
-                <br />
-                <textarea
-                  type='text'
-                  className='form-control'
-                  rows='16'
-                  cols='44'
-                  name='text'
-                  value={imageData.text}
-                  onChange={e => onChange(e)}
-                />
-              </div>
-              <button
-                className='btn btn-warning'
-                type='button'
-                onClick={() => {
-                  togglePreview(!imageData.preview);
-                }}
-              >
-                {!imageData.preview ? 'Previsualizar' : 'Editar'}
-              </button>
-              <button className='btn btn-success' type='submit'>
-                Subir!
-              </button>
-            </form>
 
-            <a onClick={() => historyLog.goBack()}>Volver</a>
+                <p className='post-date'>
+                  Publicada a las {functions.calculateWeekFromNow(user.miracle)}{' '}
+                  el <Moment format='DD/MM/YYYY'>{new Date()}</Moment>
+                  {imageData.privada &&
+                    ' - Esta foto es privada, sólo tú la puedes ver 🔐🤫😳'}
+                </p>
+
+                <button type='submit' className='btn btn-primary'>
+                  Subir Imagen
+                </button>
+              </form>
+            </div>
           </div>
-        </div>
+        </Fragment>
       ) : (
         <Fragment>
           <Spinner />

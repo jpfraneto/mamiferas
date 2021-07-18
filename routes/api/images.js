@@ -68,18 +68,54 @@ router.post('/', auth, async (req, res) => {
     );
     const newImage = new Image({
       username: profile.username,
+      name: profile.name,
       title: req.body.data.title,
       alt: '',
       pregnancyDate: functions.calculateWeekFromNow(profile.miracle),
       secure_url: uploadedResponse.secure_url,
+      avatar: profile.imageLink,
       text: req.body.data.text,
     });
     await newImage.save();
     profile.images.unshift(newImage);
     await profile.save();
-    res.json({ msg: 'La imagen fue agregada a tu perfil!' });
+    res.json({
+      imageId: newImage._id,
+      msg: 'La imagen fue agregada a tu perfil!',
+    });
   } catch (error) {
     console.log('ooops, there was an error');
+    res.status(500).json({ err: 'Something went wrong uploading the image' });
+  }
+});
+
+// @route   PUT api/images/:id
+// @desc    Update an image
+// @access  Private
+
+router.put('/:id', auth, async (req, res) => {
+  try {
+    const image = await Image.findById(req.params.id);
+    const profile = await Profile.findOne({ user: req.user.id }).select(
+      '-password'
+    );
+
+    image.title = req.body.data.title;
+    image.text = req.body.data.text;
+    image.updated = true;
+
+    await image.save();
+    const index = profile.images.indexOf(image._id);
+
+    profile.images[index] = image;
+    await profile.save();
+
+    res.json({
+      updatedImage: image,
+      msg: 'La imagen fue actualizada en tu perfil!',
+    });
+  } catch (err) {
+    console.log('Oops, the following error happened: ', err);
     res.status(500).json({ err: 'Something went wrong uploading the image' });
   }
 });
@@ -111,6 +147,81 @@ router.post('/update-profile-picture', auth, async (req, res) => {
   } catch (err) {
     console.log('the err is: ', err);
     res.status(500).json({ err: 'Something went wrong uploading the image' });
+  }
+});
+
+// @route   POST api/images/comment/:id
+// @desc    Comment on an image
+// @access  Private
+
+router.post(
+  '/comment/:id',
+  [auth, [check('text', 'Text is required').not().isEmpty()]],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const user = await User.findById(req.user.id).select('-password');
+      const image = await Image.findById(req.params.id);
+      const profile = await Profile.findOne({ user: req.user.id });
+
+      const newComment = {
+        text: req.body.text,
+        name: user.name,
+        avatar: profile.imageLink,
+        username: profile.username,
+        user: req.user.id,
+      };
+
+      image.comments.push(newComment);
+      await image.save();
+
+      res.json(image);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error!');
+    }
+  }
+);
+
+// @route   DELETE api/images/comment/:id/:comment_id
+// @desc    Delete a comment on an image
+// @access  Private
+
+router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
+  try {
+    const image = await Image.findById(req.params.id);
+    //pull out comment
+    const comment = image.comments.find(
+      comment => comment.id === req.params.comment_id
+    );
+
+    //Make sure comment exists
+    if (!comment)
+      return res.status(404).json({ msg: 'Comment does not exist' });
+
+    //Check user
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+
+    //Get the remove index
+    const removeIndex = image.comments
+      .map(comment => comment.user.toString())
+      .indexOf(req.user.id);
+
+    image.comments.splice(removeIndex, 1);
+
+    await image.save();
+
+    res.json(image.comments);
+  } catch (err) {
+    console.log('there was an error deleting the comment', err);
+    console.error(err.message);
+    res.status(500).send('Server error!');
   }
 });
 

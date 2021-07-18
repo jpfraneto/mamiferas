@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
-import { deleteComment } from '../../actions/article';
+import { deleteComment } from '../../actions/image';
 
 const CommentItem = ({
-  articleId,
+  imageId,
   comment: { _id, text, name, avatar, username, user, date },
   auth,
   deleteComment,
@@ -30,7 +30,7 @@ const CommentItem = ({
           <button
             type='button'
             className='btn btn-danger'
-            onClick={e => deleteComment(articleId, _id)}
+            onClick={e => deleteComment(imageId, _id)}
           >
             Eliminar Comentario
           </button>

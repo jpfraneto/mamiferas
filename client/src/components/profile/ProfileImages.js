@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Image } from 'cloudinary-react';
-import { getProfileImages } from '../../actions/images';
+import { getProfileImages } from '../../actions/image';
 
 const ProfileImages = ({
   images,
