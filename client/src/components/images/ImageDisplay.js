@@ -20,13 +20,12 @@ const ImageDisplay = ({
 }) => {
   let history = useHistory();
   const [loading2, setLoading2] = useState(true);
+  const [toggleComment, setToggleComment] = useState(true);
   useEffect(() => {
     getImage(globalImages, match.params.id);
     setLoading2(false);
-    console.log('la imagen es: ', image);
   }, [getImage]);
   const handleGoBack = () => {
-    console.log('inside here!!');
     if (history.location.state) {
       history.push(history.location.state.returnTo);
     } else {
@@ -48,17 +47,27 @@ const ImageDisplay = ({
           </button>
           <div className='post bg-white p-1 my-1'>
             <div>
-              <Link to={`/profile/${image.username}`}>
-                <img className='round-img' src={image.avatar} alt='' />
-                <h4>{image.name}</h4>
-              </Link>
+              {image.systemUser ? (
+                <Link to={`/profile/${image.username}`}>
+                  <img className='round-img' src={image.avatar} alt='' />
+                  <h4>{image.name}</h4>
+                </Link>
+              ) : (
+                <Fragment>
+                  <img className='round-img' src={image.avatar} alt='' />
+                  <h4>{image.name}</h4>
+                </Fragment>
+              )}
             </div>
             <div>
-              <img
-                className='post-image-display'
-                src={image.secure_url}
-                alt={image.alt}
-              />
+              {image.secure_url.length > 0 && (
+                <img
+                  className='post-image-display'
+                  src={image.secure_url}
+                  alt={image.alt}
+                />
+              )}
+
               <h1>{image.title}</h1>
               <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
                 {image.text}
@@ -67,7 +76,7 @@ const ImageDisplay = ({
                 Publicada a las {image.pregnancyDate} el{' '}
                 <Moment format='DD/MM/YYYY'>{image.date}</Moment>
                 {image.privada &&
-                  ' - Esta foto es privada, sólo tú la puedes ver 🔐🤫😳'}
+                  ' - Esta crónica es privada, sólo tú la puedes ver 🔐🤫😳'}
               </p>
 
               {user && user.username === image.username && (
@@ -77,7 +86,7 @@ const ImageDisplay = ({
                     type='button'
                     className='btn btn-primary'
                   >
-                    Editar Imagen
+                    Editar
                   </Link>
                   <button
                     type='button'
@@ -86,7 +95,7 @@ const ImageDisplay = ({
                     }
                     className='btn btn-danger'
                   >
-                    Eliminar Imagen
+                    Eliminar
                   </button>
                 </Fragment>
               )}
@@ -104,7 +113,13 @@ const ImageDisplay = ({
               />
             ))}
           </div>
-          {isAuthenticated && <CommentForm imageId={image._id} />}
+          {toggleComment && (
+            <CommentForm
+              imageId={image._id}
+              username={user ? user.username : ''}
+              setLoading2={setLoading2}
+            />
+          )}
         </Fragment>
       )}
     </Fragment>
@@ -113,6 +128,7 @@ const ImageDisplay = ({
 
 ImageDisplay.propTypes = {
   getImage: PropTypes.func.isRequired,
+  deleteImage: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
 };
 
@@ -121,4 +137,6 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getImage })(ImageDisplay);
+export default connect(mapStateToProps, { getImage, deleteImage })(
+  ImageDisplay
+);

@@ -4,6 +4,7 @@ import {
   GET_GLOBAL_IMAGES,
   CLEAR_IMAGE,
   UPDATE_IMAGE,
+  DELETE_IMAGE,
   IMAGE_ERROR,
   ADD_IMAGE_COMMENT,
   REMOVE_IMAGE_COMMENT,
@@ -74,12 +75,22 @@ export default function image(state = initialState, action) {
           loading: false,
         },
       };
+    case DELETE_IMAGE:
+      return {
+        ...state,
+        image: null,
+        globalImages: state.globalImages.filter(
+          image => image._id !== payload.imageId
+        ),
+        loading: false,
+      };
 
     case UPLOAD_IMAGE:
     case UPDATE_IMAGE:
       return {
         ...state,
         image: payload,
+        globalImages: [payload, ...state.globalImages],
         loading: false,
       };
     case IMAGE_ERROR:

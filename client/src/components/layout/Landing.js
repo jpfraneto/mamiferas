@@ -32,11 +32,11 @@ const Landing = ({ isAuthenticated }) => {
             </div>
           ) : (
             <div className='buttons'>
-              <Link to='/articles' className='btn btn-light'>
-                Historias
+              <Link to='/images' className='btn btn-light'>
+                Historias de Parto
               </Link>
-              <Link to='/images' className='btn btn-primary'>
-                Imágenes
+              <Link to='/articles' className='btn btn-primary'>
+                Crónicas de Embarazo
               </Link>
             </div>
           )}

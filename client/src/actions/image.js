@@ -20,7 +20,6 @@ export const getAllImages = globalImages => async dispatch => {
     const res = await axios.get('/api/images');
     const returnedDataFromServer = res.data;
     const newImages = compareImages(globalImages, returnedDataFromServer);
-
     dispatch({
       type: GET_GLOBAL_IMAGES,
       payload: newImages,
@@ -60,7 +59,7 @@ export const getImage = (globalImages, id) => async dispatch => {
   }
 };
 
-export const uploadImage = (imageData, history, username) => async dispatch => {
+export const uploadImage = (imageData, history) => async dispatch => {
   const body = JSON.stringify({ data: imageData });
 
   const config = {
@@ -73,17 +72,17 @@ export const uploadImage = (imageData, history, username) => async dispatch => {
     const res = await axios.post('/api/images', body, config);
     dispatch({
       type: UPLOAD_IMAGE,
-      payload: res.data,
+      payload: res.data.newImage,
     });
 
     dispatch(setAlert(res.data.msg, 'success'));
 
-    history.push(`/images/${res.data.imageId}`, {
+    history.push(`/images/${res.data.newImage._id}`, {
       returnTo: '/images',
     });
   } catch (err) {
     dispatch({
-      type: POST_ERROR,
+      type: IMAGE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status },
     });
   }
@@ -133,18 +132,25 @@ export const getProfileImages = id => async dispatch => {
   }
 };
 
-export const deleteImage = id => async dispatch => {
-  try {
-    const res = await axios.delete(`/api/images/${id}`);
-    dispatch({
-      type: DELETE_IMAGE,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: POST_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
+export const deleteImage = (history, username, id) => async dispatch => {
+  if (window.confirm('¿Estás segur@ que quieres borrar esta crónica?')) {
+    try {
+      const res = await axios.delete(`/api/images/${id}`);
+      dispatch({
+        type: DELETE_IMAGE,
+        payload: res.data,
+      });
+      dispatch(setAlert('Se eliminó tu crónica', 'success'));
+      history.push(`/images`);
+    } catch (err) {
+      dispatch({
+        type: POST_ERROR,
+        payload: {
+          msg: err.response.statusText,
+          status: err.response.status,
+        },
+      });
+    }
   }
 };
 

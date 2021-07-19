@@ -54,7 +54,7 @@ const Routes = () => {
         </Route>
 
         <Route exact path='/images' component={Images} />
-        <PrivateRoute exact path='/images/new' component={AddImage} />
+        <Route exact path='/images/new' component={AddImage} />
         <Route exact path='/images/:id' component={ImageDisplay} />
         <PrivateRoute exact path='/images/:id/edit' component={EditImage} />
         <Route exact path='/profiles' component={Profiles} />
@@ -72,8 +72,8 @@ const Routes = () => {
         <PrivateRoute exact path='/posts/:id' component={Post} />
 
         <Route exact path='/articles' component={Articles} />
-        <PrivateRoute exact path='/articles/new' component={WriteArticle} />
         <Route exact path='/articles/:id' component={ShowArticle} />
+        <Route exact path='/articles/new' component={WriteArticle} />
         <PrivateRoute exact path='/articles/:id/edit' component={EditArticle} />
 
         <Route component={NotFound} />

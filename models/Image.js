@@ -1,15 +1,24 @@
 const mongoose = require('mongoose');
 
 const ImageSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  },
+  imageType: {
+    type: String,
+  },
   username: {
     type: String,
-    required: true,
   },
   name: {
     type: String,
   },
   avatar: {
     type: String,
+  },
+  systemUser: {
+    type: Boolean,
   },
   title: {
     type: String,
@@ -37,10 +46,6 @@ const ImageSchema = new mongoose.Schema({
   ],
   comments: [
     {
-      user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
-      },
       text: {
         type: String,
         required: true,
@@ -49,6 +54,9 @@ const ImageSchema = new mongoose.Schema({
         type: String,
       },
       avatar: {
+        type: String,
+      },
+      username: {
         type: String,
       },
       date: {

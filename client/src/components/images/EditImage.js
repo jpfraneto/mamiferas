@@ -12,6 +12,7 @@ const EditImage = ({ updateImage, image, auth: { user, isAuthenticated } }) => {
     title: image.title,
     text: image.text,
     id: image._id,
+    privada: image.privada,
   });
   const onChange = e => {
     setData({ ...data, [e.target.name]: e.target.value });
@@ -19,6 +20,12 @@ const EditImage = ({ updateImage, image, auth: { user, isAuthenticated } }) => {
   const handleSubmit = e => {
     e.preventDefault();
     updateImage(history, data);
+  };
+
+  const togglePrivada = e => {
+    e.target.checked
+      ? setData({ ...data, privada: true })
+      : setData({ ...data, privada: false });
   };
 
   return (
@@ -40,11 +47,13 @@ const EditImage = ({ updateImage, image, auth: { user, isAuthenticated } }) => {
               </Link>
             </div>
             <div>
-              <img
-                className='post-image-display'
-                src={image.secure_url}
-                alt={image.alt}
-              />
+              {image.secure_url.length > 0 && (
+                <img
+                  className='post-image-display'
+                  src={image.secure_url}
+                  alt={image.alt}
+                />
+              )}
               <form onSubmit={e => handleSubmit(e)}>
                 <div className='form-group'>
                   <input
@@ -66,21 +75,33 @@ const EditImage = ({ updateImage, image, auth: { user, isAuthenticated } }) => {
                     onChange={e => onChange(e)}
                   />
                 </div>
+                <div className='form-group'>
+                  <input
+                    type='checkbox'
+                    name='privada'
+                    checked={data.privada}
+                    onChange={e => togglePrivada(e)}
+                  />
+                  <label htmlFor='privada'>
+                    {' '}
+                    Quiero que esté disponible solo para mí.
+                  </label>
+                </div>
                 <p className='post-date'>
                   Publicada a las {image.pregnancyDate} el{' '}
                   <Moment format='DD/MM/YYYY'>{image.date}</Moment>
-                  {image.privada &&
-                    ' - Esta foto es privada, sólo tú la puedes ver 🔐🤫😳'}
+                  {data.privada &&
+                    ' - Esta crónica es privada, sólo tú la puedes ver 🔐🤫😳'}
                 </p>
                 <button type='submit' className='btn btn-primary'>
-                  Actualizar Imagen
+                  Actualizar
                 </button>
                 <button
                   type='button'
                   onClick={() => deleteImage(history, user.username, image._id)}
                   className='btn btn-danger'
                 >
-                  Eliminar Imagen
+                  Eliminar
                 </button>
               </form>
             </div>

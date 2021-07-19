@@ -14,7 +14,7 @@ const functions = require('../../utils/functions');
 
 router.get('/', async (req, res) => {
   try {
-    const globalImages = await Image.find({});
+    const globalImages = await Image.find({}).sort([['date', -1]]);
     res.json({ globalImages });
   } catch (err) {
     res.status(500).json({ err: 'Something went wrong getting the images' });
@@ -43,6 +43,7 @@ router.get('/user/:id', auth, async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
+    console.log('the image is: ', image);
     res.json(image);
   } catch (err) {
     res
@@ -55,35 +56,59 @@ router.get('/:id', async (req, res) => {
 // @desc    Upload image and add it to the profile of the user that is logged in
 // @access  Private
 
-router.post('/', auth, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
-    const uploadedResponse = await cloudinary.uploader.upload(
-      req.body.data.previewSource,
-      {
-        upload_preset: 'mamiferas_media',
-      }
-    );
-    const profile = await Profile.findOne({ user: req.user.id }).select(
-      '-password'
-    );
+    var imageType = req.body.data.imageType;
+    var secure_url = '';
+    var systemUser = false;
+    var user,
+      profile,
+      pregnancyDate = null;
+    var username = req.body.data.username || null;
+    var name = req.body.data.name;
+    var avatar =
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG';
+    if (req.body.data.previewSource) {
+      const uploadedResponse = await cloudinary.uploader.upload(
+        req.body.data.previewSource,
+        {
+          upload_preset: 'mamiferas_media',
+        }
+      );
+      secure_url = uploadedResponse.secure_url;
+    }
+    if (username) {
+      profile = await Profile.findOne({ username }).select('-password');
+      username = profile.username;
+      name = profile.name;
+      pregnancyDate = functions.calculateWeekFromNow(profile.miracle);
+      avatar = profile.imageLink;
+      systemUser = true;
+    }
     const newImage = new Image({
-      username: profile.username,
-      name: profile.name,
+      user,
+      username,
+      name,
+      imageType,
       title: req.body.data.title,
-      alt: '',
-      pregnancyDate: functions.calculateWeekFromNow(profile.miracle),
-      secure_url: uploadedResponse.secure_url,
-      avatar: profile.imageLink,
+      pregnancyDate,
+      secure_url,
+      privada: req.body.data.privada,
+      avatar,
+      systemUser,
       text: req.body.data.text,
     });
     await newImage.save();
-    profile.images.unshift(newImage);
-    await profile.save();
+    if (profile) {
+      profile.images.unshift(newImage);
+      await profile.save();
+    }
     res.json({
-      imageId: newImage._id,
-      msg: 'La imagen fue agregada a tu perfil!',
+      newImage,
+      msg: 'La crónica fue agregada a tu perfil!',
     });
-  } catch (error) {
+  } catch (err) {
+    console.log('the error is:', err);
     console.log('ooops, there was an error');
     res.status(500).json({ err: 'Something went wrong uploading the image' });
   }
@@ -112,7 +137,7 @@ router.put('/:id', auth, async (req, res) => {
 
     res.json({
       updatedImage: image,
-      msg: 'La imagen fue actualizada en tu perfil!',
+      msg: 'La crónica fue actualizada en tu perfil!',
     });
   } catch (err) {
     console.log('Oops, the following error happened: ', err);
@@ -156,7 +181,7 @@ router.post('/update-profile-picture', auth, async (req, res) => {
 
 router.post(
   '/comment/:id',
-  [auth, [check('text', 'Text is required').not().isEmpty()]],
+  [[check('text', 'Text is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -164,21 +189,29 @@ router.post(
     }
 
     try {
-      const user = await User.findById(req.user.id).select('-password');
+      let username = req.body.username;
+      let name = username;
+      let avatar =
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG';
+      const user = await User.findOne({ username: req.body.username }).select(
+        '-password'
+      );
+      const profile = await Profile.findOne({ username: req.body.username });
+      if (user && profile) {
+        name = user.name;
+        avatar = profile.imageLink;
+      }
       const image = await Image.findById(req.params.id);
-      const profile = await Profile.findOne({ user: req.user.id });
 
       const newComment = {
         text: req.body.text,
-        name: user.name,
-        avatar: profile.imageLink,
-        username: profile.username,
-        user: req.user.id,
+        name,
+        avatar,
+        username,
       };
 
       image.comments.push(newComment);
       await image.save();
-
       res.json(image);
     } catch (err) {
       console.error(err.message);
@@ -186,6 +219,36 @@ router.post(
     }
   }
 );
+
+// @route   DELETE api/images/:id
+// @desc    Delete a specific image
+// @access  Private
+
+router.delete('/:id', auth, async (req, res) => {
+  try {
+    const image = await Image.findById(req.params.id);
+
+    if (!image) {
+      return res.status(404).json({ msg: 'No image found with that ID' });
+    }
+    const user = await User.findOne({ _id: req.user.id });
+
+    //Check ownership of the image
+    if (image.username !== user.username) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+
+    await image.remove();
+
+    res.json({ imageId: image._id, msg: 'La crónica fue eliminada' });
+  } catch (err) {
+    console.log('the error is:', err);
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'No image found with that ID' });
+    }
+    res.status(500).send('Server error!');
+  }
+});
 
 // @route   DELETE api/images/comment/:id/:comment_id
 // @desc    Delete a comment on an image

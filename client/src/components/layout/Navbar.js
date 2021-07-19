@@ -23,8 +23,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           'Relaciones',
         ]}
       />
-      <NavItem name={'Historias'} linkRoute={'articles'} />
-      <NavItem name={'Imágenes'} linkRoute={'images'} />
+      <NavItem name={'Historias de Parto'} linkRoute={'images'} />
+      <NavItem name={'Crónicas de Embarazo'} linkRoute={'articles'} />
       <NavItem name={'Perfiles'} linkRoute={'profiles'} />
 
       <li>
@@ -44,6 +44,19 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
   const guestLinks = (
     <ul>
+      <NavItem
+        name={'Recursos'}
+        linkRoute={'resources'}
+        elements={[
+          'Parto',
+          'Puerperio',
+          'Embarazo',
+          'Lactancia',
+          'Crianza',
+          'Relaciones',
+        ]}
+      />
+      <NavItem name={'Historias de Parto'} linkRoute={'images'} />
       <NavItem name={'Registrarse'} linkRoute={'register'} />
       <NavItem name={'Iniciar Sesión'} linkRoute={'login'} />
     </ul>

@@ -61,7 +61,6 @@ const Profile = ({
           <div className='profile-grid my-1'>
             <ProfileTop birthDate={birthDate} profile={profile} />
             <ProfileAbout profile={profile} />
-            <ProfileArticles profile={profile} />
             <ProfileImages profile={profile} />
           </div>
         </Fragment>

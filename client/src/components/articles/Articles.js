@@ -21,13 +21,10 @@ const Article = ({
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='large text-primary'>Historias</h1>
-      <p className='lead'>
-        Acá hay una lista de historias que futur@s mamás y papás han
-        compartido...
-      </p>
+      <h1 className='large text-primary'>Crónicas de Embarazo</h1>
+      <p className='lead'>Que han sido compartidas en este espacio</p>
       <Link className='btn btn-primary' to={'/articles/new'}>
-        Escribir Historia
+        Agregar Nueva Crónica
       </Link>
 
       <div className='posts'>

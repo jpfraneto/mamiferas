@@ -4,9 +4,12 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/image';
 
-const CommentForm = ({ imageId, addComment }) => {
+const CommentForm = ({ setLoading2, imageId, username, addComment }) => {
   let history = useHistory();
-  const [text, setText] = useState('');
+  const [data, setData] = useState({
+    text: '',
+    username,
+  });
   return (
     <div className='post-form'>
       <div className='bg-primary p'>
@@ -16,17 +19,34 @@ const CommentForm = ({ imageId, addComment }) => {
         className='form my-1'
         onSubmit={e => {
           e.preventDefault();
-          addComment(imageId, { text });
-          setText('');
+          addComment(imageId, data);
+          setLoading2(true);
+          setTimeout(() => {
+            setLoading2(false);
+          }, 1618);
+          setData({ ...data, text: '' });
         }}
       >
+        {username.length > 0 ? (
+          ''
+        ) : (
+          <div className='form-group'>
+            <input
+              type='text'
+              className='form-control'
+              name='name'
+              onChange={e => setData({ ...data, username: e.target.value })}
+            />
+            <small>Tu nombre</small>
+          </div>
+        )}
         <textarea
           name='text'
           cols='30'
           rows='5'
           placeholder='Escribe acá...'
-          value={text}
-          onChange={e => setText(e.target.value)}
+          value={data.text}
+          onChange={e => setData({ ...data, text: e.target.value })}
           required
         ></textarea>
         <input

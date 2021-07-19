@@ -22,7 +22,7 @@ const ProfileImages = ({
           {images && images.length > 0 ? (
             <Fragment>
               <h1>
-                Fotos compartidas por <strong>{username}</strong>
+                Crónicas compartidas por <strong>{username}</strong>
               </h1>
               {images.map((image, index) => (
                 <Link key={index} to={`/images/${image._id}`}>
@@ -32,7 +32,7 @@ const ProfileImages = ({
               ))}
             </Fragment>
           ) : (
-            <h1>{username} todavía no comparte ninguna foto.</h1>
+            <h1>{username} todavía no comparte ninguna crónica.</h1>
           )}
           <br />
           {loggedInUsername === username && (

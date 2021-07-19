@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getAllImages } from '../../actions/image';
 import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
+import ImageItem from './ImageItem';
 import PropTypes from 'prop-types';
 
 const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
@@ -16,23 +17,22 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
       {loading || loading2 ? (
         <Spinner />
       ) : (
-        <div style={{ textAlign: 'center' }}>
-          <h1>Fotos</h1>
+        <div>
           {globalImages.length > 0 ? (
             <Fragment>
-              <p>Estas son fotos que han sido compartidas en este lugar</p>
+              <h1 className='large text-primary'>Historias de Parto</h1>
+              <p className='lead'>
+                Escritas y compartidas para honrar este increíble momento, y
+                para empoderar a futuros papás y mamás en su proceso.
+              </p>
               <Link to='/images/new' className='btn'>
-                Agregar Nueva Foto
+                Escribir Historia de Parto
               </Link>
-              <br />
-              {globalImages.map((image, index) => (
-                <Link key={index} to={`/images/${image._id}`}>
-                  <img
-                    className='profile-image-display'
-                    src={image.secure_url}
-                  />
-                </Link>
-              ))}
+              <div className='posts'>
+                {globalImages.map((image, index) => (
+                  <ImageItem key={image._id} image={image} />
+                ))}
+              </div>
             </Fragment>
           ) : (
             <p>Aún no hay fotos :(</p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -14,10 +14,17 @@ const CommentItem = ({
   return (
     <div className='post bg-comment p-1 my-1'>
       <div>
-        <Link to={`/profile/${username}`}>
-          <img className='round-img' src={avatar} alt='' />
-          <h4>{name}</h4>
-        </Link>
+        {username ? (
+          <Link to={`/profile/${username}`}>
+            <img className='round-img' src={avatar} alt='' />
+            <h4>{name}</h4>
+          </Link>
+        ) : (
+          <Fragment>
+            <img className='round-img' src={avatar} alt='' />
+            <h4>{name}</h4>
+          </Fragment>
+        )}
       </div>
       <div>
         <p className='my-1'>{text}</p>
