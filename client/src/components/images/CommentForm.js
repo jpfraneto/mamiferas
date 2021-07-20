@@ -19,6 +19,9 @@ const CommentForm = ({ setLoading2, imageId, username, addComment }) => {
         className='form my-1'
         onSubmit={e => {
           e.preventDefault();
+          if (username) {
+            setData({ ...data, username });
+          }
           addComment(imageId, data);
           setLoading2(true);
           setTimeout(() => {

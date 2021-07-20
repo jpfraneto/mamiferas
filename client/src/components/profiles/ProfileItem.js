@@ -28,7 +28,7 @@ const ProfileItem = ({
             <span>Aún no sabemos cuándo nace su bebé</span>
           )}
         </p>
-        <p>Ha escrito {articles.length} historias</p>
+        <p>Ha escrito {articles.length} crónicas</p>
         <p className='my-1'>{location && <span>🌏🗺 {location}</span>}</p>
         <Link to={`/profile/${username}`} className='btn btn-primary'>
           Ver Perfil

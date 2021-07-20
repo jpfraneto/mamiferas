@@ -26,10 +26,22 @@ const ImageItem = ({
   return (
     <div className='post bg-white p-1 my-1'>
       <div>
-        <Link to={`/profile/${username}`}>
-          <img className='round-img' src={avatar} alt='' />
-          <h4>{name}</h4>
-        </Link>
+        {username ? (
+          <Link to={`/profile/${username}`}>
+            <img className='round-img' src={avatar} alt='' />
+            <h4>{name}</h4>
+          </Link>
+        ) : (
+          <Fragment>
+            <img
+              className='round-img'
+              src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG'
+              alt=''
+            />
+            <h4>{name}</h4>
+            <small>Invitad@</small>
+          </Fragment>
+        )}
       </div>
       <div>
         <h3>{title}</h3>

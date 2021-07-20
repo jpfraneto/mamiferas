@@ -84,8 +84,6 @@ export default function article(state = initialSate, action) {
       };
 
     case REMOVE_COMMENT:
-      console.log('inside the remove comment reducer');
-      console.log('the payload is:', payload);
       return {
         ...state,
         article: {

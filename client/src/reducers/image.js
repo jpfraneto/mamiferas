@@ -61,6 +61,10 @@ export default function image(state = initialState, action) {
         ...state,
         image: { ...state.image, comments: payload.comments },
         //Todo: add the comment to the image in the global images
+        globalImages: state.globalImages.map(image => {
+          if (payload._id === image._id) return payload;
+          return image;
+        }),
         loading: false,
       };
 
@@ -74,6 +78,14 @@ export default function image(state = initialState, action) {
           ),
           loading: false,
         },
+        globalImages: state.globalImages.map(image => {
+          if (image._id === payload.imageId) {
+            image.comments = image.comments.filter(
+              comment => comment._id !== payload.commentId
+            );
+          }
+          return image;
+        }),
       };
     case DELETE_IMAGE:
       return {

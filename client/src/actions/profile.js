@@ -89,13 +89,10 @@ export const updateProfile =
         },
       };
       const res = await axios.post('/api/profile', formData, config);
+
       dispatch({
         type: UPDATE_PROFILE,
         payload: res.data,
-      });
-
-      dispatch({
-        type: CLEAR_PROFILE,
       });
 
       dispatch(setAlert('El perfil fue actualizado', 'success'));

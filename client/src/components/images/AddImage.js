@@ -45,7 +45,6 @@ const AddImage = ({ auth: { user }, uploadImage }) => {
           ...imageData,
           fileName: file.name,
           previewSource: reader.result,
-          preview: true,
         });
       };
     } else {
@@ -90,30 +89,27 @@ const AddImage = ({ auth: { user }, uploadImage }) => {
           </button>
 
           <Fragment>
-            {!imageData.preview && (
-              <Fragment>
-                <h1 className=' text-primary'>
-                  Agregar Nueva Historia de Parto
-                </h1>
-                <div className='post bg-white p-1 my-1'>
-                  <div>
-                    <Link
-                      to={
-                        user && user.username ? `/profile/${user.username}` : ''
-                      }
-                    >
+            <Fragment>
+              <h1 className=' text-primary'>Agregar Nueva Historia de Parto</h1>
+              <div className='post bg-white p-1 my-1'>
+                <div>
+                  {user ? (
+                    <Link to={`/profile/${user.username}`}>
+                      <img className='round-img' src={user.avatar} alt='' />
+                      <h4>{imageData.name}</h4>
+                    </Link>
+                  ) : (
+                    <Fragment>
                       <img
                         className='round-img'
-                        src={
-                          user && user.avatar
-                            ? user.avatar
-                            : 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG'
-                        }
+                        src='https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG'
                         alt=''
                       />
                       <h4>{imageData.name}</h4>
-                    </Link>
-                  </div>
+                    </Fragment>
+                  )}
+                </div>
+                {!imageData.preview ? (
                   <div>
                     <form onSubmit={e => handleSubmit(e)}>
                       {!user && (
@@ -179,51 +175,30 @@ const AddImage = ({ auth: { user }, uploadImage }) => {
                       <button
                         onClick={() => togglePreview()}
                         className='btn btn-primary'
+                        type='button'
                       >
                         Previsualizar
                       </button>
 
                       <button
                         onClick={handleSubmit}
-                        className='btn btn-primary'
+                        type='button'
+                        className='btn btn-success'
                       >
                         Subir
                       </button>
                     </form>
                   </div>
-                </div>
-              </Fragment>
-            )}
-            {imageData.preview && (
-              <Fragment>
-                <h1 className=' text-primary'>
-                  Así se va a ver tu historia publicada
-                </h1>
-                <div className='post bg-white p-1 my-1'>
+                ) : (
                   <div>
-                    <Link
-                      to={
-                        user && user.username ? `/profile/${user.username}` : ''
-                      }
-                    >
+                    {imageData.previewSource && (
                       <img
-                        className='round-img'
-                        src={
-                          user && user.avatar
-                            ? user.avatar
-                            : 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG'
-                        }
-                        alt=''
+                        className='post-image-display'
+                        src={imageData.previewSource}
+                        alt='Preview Image'
                       />
-                      <h4>{imageData.name}</h4>
-                    </Link>
-                  </div>
-                  <div>
-                    <img
-                      className='post-image-display'
-                      src={imageData.previewSource}
-                      alt='Preview Image'
-                    />
+                    )}
+
                     <h1>{imageData.title}</h1>
                     <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
                       {imageData.text}
@@ -242,16 +217,21 @@ const AddImage = ({ auth: { user }, uploadImage }) => {
                     <button
                       onClick={() => togglePreview()}
                       className='btn btn-primary'
+                      type='button'
                     >
                       Editar
                     </button>
-                    <button onClick={handleSubmit} className='btn btn-success'>
-                      Subir Imagen
+                    <button
+                      onClick={handleSubmit}
+                      className='btn btn-success'
+                      type='button'
+                    >
+                      Subir
                     </button>
                   </div>
-                </div>
-              </Fragment>
-            )}
+                )}
+              </div>
+            </Fragment>
           </Fragment>
         </Fragment>
       ) : (

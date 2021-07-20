@@ -2,12 +2,12 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 const temas = [
-  'embarazo',
-  'parto',
-  'puerperio',
-  'lactancia',
-  'crianza',
-  'relacion-de-pareja',
+  'Embarazo',
+  'Parto',
+  'Puerperio',
+  'Lactancia',
+  'Crianza',
+  'Relaciones',
 ];
 
 const Resources = () => {
@@ -22,7 +22,7 @@ const Resources = () => {
       <ul>
         {temas.map((tema, index) => (
           <li>
-            <Link key={index} to={`/resources/${tema}`}>
+            <Link key={index} to={`/resources/${tema.toLowerCase()}`}>
               {tema}
             </Link>
           </li>

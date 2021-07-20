@@ -12,7 +12,7 @@ import { getProfileByUsername } from '../../actions/profile';
 
 const Profile = ({
   getProfileByUsername,
-  profile: { profile, loading },
+  profile: { loading, profile },
   auth,
   match,
 }) => {
@@ -27,11 +27,11 @@ const Profile = ({
         setBirthDate(miracleDate);
       }
       setLoading2(false);
+      if (!profileInfo) history.push('/profiles/unknown');
     };
     getProfileInfo();
   }, [getProfileByUsername, match.params.username]);
   const handleGoBack = () => {
-    console.log('inside here!!');
     if (history.location.state) {
       history.push(history.location.state.returnTo);
     } else {

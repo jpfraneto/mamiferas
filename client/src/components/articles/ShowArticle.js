@@ -76,7 +76,7 @@ const ShowArticle = ({
                     type='button'
                     className='btn btn-primary'
                   >
-                    Editar Historia
+                    Editar
                   </Link>
                   <button
                     type='button'
@@ -85,7 +85,7 @@ const ShowArticle = ({
                     }
                     className='btn btn-danger'
                   >
-                    Eliminar Historia
+                    Eliminar
                   </button>
                 </Fragment>
               )}

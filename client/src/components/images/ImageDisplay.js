@@ -38,13 +38,9 @@ const ImageDisplay = ({
         <Spinner />
       ) : (
         <Fragment>
-          <button
-            type='button'
-            onClick={handleGoBack}
-            className='btn btn-light'
-          >
-            Volver
-          </button>
+          <Link to='/images' className='btn btn-light'>
+            Volver a Historias de Parto
+          </Link>
           <div className='post bg-white p-1 my-1'>
             <div>
               {image.systemUser ? (
@@ -56,6 +52,7 @@ const ImageDisplay = ({
                 <Fragment>
                   <img className='round-img' src={image.avatar} alt='' />
                   <h4>{image.name}</h4>
+                  <small>Invitad@</small>
                 </Fragment>
               )}
             </div>

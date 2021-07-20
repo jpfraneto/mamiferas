@@ -218,7 +218,7 @@ export const deleteComment = (imageId, commentId) => async dispatch => {
     await axios.delete(`/api/images/comment/${imageId}/${commentId}`);
     dispatch({
       type: REMOVE_IMAGE_COMMENT,
-      payload: { commentId: commentId, msg: 'Comment removed!' },
+      payload: { commentId, imageId, msg: 'Comment removed!' },
     });
     dispatch(setAlert('Se eliminó tu comentario de la imagen', 'success'));
   } catch (err) {

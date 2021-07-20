@@ -14,7 +14,7 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
   }, [getAllImages]);
   return (
     <Fragment>
-      {loading || loading2 ? (
+      {loading ? (
         <Spinner />
       ) : (
         <div>

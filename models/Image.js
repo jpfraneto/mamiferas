@@ -50,6 +50,9 @@ const ImageSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      user: {
+        type: String,
+      },
       name: {
         type: String,
       },

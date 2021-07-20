@@ -14,7 +14,7 @@ const CommentItem = ({
   return (
     <div className='post bg-comment p-1 my-1'>
       <div>
-        {username ? (
+        {user ? (
           <Link to={`/profile/${username}`}>
             <img className='round-img' src={avatar} alt='' />
             <h4>{name}</h4>
@@ -23,13 +23,14 @@ const CommentItem = ({
           <Fragment>
             <img className='round-img' src={avatar} alt='' />
             <h4>{name}</h4>
+            <small>Invitad@</small>
           </Fragment>
         )}
       </div>
       <div>
         <p className='my-1'>{text}</p>
         <p className='post-date'>
-          <Moment format='HH:mm:ss'>{date}</Moment>
+          <Moment format='HH:mm'>{date}</Moment>
           {' del '}
           <Moment format='DD-MM-YYYY'>{date}</Moment>
         </p>

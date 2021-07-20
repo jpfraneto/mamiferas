@@ -15,7 +15,7 @@ const ProfileArticles = ({
       <div className='profile-about bg-light p-2'>
         {articles && articles.length > 0 ? (
           <Fragment>
-            <h2>Historias</h2>
+            <h2>Crónicas de Embarazo</h2>
             {articles.map(article => (
               <Fragment key={article._id}>
                 {article.privada && loggedInUsername !== username ? (
@@ -42,7 +42,7 @@ const ProfileArticles = ({
         <br />
         {loggedInUsername === username && (
           <Link to={'/articles/new'}>
-            <button className='btn btn-success'>Escribir Historia</button>
+            <button className='btn btn-success'>Escribir Crónica</button>
           </Link>
         )}
       </div>

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { cloudinary } = require('../../utils/cloudinary');
 const auth = require('../../middleware/auth');
+const auth2 = require('../../middleware/auth2');
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const Image = require('../../models/Image');
@@ -43,7 +44,6 @@ router.get('/user/:id', auth, async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const image = await Image.findById(req.params.id);
-    console.log('the image is: ', image);
     res.json(image);
   } catch (err) {
     res
@@ -181,7 +181,7 @@ router.post('/update-profile-picture', auth, async (req, res) => {
 
 router.post(
   '/comment/:id',
-  [[check('text', 'Text is required').not().isEmpty()]],
+  [auth2, [check('text', 'Text is required').not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -189,17 +189,20 @@ router.post(
     }
 
     try {
+      let user = null;
       let username = req.body.username;
       let name = username;
       let avatar =
         'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG';
-      const user = await User.findOne({ username: req.body.username }).select(
-        '-password'
-      );
-      const profile = await Profile.findOne({ username: req.body.username });
-      if (user && profile) {
-        name = user.name;
+      if (req.user) {
+        const userdata = await User.findOne({
+          _id: req.user.id,
+        }).select('-password');
+        const profile = await Profile.findOne({ username: userdata.username });
+        name = userdata.name;
         avatar = profile.imageLink;
+        user = userdata._id;
+        username = userdata.username;
       }
       const image = await Image.findById(req.params.id);
 
@@ -208,6 +211,7 @@ router.post(
         name,
         avatar,
         username,
+        user,
       };
 
       image.comments.push(newComment);
@@ -267,13 +271,13 @@ router.delete('/comment/:id/:comment_id', auth, async (req, res) => {
       return res.status(404).json({ msg: 'Comment does not exist' });
 
     //Check user
-    if (comment.user.toString() !== req.user.id) {
+    if (comment.user !== req.user.id) {
       return res.status(401).json({ msg: 'User not authorized' });
     }
 
     //Get the remove index
     const removeIndex = image.comments
-      .map(comment => comment.user.toString())
+      .map(comment => comment.user)
       .indexOf(req.user.id);
 
     image.comments.splice(removeIndex, 1);
