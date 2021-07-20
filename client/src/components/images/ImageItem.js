@@ -52,8 +52,7 @@ const ImageItem = ({
         )}
 
         <p className='post-date'>
-          Compartida a las {pregnancyDate} el{' '}
-          <Moment format='DD/MM/YYYY'>{date}</Moment>
+          Compartida el <Moment format='DD/MM/YYYY'>{date}</Moment>
           {privada &&
             username === auth.user.username &&
             ' - Esta historia es privada, sólo tú la puedes ver 🔐🤫😳'}

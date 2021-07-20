@@ -60,7 +60,11 @@ const WriteArticle = ({ addArticle, user }) => {
           <div>
             <h1>{data.title}</h1>
             <br />
-            <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
+            <ReactMarkdown
+              remarkPlugins={[gfm]}
+              children={'string'}
+              className='text-body'
+            >
               {data.text}
             </ReactMarkdown>
             <p className='post-date'>

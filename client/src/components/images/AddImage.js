@@ -200,7 +200,11 @@ const AddImage = ({ auth: { user }, uploadImage }) => {
                     )}
 
                     <h1>{imageData.title}</h1>
-                    <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
+                    <ReactMarkdown
+                      remarkPlugins={[gfm]}
+                      children={'string'}
+                      className='text-body'
+                    >
                       {imageData.text}
                     </ReactMarkdown>
                     <p className='post-date'>

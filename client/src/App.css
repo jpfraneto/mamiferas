@@ -685,3 +685,7 @@ button {
   width: 111px;
   border-radius: 9%;
 }
+
+.text-body p {
+  margin-bottom: 16px;
+}

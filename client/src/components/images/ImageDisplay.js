@@ -66,7 +66,11 @@ const ImageDisplay = ({
               )}
 
               <h1>{image.title}</h1>
-              <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
+              <ReactMarkdown
+                remarkPlugins={[gfm]}
+                children={'string'}
+                className='text-body'
+              >
                 {image.text}
               </ReactMarkdown>
               <p className='post-date'>

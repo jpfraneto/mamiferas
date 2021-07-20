@@ -125,6 +125,11 @@ export const deleteArticle =
     if (window.confirm('¿Estás segur@ que quieres borrar esta historia?')) {
       try {
         const res = await axios.delete(`/api/articles/${articleId}`);
+        console.log(
+          'the res after eliminating the article is: ',
+          res.data,
+          articleId
+        );
         dispatch({
           type: REMOVE_ARTICLE,
           payload: articleId,

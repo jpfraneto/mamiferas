@@ -58,7 +58,11 @@ const ShowArticle = ({
             <div>
               <h1>{article.title}</h1>
               <br />
-              <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
+              <ReactMarkdown
+                remarkPlugins={[gfm]}
+                children={'string'}
+                className='text-body'
+              >
                 {article.text}
               </ReactMarkdown>
               <p className='post-date'>
