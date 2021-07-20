@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+import functions from '../../utils/functions';
 
 const ProfileTop = ({
   profile: {
@@ -10,8 +11,10 @@ const ProfileTop = ({
     bio,
     imageLink,
     miracle,
+    babyBorn,
     location,
     social,
+    images,
     user: { name, avatar },
   },
   birthDate,
@@ -29,12 +32,30 @@ const ProfileTop = ({
         alt=''
       />
       <h1 className='large'>{name}</h1>
-      {miracle ? (
-        <p>Semanas de gestación: {birthDate}</p>
+      {!babyBorn ? (
+        <Fragment>
+          <p>
+            Semanas de gestación: {birthDate} - Faltan{' '}
+            {functions.calculateRemainingDays(miracle)} días para que nazca mi
+            bebé.
+          </p>
+          <p>
+            Si es que ya nació, agrega una{' '}
+            <Link type='button' className='btn' to='/images/new'>
+              Historia de Parto!
+            </Link>
+          </p>
+        </Fragment>
       ) : (
-        <p>Todavía no sabemos cuándo va a nacer tu bebé!</p>
+        <Fragment>
+          <p>
+            Felicitaciones por tu bebé! Acá está tu{' '}
+            <Link to={`/images/${images._id}`} className='btn btn-success'>
+              Historia de Parto
+            </Link>
+          </p>
+        </Fragment>
       )}
-
       <p>
         <strong>{location && <span>{location}</span>}</strong>
       </p>

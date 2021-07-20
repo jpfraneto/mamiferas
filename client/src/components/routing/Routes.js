@@ -72,8 +72,8 @@ const Routes = () => {
         <PrivateRoute exact path='/posts/:id' component={Post} />
 
         <Route exact path='/articles' component={Articles} />
+        <PrivateRoute exact path='/articles/new' component={WriteArticle} />
         <Route exact path='/articles/:id' component={ShowArticle} />
-        <Route exact path='/articles/new' component={WriteArticle} />
         <PrivateRoute exact path='/articles/:id/edit' component={EditArticle} />
 
         <Route component={NotFound} />

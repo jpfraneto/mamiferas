@@ -25,7 +25,6 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     if (password !== password2) {
       setAlert('passwords do not match', 'danger', 2000);
     } else {
-      console.log('before the register, and the miracle is: ', miracle);
       register({ name, email, password, miracle, username });
     }
   };
@@ -37,6 +36,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
   return (
     <Fragment>
       <h1 className='large text-primary'>Registrate</h1>
+      <p>
+        Bienvenid@ a este lugar, que fue creado para apoyar a papás y mamás en
+        su proceso de traer un nuevo ser humano al mundo.{' '}
+      </p>
       <p className='lead'>
         <i className='fas fa-user'></i> Crea tu cuenta
       </p>
@@ -84,7 +87,9 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             value={miracle}
             onChange={e => onChange(e)}
           />
-          <small className='form-text'>¿Cuándo nace tu bebé?</small>
+          <small className='form-text'>
+            ¿Cuándo nace tu bebé aproximadamente?
+          </small>
         </div>
         <div className='form-group'>
           <input

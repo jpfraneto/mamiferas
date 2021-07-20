@@ -8,6 +8,10 @@ const ProfileSchema = new mongoose.Schema({
   username: {
     type: String,
   },
+  babyBorn: {
+    type: Boolean,
+    default: false,
+  },
   name: {
     type: String,
   },
@@ -23,12 +27,10 @@ const ProfileSchema = new mongoose.Schema({
   bio: {
     type: String,
   },
-  images: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'image',
-    },
-  ],
+  images: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'image',
+  },
   articles: [
     {
       type: mongoose.Schema.Types.ObjectId,

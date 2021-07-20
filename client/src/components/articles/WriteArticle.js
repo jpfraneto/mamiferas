@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import { addArticle } from '../../actions/article';
@@ -9,7 +9,8 @@ import { getCurrentProfile } from '../../actions/profile';
 import functions from '../../utils/functions';
 import gfm from 'remark-gfm';
 
-const WriteArticle = ({ addArticle, history, user }) => {
+const WriteArticle = ({ addArticle, user }) => {
+  let history = useHistory();
   const [data, setData] = useState({
     title: 'Título',
     text: 'Texto',
@@ -47,7 +48,7 @@ const WriteArticle = ({ addArticle, history, user }) => {
       >
         Volver
       </button>
-      <h1 className='text-primary'>Escribir Historia:</h1>
+      <h1 className='text-primary'>Escribir Crónica:</h1>
       <div className='post-form'>
         <div className='post bg-white p-1 my-1'>
           <div>
@@ -79,7 +80,7 @@ const WriteArticle = ({ addArticle, history, user }) => {
               name='title'
               onChange={e => onChange(e)}
             />
-            <small className='form-text'>Título de la Historia</small>
+            <small className='form-text'>Título</small>
           </div>
           <div className='form-group'>
             <textarea

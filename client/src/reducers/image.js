@@ -13,7 +13,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  userImages: [],
+  userImage: [],
   globalImages: [],
   image: null,
   loading: true,
@@ -32,7 +32,7 @@ export default function image(state = initialState, action) {
     case CLEAR_PROFILE_IMAGES:
       return {
         ...state,
-        userImages: [],
+        userImage: [],
         loading: true,
       };
     case GET_IMAGE:
@@ -48,12 +48,9 @@ export default function image(state = initialState, action) {
         loading: false,
       };
     case GET_PROFILE_IMAGES:
-      // **** T O D O ****
-      // Check if the images of the user have already been loaded in globalImages and then add
-      // them to userImages
       return {
         ...state,
-        userImages: payload,
+        userImage: payload,
         loading: false,
       };
     case ADD_IMAGE_COMMENT:

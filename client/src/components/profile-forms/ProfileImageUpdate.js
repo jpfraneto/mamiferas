@@ -13,6 +13,7 @@ const ProfileImageUpdate = ({
   history,
   updateProfilePicture,
 }) => {
+  const [loading2, setLoading2] = useState(false);
   const [imageData, setImageData] = useState({ previewSource: '' });
   useEffect(() => {
     getCurrentProfile();
@@ -34,11 +35,12 @@ const ProfileImageUpdate = ({
   const handleSubmit = e => {
     e.preventDefault();
     if (!imageData.previewSource) return;
+    setLoading2(true);
     updateProfilePicture(history, imageData, profile.username);
   };
   return (
     <Fragment>
-      {profile === null || loading ? (
+      {profile === null || loading || loading2 ? (
         <Spinner />
       ) : (
         <Fragment>

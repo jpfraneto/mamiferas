@@ -14,7 +14,7 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
   }, [getAllImages]);
   return (
     <Fragment>
-      {loading ? (
+      {loading || loading2 ? (
         <Spinner />
       ) : (
         <div>
@@ -35,7 +35,12 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
               </div>
             </Fragment>
           ) : (
-            <p>Aún no hay fotos :(</p>
+            <Fragment>
+              <p>Aún no hay Historias de Parto :(</p>
+              <Link to='/images/new' className='btn'>
+                Escribir Historia de Parto
+              </Link>
+            </Fragment>
           )}
         </div>
       )}
@@ -47,6 +52,7 @@ ImagesDisplay.propTypes = { getAllImages: PropTypes.func.isRequired };
 
 const mapStateToProps = state => ({
   image: state.image,
+  auth: state.auth.user,
 });
 
 export default connect(mapStateToProps, { getAllImages })(ImagesDisplay);

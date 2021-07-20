@@ -12,7 +12,7 @@ const ProfileArticles = ({
 }) => {
   return (
     <div>
-      <div className='profile-about bg-light p-2'>
+      <div className='profile-articles bg-light p-2'>
         {articles && articles.length > 0 ? (
           <Fragment>
             <h2>Crónicas de Embarazo</h2>
@@ -37,12 +37,12 @@ const ProfileArticles = ({
             ))}
           </Fragment>
         ) : (
-          <h1>{username} todavía no escribe ninguna historia.</h1>
+          <h1>{username} todavía no escribe ninguna crónica del embarazo.</h1>
         )}
         <br />
         {loggedInUsername === username && (
           <Link to={'/articles/new'}>
-            <button className='btn btn-success'>Escribir Crónica</button>
+            <button className='btn btn-success'>Escribir</button>
           </Link>
         )}
       </div>

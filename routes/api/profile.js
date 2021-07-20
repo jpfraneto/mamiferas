@@ -111,9 +111,11 @@ router.get('/:username', async (req, res) => {
       username: req.params.username,
     })
       .populate('user', ['name', 'avatar'])
-      .populate('articles');
+      .populate('articles')
+      .populate('images');
     if (!profile)
       return res.status(400).json({ profile: null, msg: 'Profile not found' });
+    console.log('the profile is: ', profile);
     res.json(profile);
   } catch (err) {
     console.error(err.message);

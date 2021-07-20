@@ -69,6 +69,7 @@ export const uploadImage = (imageData, history) => async dispatch => {
   };
 
   try {
+    console.log('trying to upload the image');
     const res = await axios.post('/api/images', body, config);
     dispatch({
       type: UPLOAD_IMAGE,

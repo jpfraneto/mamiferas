@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Spinner from '../layout/Spinner';
 import ArticleItem from './ArticleItem';
 import { getArticles, sortArticles } from '../../actions/article';
-import { set } from 'mongoose';
 
 const Article = ({
   getArticles,

@@ -68,6 +68,14 @@ router.post('/', async (req, res) => {
     var name = req.body.data.name;
     var avatar =
       'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG';
+    if (username) {
+      profile = await Profile.findOne({ username }).select('-password');
+      username = profile.username;
+      name = profile.name;
+      pregnancyDate = functions.calculateWeekFromNow(profile.miracle);
+      avatar = profile.imageLink;
+      systemUser = true;
+    }
     if (req.body.data.previewSource) {
       const uploadedResponse = await cloudinary.uploader.upload(
         req.body.data.previewSource,
@@ -77,14 +85,7 @@ router.post('/', async (req, res) => {
       );
       secure_url = uploadedResponse.secure_url;
     }
-    if (username) {
-      profile = await Profile.findOne({ username }).select('-password');
-      username = profile.username;
-      name = profile.name;
-      pregnancyDate = functions.calculateWeekFromNow(profile.miracle);
-      avatar = profile.imageLink;
-      systemUser = true;
-    }
+
     const newImage = new Image({
       user,
       username,
@@ -100,12 +101,13 @@ router.post('/', async (req, res) => {
     });
     await newImage.save();
     if (profile) {
-      profile.images.unshift(newImage);
+      profile.babyBorn = true;
+      profile.images = newImage;
       await profile.save();
     }
     res.json({
       newImage,
-      msg: 'La crónica fue agregada a tu perfil!',
+      msg: 'La Historia de Parto fue agregada a tu perfil!',
     });
   } catch (err) {
     console.log('the error is:', err);
@@ -130,14 +132,13 @@ router.put('/:id', auth, async (req, res) => {
     image.updated = true;
 
     await image.save();
-    const index = profile.images.indexOf(image._id);
 
-    profile.images[index] = image;
+    profile.images = image;
     await profile.save();
 
     res.json({
       updatedImage: image,
-      msg: 'La crónica fue actualizada en tu perfil!',
+      msg: 'La historia de parto fue actualizada en tu perfil!',
     });
   } catch (err) {
     console.log('Oops, the following error happened: ', err);

@@ -27,7 +27,6 @@ export const addArticle = (articleData, history) => async dispatch => {
       type: ADD_ARTICLE,
       payload: res.data.newArticle,
     });
-    console.log('the new article is: ', res.data.newArticle);
     history.push(`/articles/${res.data.newArticle._id}`, {
       returnTo: '/articles',
     });

@@ -389,8 +389,8 @@ button {
   grid-template-areas:
     'top top'
     'about about'
-    'exp edu'
-    'github github';
+    'images images'
+    'articles articles';
   grid-gap: 1rem;
 }
 
@@ -418,6 +418,16 @@ button {
 
 .profile-about {
   grid-area: about;
+  text-align: center;
+}
+
+.profile-images {
+  grid-area: images;
+  text-align: center;
+}
+
+.profile-articles {
+  grid-area: articles;
   text-align: center;
 }
 
