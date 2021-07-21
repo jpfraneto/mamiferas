@@ -13,6 +13,7 @@ const DropdownMenu = props => {
           }`}
           linkName={`${element}`}
           toggleNav={props.toggleNav}
+          key={index}
         />
       ))}
     </div>

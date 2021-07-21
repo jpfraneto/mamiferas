@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import functions from '../../utils/functions';
 
@@ -14,7 +15,18 @@ const ProfileAbout = ({
     <Fragment>
       {' '}
       <h2 className='text-primary'>Acerca de Mi</h2>
-      <p>{bio ? bio : 'No hay biografía disponible aún'}</p>
+      <p>
+        {bio ? (
+          bio
+        ) : (
+          <Fragment>
+            <p>No hay biografía disponible aún</p>
+            <Link to='/edit-profile' className='btn btn-dark'>
+              Agregar biografía
+            </Link>
+          </Fragment>
+        )}
+      </p>
     </Fragment>
   </div>
 );

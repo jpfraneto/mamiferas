@@ -6,7 +6,11 @@ import Spinner from '../layout/Spinner';
 import ImageItem from './ImageItem';
 import PropTypes from 'prop-types';
 
-const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
+const ImagesDisplay = ({
+  image: { globalImages, loading },
+  getAllImages,
+  user,
+}) => {
   const [loading2, setLoading2] = useState(true);
   useEffect(() => {
     getAllImages(globalImages);
@@ -25,9 +29,12 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
                 Escritas y compartidas para honrar este increíble momento, y
                 para empoderar a futuros papás y mamás en su proceso.
               </p>
-              <Link to='/images/new' className='btn'>
-                Escribir Historia de Parto
-              </Link>
+              {user && !user.babyBorn && (
+                <Link to='/birth-stories/new' className='btn'>
+                  Escribir Historia de Parto
+                </Link>
+              )}
+
               <div className='posts'>
                 {globalImages.map((image, index) => (
                   <ImageItem key={image._id} image={image} />
@@ -37,7 +44,7 @@ const ImagesDisplay = ({ image: { globalImages, loading }, getAllImages }) => {
           ) : (
             <Fragment>
               <p>Aún no hay Historias de Parto :(</p>
-              <Link to='/images/new' className='btn'>
+              <Link to='/birth-stories/new' className='btn'>
                 Escribir Historia de Parto
               </Link>
             </Fragment>
@@ -52,7 +59,7 @@ ImagesDisplay.propTypes = { getAllImages: PropTypes.func.isRequired };
 
 const mapStateToProps = state => ({
   image: state.image,
-  auth: state.auth.user,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { getAllImages })(ImagesDisplay);

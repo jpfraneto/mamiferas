@@ -61,7 +61,7 @@ const ImageItem = ({
           {privada && auth.user.username !== username ? (
             <p className='btn btn-primary'>🔐🤫😳 Esta historia es privada</p>
           ) : (
-            <Link to={`/images/${_id}`} className='btn btn-primary'>
+            <Link to={`/birth-stories/${_id}`} className='btn btn-primary'>
               Leer Más 💬 {comments.length}
             </Link>
           )}

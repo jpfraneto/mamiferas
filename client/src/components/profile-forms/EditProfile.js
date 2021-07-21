@@ -166,7 +166,10 @@ const EditProfile = ({
         )}
 
         <input type='submit' className='btn btn-primary my-1' />
-        <Link className='btn btn-light my-1' to='/me'>
+        <Link
+          className='btn btn-light my-1'
+          to={`/profile/${profile.username}`}
+        >
           Atrás
         </Link>
       </form>

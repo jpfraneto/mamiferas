@@ -56,7 +56,7 @@ const AddImage = ({ auth: { user }, uploadImage }) => {
     e.preventDefault();
     if (!imageData.title && !imageData.text) {
       alert(
-        'Por favor agrega la información necesaria para poder subir la foto!'
+        'Por favor agrega la información necesaria para poder subir la historia!'
       );
     }
     setImageData({ ...imageData, uploading: true });
@@ -161,13 +161,8 @@ const AddImage = ({ auth: { user }, uploadImage }) => {
                       </div>
 
                       <p className='post-date'>
-                        Publicada{' '}
-                        {user &&
-                          user.miracle &&
-                          `a las ${functions.calculateWeekFromNow(
-                            user.miracle
-                          )}`}{' '}
-                        el <Moment format='DD/MM/YYYY'>{new Date()}</Moment>
+                        Publicada el{' '}
+                        <Moment format='DD/MM/YYYY'>{new Date()}</Moment>
                         {imageData.privada &&
                           ' - Es privada, sólo tú la puedes ver 🔐🤫😳'}
                       </p>

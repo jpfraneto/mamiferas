@@ -11,7 +11,7 @@ const ProfileArticles = ({
   profile: { articles, miracle, username, _id },
 }) => {
   return (
-    <div>
+    <Fragment>
       <div className='profile-articles bg-light p-2'>
         {articles && articles.length > 0 ? (
           <Fragment>
@@ -46,7 +46,7 @@ const ProfileArticles = ({
           </Link>
         )}
       </div>
-    </div>
+    </Fragment>
   );
 };
 

@@ -17,6 +17,7 @@ const ProfileTop = ({
     images,
     user: { name, avatar },
   },
+  user,
   birthDate,
 }) => {
   const [showModal, setShowModal] = useState(false);
@@ -32,17 +33,20 @@ const ProfileTop = ({
         alt=''
       />
       <h1 className='large'>{name}</h1>
+      <p>
+        <strong>{location && <span>{location}</span>}</strong>
+      </p>
       {!babyBorn ? (
         <Fragment>
           <p>
             Semanas de gestación: {birthDate} - Faltan{' '}
-            {functions.calculateRemainingDays(miracle)} días para que nazca mi
+            {functions.calculateRemainingDays(miracle)} días para que nazca el
             bebé.
           </p>
           <p>
             Si es que ya nació, agrega una{' '}
-            <Link type='button' className='btn' to='/images/new'>
-              Historia de Parto!
+            <Link type='button' className='btn' to='/birth-stories/new'>
+              Historia de Parto
             </Link>
           </p>
         </Fragment>
@@ -50,16 +54,17 @@ const ProfileTop = ({
         <Fragment>
           <p>
             Felicitaciones por tu bebé! Acá está tu{' '}
-            <Link to={`/images/${images._id}`} className='btn btn-success'>
+            <Link
+              to={`/birth-stories/${images._id}`}
+              className='btn btn-success'
+            >
               Historia de Parto
             </Link>
           </p>
         </Fragment>
       )}
-      <p>
-        <strong>{location && <span>{location}</span>}</strong>
-      </p>
-      <div className='icons my-1'>
+
+      <div className='icons'>
         {social
           ? Object.entries(social)
               .filter(([_, value]) => value)
@@ -84,6 +89,7 @@ const ProfileTop = ({
             setShowModal(!showModal);
           }}
         >
+          <p style={{ position: 'absolute', margin: '10px 10px' }}>❌ Cerrar</p>
           <img
             className='modal-image-display'
             src={imageLink}

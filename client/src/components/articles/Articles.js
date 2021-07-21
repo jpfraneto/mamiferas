@@ -10,6 +10,7 @@ const Article = ({
   getArticles,
   sortArticles,
   article: { articles, loading },
+  user: { babyBorn },
 }) => {
   const [loading2, setLoading2] = useState(true);
   useEffect(() => {
@@ -22,9 +23,11 @@ const Article = ({
     <Fragment>
       <h1 className='large text-primary'>Crónicas de Embarazo</h1>
       <p className='lead'>Que han sido compartidas en este espacio</p>
-      <Link className='btn btn-primary' to={'/articles/new'}>
-        Agregar Nueva Crónica
-      </Link>
+      {!babyBorn && (
+        <Link className='btn btn-primary' to={'/articles/new'}>
+          Agregar Nueva Crónica
+        </Link>
+      )}
 
       <div className='posts'>
         {articles.map(article => (
@@ -39,8 +42,12 @@ Article.propTypes = {
   getArticles: PropTypes.func.isRequired,
   sortArticles: PropTypes.func.isRequired,
   article: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({ article: state.article });
+const mapStateToProps = state => ({
+  article: state.article,
+  user: state.auth.user,
+});
 
 export default connect(mapStateToProps, { getArticles, sortArticles })(Article);

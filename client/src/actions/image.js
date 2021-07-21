@@ -13,6 +13,7 @@ import {
   REMOVE_IMAGE_COMMENT,
   IMAGE_ERROR,
   UPDATE_PROFILE_PICTURE,
+  UPDATE_BABY_BORN,
 } from './types';
 
 export const getAllImages = globalImages => async dispatch => {
@@ -69,17 +70,19 @@ export const uploadImage = (imageData, history) => async dispatch => {
   };
 
   try {
-    console.log('trying to upload the image');
     const res = await axios.post('/api/images', body, config);
     dispatch({
       type: UPLOAD_IMAGE,
       payload: res.data.newImage,
     });
+    dispatch({
+      type: UPDATE_BABY_BORN,
+    });
 
     dispatch(setAlert(res.data.msg, 'success'));
 
-    history.push(`/images/${res.data.newImage._id}`, {
-      returnTo: '/images',
+    history.push(`/birth-stories/${res.data.newImage._id}`, {
+      returnTo: '/birth-stories',
     });
   } catch (err) {
     dispatch({
@@ -107,8 +110,8 @@ export const updateImage = (history, imageData) => async dispatch => {
 
     dispatch(setAlert(res.data.msg, 'success'));
 
-    history.push(`/images/${imageData.id}`, {
-      returnTo: '/images',
+    history.push(`/birth-stories/${imageData.id}`, {
+      returnTo: '/birth-stories',
     });
   } catch (err) {
     dispatch({
@@ -134,15 +137,15 @@ export const getProfileImages = id => async dispatch => {
 };
 
 export const deleteImage = (history, username, id) => async dispatch => {
-  if (window.confirm('¿Estás segur@ que quieres borrar esta crónica?')) {
+  if (window.confirm('¿Estás segur@ que quieres borrar esta historia?')) {
     try {
       const res = await axios.delete(`/api/images/${id}`);
       dispatch({
         type: DELETE_IMAGE,
         payload: res.data,
       });
-      dispatch(setAlert('Se eliminó tu crónica', 'success'));
-      history.push(`/images`);
+      dispatch(setAlert('Se eliminó tu historia de parto', 'success'));
+      history.push(`/birth-stories`);
     } catch (err) {
       dispatch({
         type: POST_ERROR,

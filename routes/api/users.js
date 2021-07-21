@@ -5,8 +5,27 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { check, validationResult } = require('express-validator');
-
 const User = require('../../models/User');
+
+// @route   POST api/users/register-check
+// @desc    Check if username or email are already in use
+// @access  Public
+
+router.post('/register-check', async (req, res) => {
+  try {
+    const validation = { email: false, username: false };
+    const userByEmail = await User.findOne({ email: req.body.email.trim() });
+    const userByUsername = await User.findOne({
+      username: req.body.username.trim(),
+    });
+    if (userByEmail) validation.email = true;
+    if (userByUsername) validation.username = true;
+    res.json(validation);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+});
 
 // @route   POST api/users
 // @desc    Register route
@@ -29,9 +48,10 @@ router.post(
     }
     const { name, email, username, miracle, password } = req.body;
     try {
-      let user = await User.findOne({ email });
+      let user = await User.findOne({ username });
+      let user2 = await User.findOne({ email });
 
-      if (user) {
+      if (user || user2) {
         return res
           .status(400)
           .json({ errors: [{ msg: 'User already exists! ' }] });
@@ -75,6 +95,7 @@ router.post(
         'https://howtoapps.com/wp-content/uploads/2020/01/b9ed581c-cute-profile-pic-8-600x400.jpg';
       profile = new Profile(profileFields);
       await profile.save();
+      user.password = '';
 
       jwt.sign(
         payload,

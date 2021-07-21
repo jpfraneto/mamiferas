@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  babyBorn: {
+    type: Boolean,
+    default: false,
+  },
   username: {
     type: String,
     required: true,

@@ -53,10 +53,14 @@ const Routes = () => {
           <ResourcesItem tema={'Relaciones'} />
         </Route>
 
-        <Route exact path='/images' component={Images} />
-        <Route exact path='/images/new' component={AddImage} />
-        <Route exact path='/images/:id' component={ImageDisplay} />
-        <PrivateRoute exact path='/images/:id/edit' component={EditImage} />
+        <Route exact path='/birth-stories' component={Images} />
+        <Route exact path='/birth-stories/new' component={AddImage} />
+        <Route exact path='/birth-stories/:id' component={ImageDisplay} />
+        <PrivateRoute
+          exact
+          path='/birth-stories/:id/edit'
+          component={EditImage}
+        />
         <Route exact path='/profiles' component={Profiles} />
         <PrivateRoute exact path='/profile/:username' component={Profile} />
         <Route exact path='/profile/:id/images' component={ProfileImages} />

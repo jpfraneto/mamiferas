@@ -101,8 +101,11 @@ router.post('/', async (req, res) => {
     });
     await newImage.save();
     if (profile) {
+      let thisUser = await User.findOne({ username });
+      thisUser.babyBorn = true;
       profile.babyBorn = true;
       profile.images = newImage;
+      await thisUser.save();
       await profile.save();
     }
     res.json({

@@ -26,7 +26,6 @@ const ShowArticle = ({
     getArticleById(match.params.id);
   }, [getArticleById]);
   const handleGoBack = () => {
-    console.log('inside here!!');
     if (history.location.state) {
       history.push(history.location.state.returnTo);
     } else {

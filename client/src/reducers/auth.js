@@ -8,6 +8,7 @@ import {
   LOGOUT,
   ACCOUNT_DELETED,
   UPDATE_PROFILE_PICTURE,
+  UPDATE_BABY_BORN,
 } from '../actions/types';
 
 const initialState = {
@@ -45,6 +46,13 @@ export default function auth(state = initialState, action) {
         user: payload,
         isAuthenticated: true,
         loading: false,
+      };
+
+    case UPDATE_BABY_BORN:
+      console.log('INSIDE HERE!');
+      return {
+        ...state,
+        user: { ...state.user, babyBorn: true },
       };
 
     case REGISTER_FAIL:

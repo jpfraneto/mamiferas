@@ -22,6 +22,8 @@ const ImageDisplay = ({
   const [loading2, setLoading2] = useState(true);
   const [toggleComment, setToggleComment] = useState(true);
   useEffect(() => {
+    console.log('inside here! the image is: ', image);
+    console.log('the match.params.id is', match.params.id);
     getImage(globalImages, match.params.id);
     setLoading2(false);
   }, [getImage]);
@@ -38,7 +40,7 @@ const ImageDisplay = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to='/images' className='btn btn-light'>
+          <Link to='/birth-stories' className='btn btn-light'>
             Volver a Historias de Parto
           </Link>
           <div className='post bg-white p-1 my-1'>
@@ -74,16 +76,15 @@ const ImageDisplay = ({
                 {image.text}
               </ReactMarkdown>
               <p className='post-date'>
-                Publicada a las {image.pregnancyDate} el{' '}
-                <Moment format='DD/MM/YYYY'>{image.date}</Moment>
+                Publicada el <Moment format='DD/MM/YYYY'>{image.date}</Moment>
                 {image.privada &&
-                  ' - Esta crónica es privada, sólo tú la puedes ver 🔐🤫😳'}
+                  ' - Esta historia es privada, sólo tú la puedes ver 🔐🤫😳'}
               </p>
 
               {user && user.username === image.username && (
                 <Fragment>
                   <Link
-                    to={`/images/${image._id}/edit`}
+                    to={`/birth-stories/${image._id}/edit`}
                     type='button'
                     className='btn btn-primary'
                   >

@@ -39,7 +39,7 @@ const ProfileImages = ({
         {loggedInUsername === username && (
           <Fragment>
             <p>Ya nació?</p>
-            <Link to={'/images/new'}>
+            <Link to={'/birth-stories/new'}>
               <button className='btn btn-success'>
                 Agregar Historia de Parto
               </button>

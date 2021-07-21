@@ -16,6 +16,7 @@ export const UPDATE_PROFILE_PICTURE = 'UPDATE_PROFILE_PICTURE';
 export const CLEAR_PROFILE = 'CLEAR_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
 export const ACCOUNT_DELETED = 'ACCOUNT_DELETED';
+export const UPDATE_BABY_BORN = 'UPDATE_BABY_BORN';
 //posts
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POST = 'GET_POST';
