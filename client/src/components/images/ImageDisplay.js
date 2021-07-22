@@ -22,8 +22,6 @@ const ImageDisplay = ({
   const [loading2, setLoading2] = useState(true);
   const [toggleComment, setToggleComment] = useState(true);
   useEffect(() => {
-    console.log('inside here! the image is: ', image);
-    console.log('the match.params.id is', match.params.id);
     getImage(globalImages, match.params.id);
     setLoading2(false);
   }, [getImage]);

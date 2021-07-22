@@ -29,7 +29,13 @@ const ImagesDisplay = ({
                 Escritas y compartidas para honrar este increíble momento, y
                 para empoderar a futuros papás y mamás en su proceso.
               </p>
-              {user && !user.babyBorn && (
+              {user ? (
+                !user.babyBorn && (
+                  <Link to='/birth-stories/new' className='btn'>
+                    Escribir Historia de Parto
+                  </Link>
+                )
+              ) : (
                 <Link to='/birth-stories/new' className='btn'>
                   Escribir Historia de Parto
                 </Link>

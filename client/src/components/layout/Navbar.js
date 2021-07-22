@@ -11,7 +11,7 @@ import DropdownMenu from './DropdownMenu';
 const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const authLinks = (
     <ul>
-      <NavItem
+      {/* <NavItem
         name={'Recursos'}
         linkRoute={'resources'}
         elements={[
@@ -22,7 +22,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           'Crianza',
           'Relaciones',
         ]}
-      />
+      /> */}
+      <NavItem name={'Recursos'} linkRoute={'resources'} />
       <NavItem name={'Historias de Parto'} linkRoute={'birth-stories'} />
       <NavItem name={'Crónicas de Embarazo'} linkRoute={'articles'} />
       <NavItem name={'Perfiles'} linkRoute={'profiles'} />
@@ -44,7 +45,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 
   const guestLinks = (
     <ul>
-      <NavItem
+      {/* <NavItem
         name={'Recursos'}
         linkRoute={'resources'}
         elements={[
@@ -55,7 +56,8 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           'Crianza',
           'Relaciones',
         ]}
-      />
+      /> */}
+      <NavItem name={'Recursos'} linkRoute={'resources'} />
       <NavItem name={'Historias de Parto'} linkRoute={'birth-stories'} />
       <NavItem name={'Registrarse'} linkRoute={'register'} />
       <NavItem name={'Iniciar Sesión'} linkRoute={'login'} />

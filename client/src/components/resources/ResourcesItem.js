@@ -1,17 +1,19 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
+import { connect } from 'react-redux';
 
-const ResourcesItem = props => {
+const ResourcesItem = ({ resource }) => {
   return (
     <Fragment>
-      <h1 className='large text-primary'>{props.tema}</h1>
-      <p>
-        Acá se va a hablar de este tema, y se va a compartir material asociado a
-        él.
-      </p>
-      <Link to={'/resources'} className='btn btn-primary'>
-        Volver
-      </Link>
+      <div style={{ border: 'solid black 1px' }}>
+        <p>Category: {resource.category}</p>
+        <h3>Name: {resource.name}</h3>
+        <p>Added By: {resource.addedBy}</p>
+        <p>Link: {resource.url}</p>
+        <p>Description: {resource.description}</p>
+      </div>
     </Fragment>
   );
 };

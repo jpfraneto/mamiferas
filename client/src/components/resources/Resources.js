@@ -21,13 +21,14 @@ const Resources = () => {
       </p>
       <ul>
         {temas.map((tema, index) => (
-          <li>
-            <Link key={index} to={`/resources/${tema.toLowerCase()}`}>
-              {tema}
-            </Link>
+          <li key={index}>
+            <Link to={`/resources/${tema.toLowerCase()}`}>{tema}</Link>
           </li>
         ))}
       </ul>
+      <Link className='btn btn-primary' to={'/resources/new'}>
+        Agregar Recurso
+      </Link>
     </Fragment>
   );
 };

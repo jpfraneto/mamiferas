@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import functions from '../../utils/functions';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const ProfileAbout = ({
   profile: {
@@ -17,7 +19,13 @@ const ProfileAbout = ({
       <h2 className='text-primary'>Acerca de Mi</h2>
       <p>
         {bio ? (
-          bio
+          <ReactMarkdown
+            remarkPlugins={[gfm]}
+            children={'string'}
+            className='text-body'
+          >
+            {bio}
+          </ReactMarkdown>
         ) : (
           <Fragment>
             <p>No hay biografía disponible aún</p>

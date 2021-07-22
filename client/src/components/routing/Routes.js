@@ -6,7 +6,8 @@ import EditProfile from '../profile-forms/EditProfile';
 import Profiles from '../profiles/Profiles';
 import Profile from '../profile/Profile';
 import Resources from '../resources/Resources';
-import ResourcesItem from '../resources/ResourcesItem';
+import ResourcesPage from '../resources/ResourcesPage';
+import NewResource from '../resources/NewResource';
 import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import Login from '../auth/Login';
@@ -33,24 +34,25 @@ const Routes = () => {
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
         <Route exact path='/resources' component={Resources} />
+        <Route exact path='/resources/new' component={NewResource} />
 
         <Route exact path='/resources/embarazo'>
-          <ResourcesItem tema={'Embarazo'} />
+          <ResourcesPage tema={'Embarazo'} />
         </Route>
         <Route exact path='/resources/parto'>
-          <ResourcesItem tema={'Parto'} />
+          <ResourcesPage tema={'Parto'} />
         </Route>
         <Route exact path='/resources/puerperio'>
-          <ResourcesItem tema={'Puerperio'} />
+          <ResourcesPage tema={'Puerperio'} />
         </Route>
         <Route exact path='/resources/lactancia'>
-          <ResourcesItem tema={'Lactancia'} />
+          <ResourcesPage tema={'Lactancia'} />
         </Route>
         <Route exact path='/resources/crianza'>
-          <ResourcesItem tema={'Crianza'} />
+          <ResourcesPage tema={'Crianza'} />
         </Route>
         <Route exact path='/resources/relaciones'>
-          <ResourcesItem tema={'Relaciones'} />
+          <ResourcesPage tema={'Relaciones'} />
         </Route>
 
         <Route exact path='/birth-stories' component={Images} />

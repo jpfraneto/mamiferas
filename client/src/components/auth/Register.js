@@ -64,8 +64,8 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
         return;
       }
 
-      // register({ name, email, password, miracle, username });
-      // setLoading(true);
+      register({ name, email, password, miracle, username });
+      setLoading(true);
     }
   };
 
