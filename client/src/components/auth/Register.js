@@ -21,9 +21,18 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     miracle: '',
     password: '',
     password2: '',
+    parentIdentificator: false,
   });
 
-  const { name, email, username, miracle, password, password2 } = formData;
+  const {
+    name,
+    email,
+    username,
+    miracle,
+    password,
+    password2,
+    parentIdentificator,
+  } = formData;
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -159,6 +168,22 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 {pregnancyMessage && (
                   <span style={{ color: 'red' }}>{pregnancyMessage}</span>
                 )}
+              </small>
+            </div>
+            <div className='form-group'>
+              <select
+                name='parentIdentificator'
+                required
+                onChange={e => {
+                  onChange(e);
+                }}
+              >
+                <option value='false'>Mamá</option>
+                <option value='true'>Papá</option>
+              </select>
+
+              <small className='form-text'>
+                ¿Te identificas como la mamá o el papá?
               </small>
             </div>
             <div className='form-group'>

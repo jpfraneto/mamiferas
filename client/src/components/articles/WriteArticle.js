@@ -48,7 +48,6 @@ const WriteArticle = ({ addArticle, user }) => {
       >
         Volver
       </button>
-      <h1 className='text-primary'>Escribir Crónica:</h1>
       <div className='post-form'>
         <div className='post bg-white p-1 my-1'>
           <div>

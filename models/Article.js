@@ -12,6 +12,9 @@ const ArticleSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  parentIdentificator: {
+    type: String,
+  },
   avatar: {
     type: String,
   },

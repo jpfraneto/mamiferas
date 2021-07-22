@@ -12,9 +12,12 @@ const functions = require('../../utils/functions');
 // @route   GET api/articles
 // @desc    GET all articles
 // @access  Private
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const articles = await Article.find({}).sort([['date', -1]]);
+    const user = await User.findById(req.user.id);
+    const articles = await Article.find({
+      parentIdentificator: user.parentIdentificator.toString(),
+    }).sort([['date', -1]]);
     res.json({ articles });
   } catch (err) {
     console.log('the error is', err);
@@ -43,6 +46,7 @@ router.post(
       const newArticle = new Article({
         user: req.user.id,
         name: user.name,
+        parentIdentificator: user.parentIdentificator,
         username: profile.username,
         title: req.body.title,
         text: req.body.text,

@@ -5,7 +5,11 @@ import Spinner from '../layout/Spinner';
 import { getProfiles } from '../../actions/profile';
 import ProfileItem from './ProfileItem';
 
-const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
+const Profiles = ({
+  getProfiles,
+  profile: { profiles, loading },
+  user: { parentIdentificator },
+}) => {
   useEffect(() => {
     getProfiles();
   }, [getProfiles]);
@@ -16,10 +20,12 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
         <Spinner />
       ) : (
         <Fragment>
-          <h1 className='large text-primary'>Futuras Mamás / Futuros Papás</h1>
+          <h1 className='large text-primary'>
+            {parentIdentificator ? 'Futuros Papás' : 'Futuras Mamás'}{' '}
+          </h1>
           <p className='lead'>
-            Conoce a otr@s que están en transición y apoyense mutuamente en este
-            camino
+            Conoce a otr{parentIdentificator ? 'o' : 'a'}s que están en
+            transición y apoyense mutuamente en este camino
           </p>
           <div className='profiles'>
             {profiles.length > 0 || loading ? (
@@ -39,10 +45,12 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   profile: state.profile,
+  user: state.auth.user,
 });
 
 export default connect(mapStateToProps, { getProfiles })(Profiles);

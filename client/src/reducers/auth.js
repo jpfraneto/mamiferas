@@ -49,7 +49,6 @@ export default function auth(state = initialState, action) {
       };
 
     case UPDATE_BABY_BORN:
-      console.log('INSIDE HERE!');
       return {
         ...state,
         user: { ...state.user, babyBorn: true },

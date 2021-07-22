@@ -91,9 +91,12 @@ router.post('/', auth, async (req, res) => {
 // @desc    Get all profiles
 // @access  Public
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
   try {
-    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    const user = await User.findById(req.user.id).select('parentIdentificator');
+    const profiles = await Profile.find({
+      parentIdentificator: user.parentIdentificator,
+    }).populate('user', ['name', 'avatar']);
     res.json(profiles);
   } catch (err) {
     console.error(err.message);

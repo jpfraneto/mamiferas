@@ -10,7 +10,7 @@ const Article = ({
   getArticles,
   sortArticles,
   article: { articles, loading },
-  user: { babyBorn },
+  user: { babyBorn, parentIdentificator },
 }) => {
   const [loading2, setLoading2] = useState(true);
   useEffect(() => {
@@ -22,7 +22,15 @@ const Article = ({
   ) : (
     <Fragment>
       <h1 className='large text-primary'>Crónicas de Embarazo</h1>
-      <p className='lead'>Que han sido compartidas en este espacio</p>
+      <p className='lead'>
+        Que han sido compartidas en este espacio por{' '}
+        {JSON.parse(parentIdentificator) ? 'futuros papás' : 'futuras mamás'}{' '}
+        como tú. Acá se cargarán sólo historias escritas por{' '}
+        {JSON.parse(parentIdentificator) ? 'papás' : 'mamás'}, pero si es que te
+        envían una escrita por{' '}
+        {JSON.parse(parentIdentificator) ? 'una mamá' : 'un papá'} puedes
+        visitarla sin problema.
+      </p>
       {!babyBorn && (
         <Link className='btn btn-primary' to={'/articles/new'}>
           Agregar Nueva Crónica

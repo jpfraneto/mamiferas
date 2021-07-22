@@ -14,6 +14,10 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  // true for father, false for mother
+  parentIdentificator: {
+    type: String,
+  },
   username: {
     type: String,
     required: true,

@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const temas = [
   'Embarazo',
@@ -11,6 +12,10 @@ const temas = [
 ];
 
 const Resources = () => {
+  useEffect(() => {
+    console.log('inside the useEffect');
+    axios.get('/api/resources');
+  }, []);
   return (
     <Fragment>
       <h1 className='large text-primary'>Recursos</h1>

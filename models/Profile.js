@@ -12,6 +12,9 @@ const ProfileSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  parentIdentificator: {
+    type: String,
+  },
   name: {
     type: String,
   },

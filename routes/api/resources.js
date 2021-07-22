@@ -16,25 +16,16 @@ const functions = require('../../utils/functions');
 
 router.get('/', async (req, res) => {
   try {
-    // const resources = await Resource.find({});
-    const resources = [
-      {
-        link: 'http://www.human.music.com',
-        name: 'Recurso 1',
-        addedBy: 'María Ignacia Sanhueza',
-      },
-      {
-        link: 'http://www.human.music.com',
-        name: 'Recurso 2',
-        addedBy: 'Felipe',
-      },
-      {
-        link: 'http://www.human.music.com',
-        name: 'Recurso 3',
-        addedBy: 'Chocapec',
-      },
-    ];
-
+    const resourcesInfo = {
+      embarazo: 0,
+      parto: 0,
+      puerperio: 0,
+      lactancia: 0,
+      crianza: 0,
+      relaciones: 0,
+    };
+    const resources = await Resource.find({});
+    //calcular cuántos de cada recurso hay.
     res.json(resources);
   } catch (err) {
     console.log('the error is', err);
@@ -100,7 +91,7 @@ router.get('/:category', async (req, res) => {
 // @desc    Create a resource
 // @access  Private
 
-router.post('/', async (req, res) => {
+router.post('/', auth2, async (req, res) => {
   try {
     const { category, addedBy, description, url, mediaType, title } = req.body;
     const newResource = new Resource({

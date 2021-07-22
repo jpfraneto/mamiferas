@@ -46,7 +46,8 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    const { name, email, username, miracle, password } = req.body;
+    const { name, email, username, miracle, password, parentIdentificator } =
+      req.body;
     try {
       let user = await User.findOne({ username });
       let user2 = await User.findOne({ email });
@@ -69,6 +70,7 @@ router.post(
         avatar:
           'https://howtoapps.com/wp-content/uploads/2020/01/b9ed581c-cute-profile-pic-8-600x400.jpg',
         password,
+        parentIdentificator,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -86,6 +88,7 @@ router.post(
       //Create profile
       const profileFields = {};
       profileFields.name = user.name;
+      profileFields.parentIdentificator = user.parentIdentificator;
       profileFields.user = user._id;
       profileFields.username = username.toLowerCase();
       profileFields.miracle = miracle;
