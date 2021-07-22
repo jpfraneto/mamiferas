@@ -34,6 +34,17 @@ const NewResource = ({ resource }) => {
       <p>Muchas gracias por contribuir a que tod@s nos informemos.</p>
       <form className='form' onSubmit={e => onSubmit(e)}>
         <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Título'
+            name='title'
+            required
+            onChange={e => onChange(e)}
+          />
+          <small className='form-text'>Título</small>
+        </div>
+
+        <div className='form-group'>
           <select
             name='category'
             value={data.category}
@@ -62,16 +73,6 @@ const NewResource = ({ resource }) => {
         </div>
 
         <div className='form-group'>
-          <textarea
-            placeholder='Descripción'
-            name='description'
-            required
-            onChange={e => onChange(e)}
-          />
-          <small className='form-text'>Descripción</small>
-        </div>
-
-        <div className='form-group'>
           <input
             type='text'
             placeholder='Dirección Web'
@@ -79,6 +80,27 @@ const NewResource = ({ resource }) => {
             onChange={e => onChange(e)}
           />
           <small className='form-text'>Ingresa el link del recurso</small>
+        </div>
+
+        <div className='form-group'>
+          <select name='mediaType' onChange={e => onChange(e)}>
+            <option value='video'>Video</option>
+            <option value='image'>Imagen</option>
+            <option value='article'>Artículo</option>
+            <option value='music'>Música</option>
+            <option value='webpage'>Página Web</option>
+          </select>
+          <small className='form-text'>Tipo de Recurso</small>
+        </div>
+
+        <div className='form-group'>
+          <textarea
+            placeholder='Descripción'
+            name='description'
+            required
+            onChange={e => onChange(e)}
+          />
+          <small className='form-text'>Descripción</small>
         </div>
 
         <input type='submit' className='btn btn-success' value='Agregar' />

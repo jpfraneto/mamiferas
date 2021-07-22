@@ -1,10 +1,16 @@
 const mongoose = require('mongoose');
 
 const ResourceSchema = new mongoose.Schema({
+  title: {
+    type: String,
+  },
   category: {
     type: String,
   },
   addedBy: {
+    type: String,
+  },
+  mediaType: {
     type: String,
   },
   description: {
@@ -37,6 +43,11 @@ const ResourceSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
       },
+    },
+  ],
+  likes: [
+    {
+      type: String,
     },
   ],
   date: {

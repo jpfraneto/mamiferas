@@ -697,3 +697,13 @@ button {
 .text-body p {
   margin-bottom: 16px;
 }
+
+.resources-list {
+  list-style: none;
+}
+
+.resource-display {
+  border: solid black 1px;
+  margin: 12px 0;
+  padding: 8px;
+}

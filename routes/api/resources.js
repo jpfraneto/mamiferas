@@ -44,9 +44,44 @@ router.get('/', async (req, res) => {
   }
 });
 
+// @route   GET api/resources/resource/:id
+// @desc    GET resource by id
+// @access  Private
+router.get('/resource/:id', async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    console.log('the found resource is: ', resource);
+    res.json(resource);
+  } catch (err) {
+    res.status(500).json({
+      err: `There was an error retrieving the resource ${req.params.id}`,
+    });
+  }
+});
+
+// @route   GET api/resources/resource/:id/add-like
+// @desc    GET and add like to the resource
+// @access  Public
+router.get('/resource/:id/add-like', async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    resource.likes = [...resource.likes, 'like'];
+    await resource.save();
+    res.json({
+      resource,
+      msg: `The resource was liked, and it now has ${resource.likes.length} likes`,
+    });
+  } catch (err) {
+    console.log('the error is', err);
+    res.status(500).json({
+      err: `There was an error retrieving the resources from the category ${req.params.category}`,
+    });
+  }
+});
+
 // @route   GET api/resources/:category
 // @desc    GET all resources by category
-// @access  Private
+// @access  Public
 router.get('/:category', async (req, res) => {
   try {
     const resources = await Resource.find({
@@ -65,13 +100,16 @@ router.get('/:category', async (req, res) => {
 // @desc    Create a resource
 // @access  Private
 
-router.post('/', auth2, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
+    const { category, addedBy, description, url, mediaType, title } = req.body;
     const newResource = new Resource({
-      category: req.body.category,
-      addedBy: req.body.addedBy,
-      description: req.body.description,
-      url: req.body.url,
+      category,
+      addedBy,
+      description,
+      url,
+      mediaType,
+      title,
     });
     await newResource.save();
 

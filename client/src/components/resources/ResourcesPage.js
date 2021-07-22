@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import ResourcesItem from './ResourcesItem';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import axios from 'axios';
 
 const ResourcesPage = props => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [resources, setResources] = useState([]);
   useEffect(() => {
@@ -34,17 +35,22 @@ const ResourcesPage = props => {
           ) : (
             <Fragment>
               <p>Aún no hay recursos para este tema.</p>
-              <Link
-                className='btn btn-success'
-                to={`/resources/new?tema=${props.tema}`}
-              >
-                Agregar Recurso
-              </Link>
             </Fragment>
           )}
-          <Link to={'/resources'} className='btn btn-primary'>
-            Volver
+          <Link
+            className='btn btn-success'
+            to={`/resources/new?tema=${props.tema}`}
+          >
+            Agregar Nuevo
           </Link>
+          <button
+            onClick={() => {
+              history.goBack();
+            }}
+            className='btn btn-primary'
+          >
+            Volver
+          </button>
         </Fragment>
       )}
     </Fragment>

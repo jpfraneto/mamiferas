@@ -19,7 +19,7 @@ const Resources = () => {
         informar acerca de todos lo relacionado con traer un nuevo ser humano al
         mundo.
       </p>
-      <ul>
+      <ul className='resources-list'>
         {temas.map((tema, index) => (
           <li key={index}>
             <Link to={`/resources/${tema.toLowerCase()}`}>{tema}</Link>
