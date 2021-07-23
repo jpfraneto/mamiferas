@@ -16,16 +16,7 @@ const functions = require('../../utils/functions');
 
 router.get('/', async (req, res) => {
   try {
-    const resourcesInfo = {
-      embarazo: 0,
-      parto: 0,
-      puerperio: 0,
-      lactancia: 0,
-      crianza: 0,
-      relaciones: 0,
-    };
     const resources = await Resource.find({});
-    //calcular cuántos de cada recurso hay.
     res.json(resources);
   } catch (err) {
     console.log('the error is', err);

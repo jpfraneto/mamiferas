@@ -1,9 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Moment from 'react-moment';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import ReactMarkdown from 'react-markdown';
+import gfm from 'remark-gfm';
 
 const ResourcesItem = ({ resource }) => {
   const [likes, setLikes] = useState(resource.likes.length);
@@ -29,7 +29,14 @@ const ResourcesItem = ({ resource }) => {
           <strong>Link:</strong> {resource.url}
         </p>
         <p>
-          <strong>Descripción:</strong> {resource.description}
+          <strong>Descripción:</strong>{' '}
+          <ReactMarkdown
+            remarkPlugins={[gfm]}
+            children={'string'}
+            className='text-body'
+          >
+            {resource.description}
+          </ReactMarkdown>
         </p>
         <Link
           className='btn btn-success'

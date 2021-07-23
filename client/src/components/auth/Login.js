@@ -50,6 +50,9 @@ const Login = ({ login, isAuthenticated, user }) => {
             onChange={e => onChange(e)}
             required
           />
+          <small>
+            <Link to='/password-recovery'>Recuperar clave</Link>
+          </small>
         </div>
         <input type='submit' className='btn btn-primary' value='Login' />
       </form>

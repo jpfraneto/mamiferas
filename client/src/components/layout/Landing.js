@@ -10,16 +10,8 @@ const Landing = ({ isAuthenticated }) => {
         <div className='landing-inner'>
           <h1 className='landingTitle'>Mamíferas</h1>
           <p className='lead'>
-            Recordando lo que se ha olvidado / Honrando el ser madre.
-          </p>
-          <p className='lead'>
-            Este proyecto está en construcción. Cualquier comentario que pueda
-            aportar a su desarrollo es absolutamente bienvenido, porque como
-            desarrollador necesito entender qué es lo que tiene que pasar en
-            este lugar para que pueda transformarse en un espacio que es capaz
-            de alegrarte todos los días. Mi nombre es jp, mi correo es
-            jpfraneto@gmail.com, y está siempre abierto para quien quiera
-            ayudarme. Muchas gracias!!
+            Recordando lo que se ha olvidado / Honrando lo que significa traer
+            un nuevo ser humano al mundo.
           </p>
           {!isAuthenticated ? (
             <div className='buttons'>
@@ -32,7 +24,7 @@ const Landing = ({ isAuthenticated }) => {
             </div>
           ) : (
             <div className='buttons'>
-              <Link to='/images' className='btn btn-light'>
+              <Link to='/birth-stories' className='btn btn-light'>
                 Historias de Parto
               </Link>
               <Link to='/articles' className='btn btn-primary'>

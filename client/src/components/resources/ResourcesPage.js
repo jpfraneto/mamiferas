@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import ResourcesItem from './ResourcesItem';
+import ResourcesItem2 from './ResourcesItem2';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import axios from 'axios';
@@ -24,13 +25,10 @@ const ResourcesPage = props => {
       ) : (
         <Fragment>
           <h1 className='large text-primary'>{props.tema}</h1>
-          <p>
-            Acá se va a hablar de este tema, y se va a compartir material
-            asociado a él.
-          </p>
+          <p>Información que ha sido compartida en torno a este tema:</p>
           {resources.length > 0 ? (
             resources.map((resource, index) => (
-              <ResourcesItem key={index} resource={resource} />
+              <ResourcesItem2 key={index} resource={resource} />
             ))
           ) : (
             <Fragment>

@@ -1,10 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import ResourcesItem from './ResourcesItem';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import Spinner from '../layout/Spinner';
 import axios from 'axios';
 
 const ShowResource = ({ props, match }) => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const [resource, setResource] = useState({});
   useEffect(() => {
@@ -29,9 +30,14 @@ const ShowResource = ({ props, match }) => {
           >
             console resource
           </button>
-          <Link to={'/resources'} className='btn btn-primary'>
+          <button
+            onClick={() => {
+              history.goBack();
+            }}
+            className='btn btn-primary'
+          >
             Volver
-          </Link>
+          </button>
         </Fragment>
       )}
     </Fragment>
