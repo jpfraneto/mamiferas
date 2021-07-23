@@ -14,6 +14,7 @@ const NewResource = ({ resource }) => {
   const category = a.slice(index + 5, a.length).toLowerCase();
   const [data, setData] = useState({
     category,
+    mediaType: 'video',
   });
 
   const onChange = e => setData({ ...data, [e.target.name]: e.target.value });
@@ -23,10 +24,13 @@ const NewResource = ({ resource }) => {
     const config = {
       headers: { 'Content-Type': 'application/json' },
     };
+    console.log('submitting the resource with the following data: ', data);
     const body = JSON.stringify(data);
     setLoading(true);
     const res = await axios.post('/api/resources', body, config);
-    history.push(`/resources/${data.category}`);
+    history.push(`/resources/${data.category}`, {
+      returnTo: '/resources',
+    });
   };
   return (
     <Fragment>
@@ -104,6 +108,7 @@ const NewResource = ({ resource }) => {
         </div>
 
         <input type='submit' className='btn btn-success' value='Agregar' />
+
         <Link to='/resources' className='btn btn-primary'>
           Atrás
         </Link>

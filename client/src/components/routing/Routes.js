@@ -9,7 +9,6 @@ import Resources from '../resources/Resources';
 import ResourcesPage from '../resources/ResourcesPage';
 import NewResource from '../resources/NewResource';
 import ShowResource from '../resources/ShowResource';
-import ShowResource2 from '../resources/ShowResource2';
 import Posts from '../posts/Posts';
 import Post from '../post/Post';
 import Login from '../auth/Login';
@@ -40,7 +39,7 @@ const Routes = () => {
         <Route exact path='/password-recovery/:token' component={NewPassword} />
         <Route exact path='/password-recovery' component={PasswordRecovery} />
         <Route exact path='/resources' component={Resources} />
-        <Route exact path='/resources/resource/:id' component={ShowResource2} />
+        <Route exact path='/resources/resource/:id' component={ShowResource} />
         <Route exact path='/resources/new' component={NewResource} />
 
         <Route exact path='/resources/embarazo'>

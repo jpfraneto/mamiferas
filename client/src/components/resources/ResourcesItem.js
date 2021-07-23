@@ -1,9 +1,19 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import ReactMarkdown from 'react-markdown';
 import gfm from 'remark-gfm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faVideo,
+  faImage,
+  faWindowMaximize,
+  faNewspaper,
+  faMusic,
+  faBaby,
+  faComment,
+  faThumbsUp,
+} from '@fortawesome/free-solid-svg-icons';
 
 const ResourcesItem = ({ resource }) => {
   const [likes, setLikes] = useState(resource.likes.length);
@@ -13,52 +23,59 @@ const ResourcesItem = ({ resource }) => {
     setLikes(res.data.resource.likes.length);
     setDisableBtn(true);
   };
+  const getIcon = mediaType => {
+    switch (mediaType) {
+      case 'video':
+        return faVideo;
+      case 'image':
+        return faImage;
+      case 'webpage':
+        return faWindowMaximize;
+      case 'article':
+        return faNewspaper;
+      case 'music':
+        return faMusic;
+      default:
+        return faBaby;
+    }
+  };
   return (
-    <Fragment>
-      <div className='resource-display'>
-        <p>
-          <strong>Categoría:</strong> {resource.category}
-        </p>
-        <p>
-          <strong>Nombre:</strong> {resource.title}
-        </p>
-        <p>
-          <strong>Agregado Por:</strong> {resource.addedBy}
-        </p>
-        <p>
-          <strong>Link:</strong> {resource.url}
-        </p>
-        <p>
-          <strong>Descripción:</strong>{' '}
-          <ReactMarkdown
-            remarkPlugins={[gfm]}
-            children={'string'}
-            className='text-body'
-          >
-            {resource.description}
-          </ReactMarkdown>
-        </p>
-        <Link
-          className='btn btn-success'
-          to={{ pathname: resource.url }}
-          target='_blank'
-        >
-          Visitar
-        </Link>
-        <button
-          className='btn btn-primary'
-          onClick={() => {
-            {
-              disableBtn
-                ? alert('Ya mencionaste la utilidad de este recurso una vez!')
-                : addLikeToResource(resource._id);
-            }
-          }}
-        >
-          ¿Fue útil para ti? 👍🏻 {likes}
-        </button>
+    <div className='post bg-white p-1 my-1'>
+      <div>
+        <p>Agregado por:</p>
+        <h4>{resource.addedBy}</h4>
       </div>
-    </Fragment>
+      <div>
+        <h3>{resource.title}</h3>
+        <ReactMarkdown remarkPlugins={[gfm]} children={'string'}>
+          {resource.description.length > 111
+            ? resource.description.substring(0, 111) + '...'
+            : resource.description}
+        </ReactMarkdown>
+
+        <Fragment>
+          <Link
+            to={`/resources/resource/${resource._id}`}
+            className='btn btn-success'
+          >
+            <FontAwesomeIcon icon={getIcon(resource.mediaType)} /> - Ver -{' '}
+            <FontAwesomeIcon icon={faComment} /> {resource.comments.length}
+          </Link>
+          <button
+            className='btn btn-primary'
+            onClick={() => {
+              {
+                disableBtn
+                  ? alert('Ya mencionaste la utilidad de este recurso una vez!')
+                  : addLikeToResource(resource._id);
+              }
+            }}
+          >
+            <FontAwesomeIcon icon={faThumbsUp} /> {likes}
+          </button>
+        </Fragment>
+      </div>
+    </div>
   );
 };
 

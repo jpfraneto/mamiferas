@@ -32,7 +32,6 @@ router.get('/', async (req, res) => {
 router.get('/resource/:id', async (req, res) => {
   try {
     const resource = await Resource.findById(req.params.id);
-    console.log('the found resource is: ', resource);
     res.json(resource);
   } catch (err) {
     res.status(500).json({
@@ -93,6 +92,7 @@ router.post('/', auth2, async (req, res) => {
       mediaType,
       title,
     });
+    console.log('the new resource is: ', newResource);
     await newResource.save();
 
     res.json({
@@ -103,6 +103,77 @@ router.post('/', auth2, async (req, res) => {
     res
       .status(500)
       .json({ err: 'There was an error uploading the resource :(' });
+  }
+});
+
+router.post('/resource/:id/add-comment', auth2, async (req, res) => {
+  try {
+    let user = null;
+    let username = req.body.username;
+    let name = username;
+    let avatar =
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Baby_Face.JPG/1600px-Baby_Face.JPG';
+    if (req.user) {
+      const userdata = await User.findOne({
+        _id: req.user.id,
+      }).select('-password');
+      const profile = await Profile.findOne({ username: userdata.username });
+      name = userdata.name;
+      avatar = profile.imageLink;
+      user = userdata._id;
+      username = userdata.username;
+    }
+    const resource = await Resource.findById(req.params.id);
+
+    const newComment = {
+      text: req.body.text,
+      name,
+      avatar,
+      username,
+      user,
+    };
+
+    resource.comments.push(newComment);
+    await resource.save();
+    res.json(resource);
+  } catch (err) {
+    res
+      .status(500)
+      .json({ err: 'There was an error uploading the resource :(' });
+  }
+});
+
+router.post('/resource/:id/delete-comment', auth2, async (req, res) => {
+  try {
+    const resource = await Resource.findById(req.params.id);
+    //pull out comment
+    const comment = resource.comments.find(
+      comment => comment._id.toString() === req.body.commentId
+    );
+    //Make sure comment exists
+    if (!comment)
+      return res.status(404).json({ msg: 'Comment does not exist' });
+
+    //Check user
+    if (comment.user.toString() !== req.user.id) {
+      return res.status(401).json({ msg: 'User not authorized' });
+    }
+
+    //Get the remove index
+    const removeIndex = resource.comments
+      .map(comment => comment.user)
+      .indexOf(req.user.id);
+
+    resource.comments.splice(removeIndex, 1);
+
+    await resource.save();
+
+    res.json(resource);
+  } catch (err) {
+    console.log(err);
+    console.log('there was an error deleting the comment', err);
+    console.error(err.message);
+    res.status(500).send('Server error!');
   }
 });
 
