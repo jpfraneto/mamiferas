@@ -693,6 +693,7 @@ button {
   }
   .resources-list {
     list-style: none;
+    text-align: center;
     display: block;
     margin: 0 auto;
   }
