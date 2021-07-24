@@ -580,10 +580,32 @@ button {
   width: 66%;
 }
 
+.resources-list {
+  list-style: none;
+  display: flex;
+}
+
+.resource-display {
+  border: solid black 1px;
+  margin: 12px 0;
+  padding: 8px;
+}
+
+.resource-item {
+  border: solid 1px black;
+  text-align: center;
+  width: 16%;
+  margin: 8px auto;
+}
+
+.resource-item img {
+  height: 70%;
+}
+
 /* Mobile Styles */
 @media (max-width: 700px) {
   .container {
-    margin-top: 8rem;
+    margin-top: 10rem;
   }
 
   .hide-sm {
@@ -669,6 +691,18 @@ button {
   .imageText {
     width: 88%;
   }
+  .resources-list {
+    list-style: none;
+    display: block;
+    margin: 0 auto;
+  }
+  .resource-item {
+    border: solid 1px black;
+    text-align: center;
+    width: 88%;
+    display: inline-block;
+    margin: 8px auto;
+  }
 }
 
 .dialog {
@@ -696,28 +730,6 @@ button {
 
 .text-body p {
   margin-bottom: 16px;
-}
-
-.resources-list {
-  list-style: none;
-  display: flex;
-}
-
-.resource-display {
-  border: solid black 1px;
-  margin: 12px 0;
-  padding: 8px;
-}
-
-.resource-item {
-  border: solid 1px black;
-  text-align: center;
-  width: 16%;
-  margin: 8px auto;
-}
-
-.resource-item img {
-  height: 70%;
 }
 
 .video-responsive {

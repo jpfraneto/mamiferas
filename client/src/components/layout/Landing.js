@@ -13,6 +13,7 @@ const Landing = ({ isAuthenticated }) => {
             Recordando lo que se ha olvidado / Honrando lo que significa traer
             un nuevo ser humano al mundo.
           </p>
+
           {!isAuthenticated ? (
             <div className='buttons'>
               <Link to='/register' className='btn btn-primary'>
@@ -32,6 +33,15 @@ const Landing = ({ isAuthenticated }) => {
               </Link>
             </div>
           )}
+          <p style={{ position: 'absolute', bottom: 0 }}>
+            Para ver la presentación de este proyecto, haz click{' '}
+            <Link
+              to={{ pathname: 'https://www.youtube.com/watch?v=3aJ8LIR4yjw' }}
+              target='_blank'
+            >
+              acá
+            </Link>
+          </p>
         </div>
       </div>
     </section>
